@@ -13,7 +13,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
     <nav class="w-full h-auto lg:shadow-sm border-b-2 border-blue-100 lg:border-none">
       <div class="hidden max-w-[90%] mx-auto lg:flex flex-row items-center justify-between">
         <div class="w-1/4 flex items-center">
-          <img src="/images/logo.svg" alt="" class="w-20 h-20 rounded-full" />
+          <img src="/images/globaltide-lg2.jpeg" alt="" class="w-20 h-20 rounded-full" />
         </div>
         <div class="w-full flex items-center justify-evenly space-x-4">
           <ul class="w-full flex flex-row items-center justify-evenly">
@@ -37,7 +37,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
 
       <div class="flex lg:hidden w-full max-w-[90%] mx-auto justify-between items-center flex-row">
         <div class="">
-          <img src="/images/logo.svg" alt="" class="w-20 h-20 rounded-full" />
+          <img src="/images/globaltide-lg2.jpeg" alt="" class="w-20 h-20 rounded-full" />
         </div>
         <div class="">
           <button phx-click="toggle-menu" class="z-20 lg-hidden p-2 border rounded-lg">
@@ -355,7 +355,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-6"
+              class="size-6"
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
             </svg>
@@ -379,57 +379,111 @@ defmodule GlobaltideWeb.LandingPageComponent do
     """
   end
 
-  defp role_data do
-    [
-      %{
-        id: 5,
-        imgRef: "/images/DepImgs/food&beverages.jpeg",
-        title: "RSA Security Supervisor",
-        desc: "Marine Operations- Security Service",
-        hoverDesc:
-          "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
-      },
-      %{
-        id: 2,
-        imgRef: "/images/DepImgs/vacation.jpeg",
-        title: "RSA Security Supervisor",
-        desc: "Marine Operations- Security Service",
-        hoverDesc:
-          "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
-      },
-      %{
-        id: 3,
-        imgRef: "/images/DepImgs/guestandservices.jpeg",
-        title: "RSA Security Supervisor",
-        desc: "Marine Operations- Security Service",
-        hoverDesc:
-          "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
-      },
-      %{
-        id: 4,
-        imgRef: "/images/DepImgs/cleaning.jpeg",
-        title: "RSA Security Supervisor",
-        desc: "Marine Operations- Security Service",
-        hoverDesc:
-          "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
-      },
-      %{
-        id: 6,
-        imgRef: "/images/DepImgs/entertainment-activities.jpeg",
-        title: "RSA Security Supervisor",
-        desc: "Marine Operations- Security Service",
-        hoverDesc:
-          "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
-      },
-      %{
-        id: 1,
-        imgRef: "/images/DepImgs/security.png",
-        title: "RSA Security Supervisor",
-        desc: "Marine Operations-Security Service",
-        hoverDesc:
-          "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
-      }
-    ]
+  # defp role_data do
+  #   [
+  #     %{
+  #       id: 5,
+  #       imgRef: "/images/DepImgs/food&beverages.jpeg",
+  #       title: "RSA Security Supervisor",
+  #       desc: "Marine Operations- Security Service",
+  #       hoverDesc:
+  #         "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
+  #     },
+  #     %{
+  #       id: 2,
+  #       imgRef: "/images/DepImgs/vacation.jpeg",
+  #       title: "RSA Security Supervisor",
+  #       desc: "Marine Operations- Security Service",
+  #       hoverDesc:
+  #         "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
+  #     },
+  #     %{
+  #       id: 3,
+  #       imgRef: "/images/DepImgs/guestandservices.jpeg",
+  #       title: "RSA Security Supervisor",
+  #       desc: "Marine Operations- Security Service",
+  #       hoverDesc:
+  #         "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
+  #     },
+  #     %{
+  #       id: 4,
+  #       imgRef: "/images/DepImgs/cleaning.jpeg",
+  #       title: "RSA Security Supervisor",
+  #       desc: "Marine Operations- Security Service",
+  #       hoverDesc:
+  #         "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
+  #     },
+  #     %{
+  #       id: 6,
+  #       imgRef: "/images/DepImgs/entertainment-activities.jpeg",
+  #       title: "RSA Security Supervisor",
+  #       desc: "Marine Operations- Security Service",
+  #       hoverDesc:
+  #         "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
+  #     },
+  #     %{
+  #       id: 1,
+  #       imgRef: "/images/DepImgs/security.png",
+  #       title: "RSA Security Supervisor",
+  #       desc: "Marine Operations-Security Service",
+  #       hoverDesc:
+  #         "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
+  #     }
+  #   ]
+  # end
+
+  def testimony_component(assigns) do
+    ~H"""
+    <section class="w-full max-w-[90%] md:max-w-[80%] lg:max-w-[80%] mx-auto flex flex-col justify-evenly h-[100%] items-center">
+      <div class="flex flex-col max-w-[90%]">
+        <div class="mb-4">
+          <h1 class="text-[24px] lg:text-[34px] md:text-[30px] text-center font-bold">
+            What our crew has to say.
+          </h1>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <%= for testimony <- visible_testimonies(assigns) do %>
+            <.testimony_tile testimony={testimony} />
+          <% end %>
+        </div>
+        <div class="flex justify-center mt-4 space-x-4">
+          <button phx-click="prev_testimony" class="px-4 py-2 bg-gray-300 rounded-lg">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="size-6"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </button>
+          <button phx-click="next_testimony" class="px-4 py-2 bg-gray-300 rounded-lg">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="size-6"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+    """
+  end
+
+  defp visible_testimonies(%{start_index: index}) do
+    # Show only 2 testimonies
+    Enum.slice(testimony_data(), index, 2)
   end
 
   defp testimony_data do
@@ -440,7 +494,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
         title: "Journeys that Inspire",
         desc:
           "Working on the cruise has been a life-changing experience. I've traveled the world while building lifelong friendships with my colleagues.",
-        imgRef: "/persona/Sophia.png",
+        imgRef: "images/persona/Sophia.png",
         name: "Sophia Moore",
         role: "Deck Officer, Global Tide"
       },
@@ -450,7 +504,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
         title: "Transformative Experiences",
         desc:
           "Being employed on the cruise has transformed my life. I've explored the globe and formed lasting bonds with my fellow workers.",
-        imgRef: "/persona/adam.png",
+        imgRef: "images/persona/adam.png",
         name: "Adam Smith",
         role: "Navigation Officer, Global Tide"
       },
@@ -460,7 +514,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
         title: "A Career with a View",
         desc:
           "Every day is an adventure onboard. I get to wake up to breathtaking views and create unforgettable experiences for our passengers.",
-        imgRef: "/persona/img4.jpg",
+        imgRef: "images/persona/img4.jpg",
         name: "Emily Johnson",
         role: "Hospitality Manager, Global Tide"
       },
@@ -470,10 +524,172 @@ defmodule GlobaltideWeb.LandingPageComponent do
         title: "Charting New Waters",
         desc:
           "This job has allowed me to grow professionally while exploring new horizons. I am proud to be part of a dynamic and supportive team.",
-        imgRef: "/persona/img3.jpg",
+        imgRef: "images/persona/img3.jpg",
         name: "James Carter",
         role: "Chief Engineer, Global Tide"
       }
     ]
+  end
+
+  defp testimony_tile(assigns) do
+    ~H"""
+    <div class="flex flex-col bg-white p-8 rounded-3xl w-auto shadow-md h-96">
+      <span class="font-bold ">{@testimony.tag}</span>
+      <div class="flex flex-col  space-y-4">
+        <h1 class="text-[16px] md:text-[24px] lg:text-xl font-bold">
+          {@testimony.title}
+        </h1>
+        <p class="text-md md:text-xl font-normal text-gray-500">"{@testimony.desc}"</p>
+      </div>
+      <div class="flex flex-row w-full h-1/2 items-center justify-center ">
+        <div class="bg-purple-200 rounded-full w-auto h-1/2">
+          <img
+            src={@testimony.imgRef}
+            alt={@testimony.title}
+            class="rounded-full bg-cover w-[80px] h-[80px] bg-center "
+          />
+        </div>
+        <div class="flex flex-col justify-evenly p-2 w-[60%]">
+          <h2 class="font-bold text-md lg:text-lg">{@testimony.name}</h2>
+          <span class="text-sm md:text-md">{@testimony.role}</span>
+        </div>
+      </div>
+    </div>
+    """
+  end
+
+  def team_component(assigns) do
+    ~H"""
+    <section
+      class="relative w-full h-auto lg:h-[400px] bg-cover bg-fixed flex flex-col items-center justify-center"
+      style="background-image: url(/images/cruise2.jpeg)"
+    >
+      <div class="absolute inset-0 bg-black/50"></div>
+      <div class="relative w-full max-w-[90%] lg:max-w-[80%] mx-auto space-y-4 my-10 lg:space-y-8 text-center lg:text-start">
+        <div class="relative">
+          <h1 class="text-[24px] md:text-[30px] lg:text-[34px] font-bold text-white">
+            Join Our Exciting Team Today
+          </h1>
+          <p class="text-lg md:text-xl lg:text-3xl text-white mt-4">
+            Explore amazing career opportunities at sea and embark on a journey
+            of a lifetime.
+          </p>
+        </div>
+        <div className="flex flex-col lg:flex-row sm:space-y-4 lg:space-y-0  lg:space-x-4 justify-start relative">
+          <button class="pointer py-2 px-4 lg:py-4 lg:px-8 text-sm md:text-xl bg-red-500 text-white rounded-lg w-auto">
+            Apply
+          </button>
+          <button class="pointer py-2 px-4  lg:py-4 lg:px-8  text-sm md:text-xl border-2 border-gray-400 text-white rounded-lg">
+            View All Jobs
+          </button>
+        </div>
+      </div>
+    </section>
+    """
+  end
+
+  def footer(assigns) do
+    ~H"""
+    <footer class="-full bg-blue-800 lg:h-80  flex items-center justify-center text-white py-10 lg:py-20">
+      <div class="w-full max-w-[90%] mx-auto">
+        <div class="flex flex-col lg:space-x-4 lg:flex-row items-start justify-start lg:justify-center lg:items-center">
+          <div class="w-full flex items-center">
+            <img src="/images/globaltide-lg2.jpeg" alt="" class="w-20 h-20 " />
+          </div>
+          <div class="w-full flex flex-col lg:flex-row lg:space-x-8 space-y-2 lg:space-y-8">
+            <ul class="font-bold flex flex-col lg:flex-row lg:items-center lg:justify-center lg:space-x-8 space-y-2 lg:space-y-0 ">
+              <a href="" class="text-lg font-medium hover:text-gray-300 transition duration-200">
+                <li>Home</li>
+                
+              </a>
+              <a href="" class="text-lg font-medium hover:text-gray-300 transition duration-200">
+                <li>Jobs available</li>
+              </a>
+              <a href="" class="text-lg font-medium hover:text-gray-300 transition duration-200">
+                <li>Contact</li>
+              </a>
+            </ul>
+          </div>
+          <div class="w-full items-center justify-between lg:justify-center flex flex-col lg:flex-row">
+            <div class="w-full flex items-center justify-center  space-y-4 lg:space-y-0" >
+              <ul class="w-full flex flex-row lg:space-x-8 items-center justify-center space-x-4">
+                <a href="">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    x="0px"
+                    y="0px"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 48 48"
+                  >
+                    <path fill="#039be5" d="M24 5A19 19 0 1 0 24 43A19 19 0 1 0 24 5Z"></path>
+                    <path
+                      fill="#fff"
+                      d="M26.572,29.036h4.917l0.772-4.995h-5.69v-2.73c0-2.075,0.678-3.915,2.619-3.915h3.119v-4.359c-0.548-0.074-1.707-0.236-3.897-0.236c-4.573,0-7.254,2.415-7.254,7.917v3.323h-4.701v4.995h4.701v13.729C22.089,42.905,23.032,43,24,43c0.875,0,1.729-0.08,2.572-0.194V29.036z"
+                    >
+                    </path>
+                  </svg>
+                </a>
+    
+                <a href="">
+                  <li class=" bg-blue-300 text-white rounded-xl">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      x="0px"
+                      y="0px"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 50 50"
+                    >
+                      <path d="M 16 3 C 8.8545455 3 3 8.8545455 3 16 L 3 34 C 3 41.145455 8.8545455 47 16 47 L 34 47 C 41.145455 47 47 41.145455 47 34 L 47 16 C 47 8.8545455 41.145455 3 34 3 L 16 3 z M 16 5 L 34 5 C 40.054545 5 45 9.9454545 45 16 L 45 34 C 45 40.054545 40.054545 45 34 45 L 16 45 C 9.9454545 45 5 40.054545 5 34 L 5 16 C 5 9.9454545 9.9454545 5 16 5 z M 37 11 C 35.9 11 35 11.9 35 13 C 35 14.1 35.9 15 37 15 C 38.1 15 39 14.1 39 13 C 39 11.9 38.1 11 37 11 z M 25 14 C 18.954545 14 14 18.954545 14 25 C 14 31.045455 18.954545 36 25 36 C 31.045455 36 36 31.045455 36 25 C 36 18.954545 31.045455 14 25 14 z M 25 16 C 29.954545 16 34 20.045455 34 25 C 34 29.954545 29.954545 34 25 34 C 20.045455 34 16 29.954545 16 25 C 16 20.045455 20.045455 16 25 16 z">
+                      </path>
+                    </svg>
+                  </li>
+                </a>
+                <a href="">
+                  <li>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      x="0px"
+                      y="0px"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 48 48"
+                    >
+                      <path
+                        fill="#0288D1"
+                        d="M42,37c0,2.762-2.238,5-5,5H11c-2.761,0-5-2.238-5-5V11c0-2.762,2.239-5,5-5h26c2.762,0,5,2.238,5,5V37z"
+                      >
+                      </path>
+                      <path
+                        fill="#FFF"
+                        d="M12 19H17V36H12zM14.485 17h-.028C12.965 17 12 15.888 12 14.499 12 13.08 12.995 12 14.514 12c1.521 0 2.458 1.08 2.486 2.499C17 15.887 16.035 17 14.485 17zM36 36h-5v-9.099c0-2.198-1.225-3.698-3.192-3.698-1.501 0-2.313 1.012-2.707 1.99C24.957 25.543 25 26.511 25 27v9h-5V19h5v2.616C25.721 20.5 26.85 19 29.738 19c3.578 0 6.261 2.25 6.261 7.274L36 36 36 36z"
+                      >
+                      </path>
+                    </svg>
+                  </li>
+                </a>
+              </ul>
+            </div>
+            <div class="text-center w-full items-center   flex flex-col lg:flex-row ">
+              <span class="flex flex-row text-lg font-bold">
+                <.current_year /> &copy;
+                <h3>GTCruise LTD</h3>
+              </span>
+            </div>
+          </div>
+        </div>
+      
+
+       
+      </div>
+    </footer>
+    """
+  end
+
+  defp current_year(assigns) do
+    ~H"""
+    {Date.utc_today().year()}
+    """
   end
 end
