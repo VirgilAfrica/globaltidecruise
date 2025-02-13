@@ -292,7 +292,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
           <span class="px-8 py-4 lg:py-4 font-bold uppercase bg-gray-100 rounded-full text-sm">
             how to apply
           </span>
-          <h1 class="text-lg md:text-xl lg:text-2xl font-medium text-center">
+          <h1 class="uppercase font-bold text-[20px] md:text-[30px] lg:text-[34px] text-center leading-snu">
             Your Journey to a Rewarding Shipboard Career Starts Here
           </h1>
           <p class="text-lg md:text-xl lg:text-2xl font-medium text-center">
@@ -517,7 +517,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
 
   def testimony_component(assigns) do
     ~H"""
-    <section class="w-full max-w-[90%] md:max-w-[80%] lg:max-w-[80%] mx-auto flex flex-col justify-evenly h-[100%] items-center">
+    <section class="w-full max-w-[90%] md:max-w-[80%] lg:max-w-[80%] py-10 lg:py-20 mx-auto flex flex-col justify-evenly h-[100%] items-center">
       <div class="flex flex-col max-w-[90%]">
         <div class="mb-4">
           <h1 class="text-[24px] lg:text-[34px] md:text-[30px] text-center font-bold">
