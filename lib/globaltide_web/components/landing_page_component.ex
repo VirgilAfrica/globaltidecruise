@@ -1,5 +1,26 @@
 defmodule GlobaltideWeb.LandingPageComponent do
   use Phoenix.Component
+  use Phoenix.LiveComponent
+
+  # mount
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, current_index: 0)}
+  end
+
+  def handle_event("next_page", _, socket) do
+    max_index = length(role_data()) - 3
+    new_index = min(socket.assigns.current_index + 3, max_index)
+
+    {
+      :noreply,
+      assign(socket, current_index: new_index)
+    }
+  end
+
+  def handle_event("prev_page", _, socket) do
+    new_index = max(socket.assigns.current_index - 3, 0)
+    {:noreply, assign(socket, current_index: new_index)}
+  end
 
   def navbar(assigns) do
     assigns =
@@ -332,11 +353,13 @@ defmodule GlobaltideWeb.LandingPageComponent do
   end
 
   def roles(assigns) do
+    assigns = assign_new(assigns, :current_index, fn -> 0 end)
+
     ~H"""
-    <section class="w-full h-auto py-10 md:py-20 bg-white">
+    <section class="w-full h-auto py-10 md:py-20 bg-blue-700">
       <div class="max-w-[90%] mx-auto flex flex-col">
         <div class="w-full flex flex-col items-center justify-center my-20 space-y-4 lg:space-y-8">
-          <span class="px-8 py-4 lg:py-4 font-bold uppercase bg-gray-100 rounded-full text-sm">
+          <span class="px-8 py-4 lg:py-4 font-bold uppercase bg-red-500 text-white rounded-full text-sm">
             Explore
           </span>
           <h1 class="text-[20px] md:text-[30px] lg:text-[34px] text-center font-bold text-white mt-4">
@@ -348,89 +371,149 @@ defmodule GlobaltideWeb.LandingPageComponent do
           </p>
         </div>
         <div>
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              class="size-6"
+          <div class="flex flex-row py-4 space-x-4 items-start justify-end">
+            <button
+              phx-click="prev_page"
+              class="px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 bg-gray-300 hover:bg-gray-100 rounded-xl"
+              disabled={@current_index == 0 or is_nil(@current_index)}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-            </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+            <button
+              phx-click="next_page"
+              class="px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 bg-gray-300 hover:bg-gray-100 rounded-xl"
+              disabled={@current_index + 3 >= length(role_data())}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
+            <%= for role <- Enum.slice(role_data(), @current_index, 3) do %>
+              <.role_card role={role} />
+            <% end %>
           </div>
           <div></div>
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-6"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-            </svg>
-          </div>
         </div>
       </div>
     </section>
     """
   end
 
-  # defp role_data do
-  #   [
-  #     %{
-  #       id: 5,
-  #       imgRef: "/images/DepImgs/food&beverages.jpeg",
-  #       title: "RSA Security Supervisor",
-  #       desc: "Marine Operations- Security Service",
-  #       hoverDesc:
-  #         "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
-  #     },
-  #     %{
-  #       id: 2,
-  #       imgRef: "/images/DepImgs/vacation.jpeg",
-  #       title: "RSA Security Supervisor",
-  #       desc: "Marine Operations- Security Service",
-  #       hoverDesc:
-  #         "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
-  #     },
-  #     %{
-  #       id: 3,
-  #       imgRef: "/images/DepImgs/guestandservices.jpeg",
-  #       title: "RSA Security Supervisor",
-  #       desc: "Marine Operations- Security Service",
-  #       hoverDesc:
-  #         "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
-  #     },
-  #     %{
-  #       id: 4,
-  #       imgRef: "/images/DepImgs/cleaning.jpeg",
-  #       title: "RSA Security Supervisor",
-  #       desc: "Marine Operations- Security Service",
-  #       hoverDesc:
-  #         "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
-  #     },
-  #     %{
-  #       id: 6,
-  #       imgRef: "/images/DepImgs/entertainment-activities.jpeg",
-  #       title: "RSA Security Supervisor",
-  #       desc: "Marine Operations- Security Service",
-  #       hoverDesc:
-  #         "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
-  #     },
-  #     %{
-  #       id: 1,
-  #       imgRef: "/images/DepImgs/security.png",
-  #       title: "RSA Security Supervisor",
-  #       desc: "Marine Operations-Security Service",
-  #       hoverDesc:
-  #         "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
-  #     }
-  #   ]
-  # end
+  defp role_card(assigns) do
+    ~H"""
+    <div
+      x-data="{ hover: false }"
+      @mouseover="hover = true"
+      @mouseleave="hover = false"
+      class="relative h-[400px] md:h-auto flex flex-col items-center w-full bg-transparent rounded-t-xl shadow-lg transform transition-transform duration-300"
+    >
+      <div class="bg-cover bg-center w-full h-[250px]" style="background-image: url('{@role.imgRef}')">
+      </div>
+
+      <div class="h-[150px] md:h-[200px] lg:h-1/3 flex flex-row items-center justify-center w-full text-center p-2 bg-gradient-to-t from-black to-transparent">
+        <a href="/jobs">
+          <div>
+            <h1 class="text-[20px] md:text-[24px] lg:text-[28px] font-bold text-white">
+              {@role.title}
+            </h1>
+            <p class="mt-2 text-xl text-white md:text-[20px]">
+              {@role.desc}
+            </p>
+          </div>
+
+          <span x-show="hover" class="block mt-2 px-2 text-lg text-gray-300">
+            <i class="fas fa-arrow-right"></i>
+          </span>
+        </a>
+      </div>
+
+      <div
+        x-show="hover"
+        x-transition
+        class="absolute top-0 bg-black w-full h-[250px] md:h-[250px] p-4 md:p-6 bg-opacity-80 text-white rounded-lg shadow-md flex items-center justify-center flex-col z-10"
+      >
+        <p class="text-[18px] md:text-[20px] lg:text-[16px]">
+          {@role.hoverDesc}
+        </p>
+      </div>
+    </div>
+    """
+  end
+
+  defp role_data do
+    [
+      %{
+        id: 1,
+        imgRef: "/images/DepImgs/security.png",
+        title: "RSA Security Supervisor",
+        desc: "Marine Operations-Security Service",
+        hoverDesc:
+          "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
+      },
+      %{
+        id: 2,
+        imgRef: "/images/DepImgs/vacation.jpeg",
+        title: "RSA Security Supervisor",
+        desc: "Marine Operations- Security Service",
+        hoverDesc:
+          "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
+      },
+      %{
+        id: 3,
+        imgRef: "/images/DepImgs/guestandservices.jpeg",
+        title: "RSA Security Supervisor",
+        desc: "Marine Operations- Security Service",
+        hoverDesc:
+          "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
+      },
+      %{
+        id: 4,
+        imgRef: "/images/DepImgs/cleaning.jpeg",
+        title: "RSA Security Supervisor",
+        desc: "Marine Operations- Security Service",
+        hoverDesc:
+          "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
+      },
+      %{
+        id: 5,
+        imgRef: "/images/DepImgs/food&beverages.jpeg",
+        title: "RSA Security Supervisor",
+        desc: "Marine Operations- Security Service",
+        hoverDesc:
+          "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
+      },
+      %{
+        id: 6,
+        imgRef: "/images/DepImgs/entertainment-activities.jpeg",
+        title: "RSA Security Supervisor",
+        desc: "Marine Operations- Security Service",
+        hoverDesc:
+          "Maintain a Safe Environment throught trained security officers and lifeguards, ensuring guest safety all the time"
+      }
+    ]
+  end
 
   def testimony_component(assigns) do
     ~H"""
@@ -442,12 +525,12 @@ defmodule GlobaltideWeb.LandingPageComponent do
           </h1>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <%= for testimony <- visible_testimonies(assigns) do %>
+          <%= for testimony <- testimony_data() do %>
             <.testimony_tile testimony={testimony} />
           <% end %>
         </div>
-        <div class="flex justify-center mt-4 space-x-4">
-          <button phx-click="prev_testimony" class="px-4 py-2 bg-gray-300 rounded-lg">
+        <div class="flex justify-center mt-4 space-x-4 my-10">
+          <button class="px-4 py-2 bg-gray-300 rounded-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -461,7 +544,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
               />
             </svg>
           </button>
-          <button phx-click="next_testimony" class="px-4 py-2 bg-gray-300 rounded-lg">
+          <button class="px-4 py-2 bg-gray-300 rounded-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -479,56 +562,6 @@ defmodule GlobaltideWeb.LandingPageComponent do
       </div>
     </section>
     """
-  end
-
-  defp visible_testimonies(%{start_index: index}) do
-    # Show only 2 testimonies
-    Enum.slice(testimony_data(), index, 2)
-  end
-
-  defp testimony_data do
-    [
-      %{
-        id: 1,
-        tag: "Deck officer",
-        title: "Journeys that Inspire",
-        desc:
-          "Working on the cruise has been a life-changing experience. I've traveled the world while building lifelong friendships with my colleagues.",
-        imgRef: "images/persona/Sophia.png",
-        name: "Sophia Moore",
-        role: "Deck Officer, Global Tide"
-      },
-      %{
-        id: 2,
-        tag: "Global tide",
-        title: "Transformative Experiences",
-        desc:
-          "Being employed on the cruise has transformed my life. I've explored the globe and formed lasting bonds with my fellow workers.",
-        imgRef: "images/persona/adam.png",
-        name: "Adam Smith",
-        role: "Navigation Officer, Global Tide"
-      },
-      %{
-        id: 3,
-        tag: "Global Tide",
-        title: "A Career with a View",
-        desc:
-          "Every day is an adventure onboard. I get to wake up to breathtaking views and create unforgettable experiences for our passengers.",
-        imgRef: "images/persona/img4.jpg",
-        name: "Emily Johnson",
-        role: "Hospitality Manager, Global Tide"
-      },
-      %{
-        id: 4,
-        tag: "Global Tide",
-        title: "Charting New Waters",
-        desc:
-          "This job has allowed me to grow professionally while exploring new horizons. I am proud to be part of a dynamic and supportive team.",
-        imgRef: "images/persona/img3.jpg",
-        name: "James Carter",
-        role: "Chief Engineer, Global Tide"
-      }
-    ]
   end
 
   defp testimony_tile(assigns) do
@@ -556,6 +589,31 @@ defmodule GlobaltideWeb.LandingPageComponent do
       </div>
     </div>
     """
+  end
+
+  defp testimony_data do
+    [
+      %{
+        id: 1,
+        tag: "Deck officer",
+        title: "Journeys that Inspire",
+        desc:
+          "Working on the cruise has been a life-changing experience. I've traveled the world while building lifelong friendships with my colleagues.",
+        imgRef: "images/persona/Sophia.png",
+        name: "Sophia Moore",
+        role: "Deck Officer, Global Tide"
+      },
+      %{
+        id: 2,
+        tag: "Global tide",
+        title: "Transformative Experiences",
+        desc:
+          "Being employed on the cruise has transformed my life. I've explored the globe and formed lasting bonds with my fellow workers.",
+        imgRef: "images/persona/adam.png",
+        name: "Adam Smith",
+        role: "Navigation Officer, Global Tide"
+      }
+    ]
   end
 
   def team_component(assigns) do
@@ -600,7 +658,6 @@ defmodule GlobaltideWeb.LandingPageComponent do
             <ul class="font-bold flex flex-col lg:flex-row lg:items-center lg:justify-center lg:space-x-8 space-y-2 lg:space-y-0 ">
               <a href="" class="text-lg font-medium hover:text-gray-300 transition duration-200">
                 <li>Home</li>
-
               </a>
               <a href="" class="text-lg font-medium hover:text-gray-300 transition duration-200">
                 <li>Jobs available</li>
@@ -611,7 +668,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
             </ul>
           </div>
           <div class="w-full items-center justify-between lg:justify-center flex flex-col lg:flex-row">
-            <div class="w-full flex items-center justify-center  space-y-4 lg:space-y-0" >
+            <div class="w-full flex items-center justify-center  space-y-4 lg:space-y-0">
               <ul class="w-full flex flex-row lg:space-x-8 items-center justify-center space-x-4">
                 <a href="">
                   <svg
@@ -679,9 +736,6 @@ defmodule GlobaltideWeb.LandingPageComponent do
             </div>
           </div>
         </div>
-
-
-
       </div>
     </footer>
     """
