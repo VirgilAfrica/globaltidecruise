@@ -21,9 +21,10 @@ defmodule GlobaltideWeb.Router do
     pipe_through :browser
 
     live "/", LandingLive.Index, :index
-    
-    live "/job_available", JobLive.Index, :index
 
+    live "/jobs", JobLive.Index, :index
+
+    live "/contact", ContactLive.Index, :index
   end
 
   # Other scopes may use custom stacks.

@@ -5,7 +5,7 @@ defmodule GlobaltideWeb.JobAvailableComponent do
     assigns =
       assign(assigns, :nav_links, [
         %{name: "Home", path: "/"},
-        %{name: "Jobs Available", path: "/job_available"},
+        %{name: "Jobs Available", path: "/jobs"},
         %{name: "Contact", path: "/contact"}
       ])
 
@@ -13,7 +13,7 @@ defmodule GlobaltideWeb.JobAvailableComponent do
     <nav class="w-full h-auto lg:shadow-sm border-b-2 border-blue-100 lg:border-none">
       <div class="hidden max-w-[90%] mx-auto lg:flex flex-row items-center justify-between">
         <div class="w-1/4 flex items-center">
-          <img src="/images/logo.svg" alt="" class="w-20 h-20 rounded-full" />
+          <img src="/images/globaltide-lg2.jpeg" alt="" class="w-20 h-20 rounded-full" />
         </div>
         <div class="w-full flex items-center justify-evenly space-x-4">
           <ul class="w-full flex flex-row items-center justify-evenly">
@@ -37,7 +37,7 @@ defmodule GlobaltideWeb.JobAvailableComponent do
 
       <div class="flex lg:hidden w-full max-w-[90%] mx-auto justify-between items-center flex-row">
         <div class="">
-          <img src="/images/logo.svg" alt="" class="w-20 h-20 rounded-full" />
+          <img src="/images/globaltide-lg2.jpeg" alt="" class="w-20 h-20 rounded-full" />
         </div>
         <div class="">
           <button phx-click="toggle-menu" class="z-20 lg-hidden p-2 border rounded-lg">

@@ -5,7 +5,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
     assigns =
       assign(assigns, :nav_links, [
         %{name: "Home", path: "/"},
-        %{name: "Jobs Available", path: "/job_available"},
+        %{name: "Jobs Available", path: "/jobs"},
         %{name: "Contact", path: "/contact"}
       ])
 
@@ -600,7 +600,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
             <ul class="font-bold flex flex-col lg:flex-row lg:items-center lg:justify-center lg:space-x-8 space-y-2 lg:space-y-0 ">
               <a href="" class="text-lg font-medium hover:text-gray-300 transition duration-200">
                 <li>Home</li>
-                
+
               </a>
               <a href="" class="text-lg font-medium hover:text-gray-300 transition duration-200">
                 <li>Jobs available</li>
@@ -630,7 +630,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
                     </path>
                   </svg>
                 </a>
-    
+
                 <a href="">
                   <li class=" bg-blue-300 text-white rounded-xl">
                     <svg
@@ -679,9 +679,9 @@ defmodule GlobaltideWeb.LandingPageComponent do
             </div>
           </div>
         </div>
-      
 
-       
+
+
       </div>
     </footer>
     """
