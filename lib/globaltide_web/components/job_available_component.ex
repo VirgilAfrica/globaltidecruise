@@ -11,11 +11,11 @@ defmodule GlobaltideWeb.JobAvailableComponent do
 
     ~H"""
     <nav class="w-full h-auto lg:shadow-sm border-b-2 border-blue-100 lg:border-none">
-      <div class="hidden max-w-[90%] mx-auto lg:flex flex-row items-center justify-between">
-        <div class="w-1/4 flex items-center">
+      <div class="hidden max-w-[90%] mx-auto lg:flex flex-row items-center justify-evenly">
+        <div class="w-full flex items-center">
           <img src="/images/globaltide-lg2.jpeg" alt="" class="w-20 h-20 rounded-full" />
         </div>
-        <div class="w-full flex items-center justify-evenly space-x-4">
+        <div class="w-full flex items-center justify-center">
           <ul class="w-full flex flex-row items-center justify-evenly">
             <%= for link <- @nav_links do %>
               <a href={link.path}>
@@ -26,7 +26,7 @@ defmodule GlobaltideWeb.JobAvailableComponent do
             <% end %>
           </ul>
         </div>
-        <div class="w-1/4 items-end justify-between">
+        <div class="grid justify-items-end w-full">
           <a href="/users/log_in">
             <button class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 lg:px-8 py-4">
               Login
@@ -36,7 +36,7 @@ defmodule GlobaltideWeb.JobAvailableComponent do
       </div>
 
       <div class="flex lg:hidden w-full max-w-[90%] mx-auto justify-between items-center flex-row">
-        <div class="">
+        <div class="w-full h-auto max-w-[90%] mx-auto">
           <img src="/images/globaltide-lg2.jpeg" alt="" class="w-20 h-20 rounded-full" />
         </div>
         <div class="">
