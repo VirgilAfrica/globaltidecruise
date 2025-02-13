@@ -36,3 +36,13 @@ button {
   font-weight: 100 1000;
   font-style: normal;
 }
+::-webkit-scrollbar{
+  width: 15px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb{
+  background: #3358FF;
+  border: 2px solid white;
+
+}
