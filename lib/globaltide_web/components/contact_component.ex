@@ -197,10 +197,6 @@ defmodule GlobaltideWeb.ContactComponent do
     """
   end
 
-  def contact_form(assigns) do
-    ~H"""
-    """
-  end
 
   def footer(assigns) do
     ~H"""

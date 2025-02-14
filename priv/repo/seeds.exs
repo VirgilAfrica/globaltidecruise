@@ -1,14 +1,14 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     Globaltide.Repo.insert!(%Globaltide.SomeSchema{})
-#
-# We recommend using the bang functions ("insert!", "update!"
-# and so on) as they will fail if something goes wrong.
+# # Script for populating the database. You can run it as:
+# #
+# #     mix run priv/repo/seeds.exs
+# #
+# # Inside the script, you can read and write to any of your
+# # repositories directly:
+# #
+# #     Globaltide.Repo.insert!(%Globaltide.SomeSchema{})
+# #
+# # We recommend using the bang functions ("insert!", "update!"
+# # and so on) as they will fail if something goes wrong.
 
 alias Globaltide.Repo
 alias Globaltide.Jobs.Job
@@ -1522,7 +1522,7 @@ job_data = [
   },
 
 ]
+Globaltide.Repo.insert_all(Globaltide.Job, jobs)
 
-Repo.insert_all(Job, Enum.map(job_data, &Map.from_strict/1))
-
-IO.puts("Multiple Jobs seeded successfully!")
+# Insert jobs into the database
+Repo.insert_all(Job, job_data)

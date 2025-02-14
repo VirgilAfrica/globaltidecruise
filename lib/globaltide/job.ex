@@ -11,11 +11,11 @@ defmodule Globaltide.Job do
     field :longDesc, {:array, :string}
     field :btn, :string
     field :heading, {:array, :string}
-    field :roles, {:array, :string}
+    field :Roles, {:array, :string}
     field :minRequirements, {:array, :string}
     field :sideHead, {:array, :string}
     field :sideDesc, {:array, :string}
-    field :sidelogo, {:array, :string}
+    field :sideLogo, {:array, :string}
 
     timestamps(type: :utc_datetime)
   end
@@ -23,7 +23,7 @@ defmodule Globaltide.Job do
   @doc false
   def changeset(job, attrs) do
     job
-    |> cast(attrs, [:imgRef, :jobTag, :jobTitle, :shortDesc, :longDesc, :btn, :heading, :roles, :minRequirements, :req, :sideHead, :sideDesc, :sideLogo])
-    |> validate_required([:imgRef, :jobTag, :jobTitle, :shortDesc, :longDesc, :btn, :heading, :roles, :minRequirements, :req, :sideHead, :sideDesc, :sidelogo])
+    |> cast(attrs, [:imgRef, :jobTag, :jobTitle, :shortDesc, :longDesc, :btn, :heading, :Roles, :minRequirements, :req, :sideHead, :sideDesc, :sideLogo])
+    |> validate_required([:imgRef, :jobTag, :jobTitle, :shortDesc, :longDesc, :btn, :heading, :Roles, :minRequirements, :req, :sideHead, :sideDesc, :sideLogo])
   end
 end

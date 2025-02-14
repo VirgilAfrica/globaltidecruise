@@ -182,4 +182,53 @@ defmodule GlobaltideWeb.JobAvailableComponent do
     </section>
     """
   end
+
+
+  def job_listing(assigns) do
+  ~H"""
+  <section class="w-full">
+    <div class="max-w-[90%] mx-auto">
+      <%= if @jobs == [] do %>
+        <p>No jobs found.</p> 
+      <% else %>
+        <%= for job <- @jobs do %>
+          <.job_tile 
+            imgRef={job.imgRef} 
+            jobTag={job.jobTag} 
+            jobRole={job.jobTitle} 
+            desc={job.shortDesc} 
+          />
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+  """
+end
+
+
+
+  def job_tile(assigns) do
+  ~H"""
+  <div class="w-full h-auto flex flex-col mt-10 items-center justify-evenly space-y-10 cursor-pointer border-t-2 border-black">
+    <span class="border-[1px] rounded-xl w-full border-black"></span>
+    <div class="flex flex-col md:flex-row lg:flex-row items-center justify-center">
+      <div class="flex items-center p-2 lg:p-4 lg:w-1/2">
+        <img src={@imgRef} alt={@jobRole} class="bg-cover bg-center rounded-3xl" />
+      </div>
+      <div class="flex flex-col w-full items-start justify-start space-y-2 max-w-[90%] mx-auto lg:p-12">
+        <span class="text-[16px] md:text-[20px] lg:text-[24px] font-bold">
+          <%= @jobTag %>
+        </span>
+        <h1 class="text-blue-700 hover:text-red-700 text-[24px] md:text-[30px] lg:text-[36px]">
+          <%= @jobRole %>
+        </h1>
+        <p class="text-[16px] md:text-[16px] lg:text-[20px] text-prettier">
+          <%= @desc %>
+        </p>
+      </div>
+    </div>
+  </div>
+  """
+end
+
 end
