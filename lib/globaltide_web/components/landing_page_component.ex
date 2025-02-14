@@ -151,7 +151,6 @@ defmodule GlobaltideWeb.LandingPageComponent do
     """
   end
 
-
   def hero_section(assigns) do
     ~H"""
     <section
@@ -624,7 +623,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
       style="background-image: url(/images/cruise2.jpeg)"
     >
       <div class="absolute inset-0 bg-black/50"></div>
-      <div class="relative w-full max-w-[90%] lg:max-w-[80%] mx-auto space-y-4 my-10 lg:space-y-8 text-center lg:text-start">
+      <div class="relative w-full max-w-[90%]  mx-auto space-y-4 my-10 lg:space-y-8 text-center lg:text-start">
         <div class="relative">
           <h1 class="text-[24px] md:text-[30px] lg:text-[34px] font-bold text-white">
             Join Our Exciting Team Today

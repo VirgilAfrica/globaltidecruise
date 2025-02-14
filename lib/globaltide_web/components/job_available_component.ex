@@ -129,4 +129,57 @@ defmodule GlobaltideWeb.JobAvailableComponent do
     </nav>
     """
   end
+
+  def hero_section(assigns) do
+    ~H"""
+    <section>
+      <div
+        class="relative bg-cover bg-bottom w-full h-[300px] md:h-[400px] lg:h-[500px] bg-fixed"
+        style="background-image: url(/images/hero-cruise.jpeg);"
+      >
+        <div class="absolute bg-black/50 inset-0"></div>
+        <div class="relative w-full h-full items-center justify-center flex flex-col px-4 text-center">
+          <h1 class="text-[32px] sm:text-[48px] md:text-[72px] font-black text-white leading-tight">
+            Join Our Crew
+          </h1>
+          <p class="text-[16px] md:text-[20px] lg:text-[24px] text-white mt-2 lg:mt-4 max-w-[90%] lg:max-w-[80%] md:max-w-[80%] mx-auto">
+            Discover thrilling job opportunities at sea with Global Tide Cruise
+            LTD and embark on your adventure.
+          </p>
+        </div>
+      </div>
+    </section>
+    """
+  end
+
+  def filter_section(assigns) do
+    ~H"""
+    <section>
+      <div class="flex flex-col max-w-[90%] mx-auto">
+        <div class="w-full">
+          <h1 class="text-[24px] md:text-[30px] lg:text-[48px] font-black uppercase">
+            Click to Filter by Departments
+          </h1>
+        </div>
+        <div class="grid grid-cols-2 gap-4 lg:grid-cols-5 lg:gap-6 flex-wrap">
+          <%!-- <%= for filter <- @filters do %>
+            <button
+              phx-click="set_filter"
+              phx-value-filter={filter.name}
+              class={
+                if @active_filter == filter.name do
+                  "bg-blue-300 text-white shadow-lg px-4 py-2 rounded-3xl text-[16px] lg:text-[24px] font-medium"
+                else
+                  "bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white px-4 py-2 rounded-3xl text-[16px] lg:text-[24px] font-medium"
+                end
+              }
+            >
+              <%= filter.name %>
+            </button>
+          <% end %> --%>
+        </div>
+      </div>
+    </section>
+    """
+  end
 end

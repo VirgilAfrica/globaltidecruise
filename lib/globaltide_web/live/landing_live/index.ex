@@ -22,7 +22,6 @@ defmodule GlobaltideWeb.LandingLive.Index do
     <.application_component />
     <.roles />
     <.testimony_component />
-
     <.team_component />
     <.footer />
     """
