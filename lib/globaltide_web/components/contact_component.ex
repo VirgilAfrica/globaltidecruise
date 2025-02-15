@@ -193,6 +193,10 @@ defmodule GlobaltideWeb.ContactComponent do
           </p>
         </div>
       </div>
+      <div>
+        <button phx-click="open_modal" class="btn">Contact Us</button>
+
+      </div>
     </section>
     """
   end

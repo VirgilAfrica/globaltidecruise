@@ -11,9 +11,9 @@
 # # and so on) as they will fail if something goes wrong.
 
 alias Globaltide.Repo
-alias Globaltide.Jobs.Job
+alias Globaltide.Job
 
-job_data = [
+jobs = [
   %{
     imgRef: "/images/updates/entertainment.jpg",
     jobTag: "Entertainment",
@@ -1522,7 +1522,4 @@ job_data = [
   },
 
 ]
-Globaltide.Repo.insert_all(Globaltide.Job, jobs)
-
-# Insert jobs into the database
-Repo.insert_all(Job, job_data)
+Globaltide.Repo.insert_all(Globaltide.Job, jobs )
