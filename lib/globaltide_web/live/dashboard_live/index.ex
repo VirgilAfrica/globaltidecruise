@@ -1,21 +1,27 @@
 defmodule GlobaltideWeb.DashboardLive.Index do
   use GlobaltideWeb, :live_view
 
-  alias GlobaltideWeb.AsideMenuComponent
-  alias GlobaltideWeb.DashboardComponent
-
   import GlobaltideWeb.AsideMenuComponent
   import GlobaltideWeb.DashboardComponent
 
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :current_user, get_current_user(socket))}
+    socket = assign_new(socket, :current_user, fn -> get_current_user(socket) end)
+    {:ok, assign(socket, is_open: false)}
+  end
+
+  def handle_event("toggle-menu", _params, socket) do
+    {:noreply, assign(socket, is_open: !socket.assigns.is_open)}
   end
 
   def render(assigns) do
     ~H"""
     <section>
-      <.aside_menu_component />
+      <.aside_menu_component
+        is_open={@is_open}
+        toggle_event="toggle-menu"
+        current_user={@current_user}
+      />
       <.dashboard_component />
     </section>
     """

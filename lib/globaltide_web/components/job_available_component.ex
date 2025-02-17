@@ -1,6 +1,5 @@
 defmodule GlobaltideWeb.JobAvailableComponent do
   use Phoenix.Component
-
   def navbar(assigns) do
     assigns =
       assign(assigns, :nav_links, [
@@ -29,6 +28,7 @@ defmodule GlobaltideWeb.JobAvailableComponent do
         <div class="grid justify-items-end w-full">
           <%= if @current_user do %>
             <form action="/users/log_out" method="post">
+              <input type="hidden" name="_method" value="delete">
               <button type="submit" class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 lg:px-8 py-4">
                 Logout
               </button>
@@ -97,6 +97,7 @@ defmodule GlobaltideWeb.JobAvailableComponent do
         <div class="flex flex-col space-y-4 mt-4 w-full">
           <%= if @current_user do %>
             <form action="/users/log_out" method="post">
+              <input type="hidden" name="_method" value="delete">
               <button type="submit" class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 px-8 py-4">
                 Logout
               </button>
