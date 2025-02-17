@@ -11,7 +11,7 @@ defmodule GlobaltideWeb.JobLive.Index do
     # job Call
     jobs = Repo.all(Job)
 
-    IO.inspect(jobs, label: "fFetched Jobs")
+    IO.inspect(jobs, label: "Fetched Jobs")
 
     filters = [
       %{name: "All"},
@@ -24,6 +24,8 @@ defmodule GlobaltideWeb.JobLive.Index do
       %{name: "Guest Service"},
       %{name: "Casino"}
     ]
+
+    socket = assign_new(socket, :current_user, fn -> get_current_user(socket) end)
 
     socket =
       assign(
@@ -44,10 +46,14 @@ defmodule GlobaltideWeb.JobLive.Index do
 
   def render(assigns) do
     ~H"""
-    <.navbar is_open={@is_open} toggle_event="toggle-menu" />
+    <.navbar is_open={@is_open} toggle_event="toggle-menu" current_user={@current_user} />
     <.hero_section />
     <.filter_section />
     <.job_listing jobs={@jobs} />
     """
+  end
+
+  defp get_current_user(socket) do
+    socket.assigns[:current_user] || GlobaltideWeb.UserAuth.fetch_current_user(socket)
   end
 end

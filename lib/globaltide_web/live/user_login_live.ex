@@ -3,7 +3,7 @@ defmodule GlobaltideWeb.UserLoginLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
+    <div class="mx-auto max-w-sm flex flex-col items-center justify-center h-screen">
       <.header class="text-center">
         Log in to account
         <:subtitle>
@@ -21,12 +21,18 @@ defmodule GlobaltideWeb.UserLoginLive do
 
         <:actions>
           <.input field={@form[:remember_me]} type="checkbox" label="Keep me logged in" />
-          <.link href={~p"/users/reset_password"} class="text-sm font-semibold">
+          <.link
+            href={~p"/users/reset_password"}
+            class="text-sm font-semibold hover:text-red-500 hover:underline hover:offset-underline-4"
+          >
             Forgot your password?
           </.link>
         </:actions>
         <:actions>
-          <.button phx-disable-with="Logging in..." class="w-full">
+          <.button
+            phx-disable-with="Logging in..."
+            class="w-full bg-blue-300 hover:bg-blue-700 ease-in transition-colors duration-300"
+          >
             Log in <span aria-hidden="true">→</span>
           </.button>
         </:actions>

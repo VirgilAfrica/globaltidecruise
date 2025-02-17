@@ -35,7 +35,7 @@ defmodule GlobaltideWeb.UserRegistrationLive do
         <.input field={@form[:password]} type="password" label="Password" required />
 
         <:actions>
-          <.button phx-disable-with="Creating account..." class="w-full">Create an account</.button>
+          <.button phx-disable-with="Creating account..." class="w-full hover:bg-blue-500 transition-colors ease-in">Create an account</.button>
         </:actions>
       </.simple_form>
     </div>

@@ -5,6 +5,7 @@ defmodule GlobaltideWeb.ContactLive.Index do
   # import GlobaltideWeb.ContactFormComponent
 
   def mount(_params, _session, socket) do
+    socket = assign_new(socket, :current_user, fn -> get_current_user(socket) end)
     {:ok, assign(socket, is_open: false, current_index: 0)}
   end
 
@@ -14,10 +15,14 @@ defmodule GlobaltideWeb.ContactLive.Index do
 
   def render(assigns) do
     ~H"""
-    <.navbar is_open={@is_open} toggle_event="toggle-menu" />
+    <.navbar is_open={@is_open} toggle_event="toggle-menu" current_user={@current_user} />
     <.upper_section />
     <.contact_header />
     <.footer />
     """
+  end
+
+  defp get_current_user(socket) do
+    socket.assigns[:current_user] || GlobaltideWeb.UserAuth.fetch_current_user(socket)
   end
 end

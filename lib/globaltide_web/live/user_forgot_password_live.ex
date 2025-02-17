@@ -5,8 +5,8 @@ defmodule GlobaltideWeb.UserForgotPasswordLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
-      <.header class="text-center">
+    <div class="mx-auto max-w-sm h-screen flex flex-col items-center justify-center">
+      <.header class="text-center font-bold">
         Forgot your password?
         <:subtitle>We'll send a password reset link to your inbox</:subtitle>
       </.header>
@@ -14,12 +14,15 @@ defmodule GlobaltideWeb.UserForgotPasswordLive do
       <.simple_form for={@form} id="reset_password_form" phx-submit="send_email">
         <.input field={@form[:email]} type="email" placeholder="Email" required />
         <:actions>
-          <.button phx-disable-with="Sending..." class="w-full">
+          <.button
+            phx-disable-with="Sending..."
+            class="w-full  hover:bg-green-500 duration-300 ease-in transition-colors"
+          >
             Send password reset instructions
           </.button>
         </:actions>
       </.simple_form>
-      <p class="text-center text-sm mt-4">
+      <p class="text-center text-sm mt-4 hover:text-blue-500">
         <.link href={~p"/users/register"}>Register</.link>
         | <.link href={~p"/users/log_in"}>Log in</.link>
       </p>

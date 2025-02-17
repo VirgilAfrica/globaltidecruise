@@ -11,27 +11,38 @@ defmodule GlobaltideWeb.ContactComponent do
 
     ~H"""
     <nav class="w-full h-auto lg:shadow-sm border-b-2 border-blue-100 lg:border-none">
-      <div class="hidden max-w-[90%] mx-auto lg:flex flex-row items-center justify-evenly ">
+      <div class="hidden max-w-[90%] mx-auto lg:flex flex-row items-center justify-evenly">
         <div class="w-full flex items-center">
           <img src="/images/globaltide-lg2.jpeg" alt="" class="w-20 h-20 rounded-full" />
         </div>
         <div class="w-full flex items-center justify-center">
           <ul class="w-full flex flex-row items-center justify-evenly">
             <%= for link <- @nav_links do %>
-              <a href={link.path}>
-                <li class="text-[20px] font-medium">
+              <li class="text-[20px] font-medium">
+                <a href={link.path}>
                   {link.name}
-                </li>
-              </a>
+                </a>
+              </li>
             <% end %>
           </ul>
         </div>
         <div class="grid justify-items-end w-full">
-          <a href="/users/log_in">
-            <button class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 lg:px-8 py-4">
-              Login
-            </button>
-          </a>
+          <%= if @current_user do %>
+            <form action="/users/log_out" method="post">
+              <button
+                type="submit"
+                class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 lg:px-8 py-4"
+              >
+                Logout
+              </button>
+            </form>
+          <% else %>
+            <a href="/users/log_in">
+              <button class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 lg:px-8 py-4">
+                Login
+              </button>
+            </a>
+          <% end %>
         </div>
       </div>
 
@@ -75,55 +86,34 @@ defmodule GlobaltideWeb.ContactComponent do
           </button>
         </div>
       </div>
-      <button phx-click="toggle-menu" class="z-20 hidden lg:hidden p-2 border rounded-lg">
-        <%= if @is_open do %>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-            />
-          </svg>
-        <% else %>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-            />
-          </svg>
-        <% end %>
-      </button>
+
       <div class={"absolute bg-white shadow-md top-25 lg:hidden w-full p-4 transition-all duration-300 z-20 " <> if(@is_open, do: "block", else: "hidden")}>
-        <ul class="flex flex-col items-start justify-evenly  space-y-4 text-center">
+        <ul class="flex flex-col items-start justify-evenly space-y-4 text-center">
           <%= for link <- @nav_links do %>
-            <a href={link.path}>
-              <li class="text-[20px] font-medium">
+            <li class="text-[20px] font-medium">
+              <a href={link.path}>
                 {link.name}
-              </li>
-            </a>
+              </a>
+            </li>
           <% end %>
         </ul>
         <div class="flex flex-col space-y-4 mt-4 w-full">
-          <a href="/users/log_in">
-            <button class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 px-8 py-4">
-              Login
-            </button>
-          </a>
+          <%= if @current_user do %>
+            <form action="/users/log_out" method="post">
+              <button
+                type="submit"
+                class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 px-8 py-4"
+              >
+                Logout
+              </button>
+            </form>
+          <% else %>
+            <a href="/users/log_in">
+              <button class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 px-8 py-4">
+                Login
+              </button>
+            </a>
+          <% end %>
         </div>
       </div>
     </nav>
