@@ -134,7 +134,7 @@ defmodule GlobaltideWeb.ContactComponent do
     ~H"""
     <section class="h-auto  w-full">
       <div
-        class=" relative lg:bg-fixed lg:bg-cover bg-fixed bg-contain w-full h-[20vh] lg:h-[80vh] flex items-center justify-center"
+        class=" relative lg:bg-fixed lg:bg-cover bg-fixed bg-contain w-full h-[50vh] lg:h-[80vh] flex items-center justify-center"
         style="background-image: url(/images/contact.jpg);"
       >
         <div class="absolute bg-black/50 inset-0 "></div>
