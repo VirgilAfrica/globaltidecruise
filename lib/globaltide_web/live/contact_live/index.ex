@@ -14,13 +14,6 @@ defmodule GlobaltideWeb.ContactLive.Index do
 
   def render(assigns) do
     ~H"""
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-12">
-          <h1>Contact Us</h1>
-        </div>
-      </div>
-    </div>
 
     <.navbar is_open={@is_open} toggle_event="toggle-menu" />
     <.upper_section />
