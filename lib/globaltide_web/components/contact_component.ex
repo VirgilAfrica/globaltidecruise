@@ -11,7 +11,7 @@ defmodule GlobaltideWeb.ContactComponent do
 
     ~H"""
     <nav class="w-full h-auto lg:shadow-sm border-b-2 border-blue-100 lg:border-none">
-      <div class="hidden max-w-[90%] mx-auto lg:flex flex-row items-center justify-evenly">
+      <div class="hidden max-w-[90%] mx-auto lg:flex flex-row items-center justify-evenly ">
         <div class="w-full flex items-center">
           <img src="/images/globaltide-lg2.jpeg" alt="" class="w-20 h-20 rounded-full" />
         </div>
@@ -108,7 +108,7 @@ defmodule GlobaltideWeb.ContactComponent do
           </svg>
         <% end %>
       </button>
-      <div class={"absolute bg-white shadow-md top-25 lg:hidden w-full p-4 transition-all duration-300 " <> if(@is_open, do: "block", else: "hidden")}>
+      <div class={"absolute bg-white shadow-md top-25 lg:hidden w-full p-4 transition-all duration-300 z-20 " <> if(@is_open, do: "block", else: "hidden")}>
         <ul class="flex flex-col items-start justify-evenly  space-y-4 text-center">
           <%= for link <- @nav_links do %>
             <a href={link.path}>
@@ -195,12 +195,10 @@ defmodule GlobaltideWeb.ContactComponent do
       </div>
       <div>
         <button phx-click="open_modal" class="btn">Contact Us</button>
-
       </div>
     </section>
     """
   end
-
 
   def footer(assigns) do
     ~H"""
