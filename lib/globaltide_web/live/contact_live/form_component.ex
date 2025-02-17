@@ -4,72 +4,73 @@ defmodule GlobaltideWeb.ContactLive.FormComponent do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="max-w-[90%] mx-auto lg:max-w-6xl">
-      <.simple_form
-        for={@form}
-        id="business-form"
-        phx-target={@myself}
-        phx-change="validate"
-        phx-submit="save"
-        class="my-5 lg:my-10"
-      >
-        <.input
-          field={@form["name"]}
-          type="text"
-          label="Name"
-          name="name"
-          value={@form["name"]}
-          class="border-2 border-blue-500 p-4 lg:p-8 w-full "
-        />
-        <%= if @errors["name"] do %>
-          <p class="text-red-500">{@errors["name"]}</p>
-        <% end %>
+    <div class="w-full">
+      <div class="w-full max-w-[90%] my-4 lg:my-10 mx-auto flex flex-col items-center justify-center">
+        <.simple_form
+          for={@form}
+          id="contact-form"
+          phx-target={@myself}
+          phx-change="validate"
+          phx-submit="save"
+          class="w-full max-w-6xl"
+        >
+          <.input
+            type="text"
+            placeholder="Name"
+            name="name"
+            value={@form["name"]}
+            class="border-2 border-blue-500 p-4 lg:p-8 w-full"
+          />
+          <%= if @errors["name"] do %>
+            <p class="text-red-500">{@errors["name"]}</p>
+          <% end %>
 
-        <.input
-          field={@form["email"]}
-          type="email"
-          label="Email"
-          name="email"
-          value={@form["email"]}
-          class="bg-red-300"
-        />
-        <%= if @errors["email"] do %>
-          <p class="text-red-500">{@errors["email"]}</p>
-        <% end %>
+          <.input
+            field={@form["email"]}
+            type="email"
+            placeholder="Email"
+            name="email"
+            value={@form["email"]}
+            class=""
+          />
+          <%= if @errors["email"] do %>
+            <p class="text-red-500">{@errors["email"]}</p>
+          <% end %>
 
-        <.input
-          field={@form["phone"]}
-          type="tel"
-          label="Phone"
-          name="phone"
-          value={@form["phone"]}
-          class="border-2 border-gray-500 p-4 lg:p-8 w-full"
-        />
-        <%= if @errors["phone"] do %>
-          <p class="text-red-500">{@errors["phone"]}</p>
-        <% end %>
+          <.input
+            field={@form["phone"]}
+            type="tel"
+            placeholder="Phone"
+            name="phone"
+            value={@form["phone"]}
+            class="border-2  border-gray-500 p-4 lg:px-8 w-full"
+          />
+          <%= if @errors["phone"] do %>
+            <p class="text-red-500">{@errors["phone"]}</p>
+          <% end %>
 
-        <.input
-          field={@form["message"]}
-          type="text"
-          label="Message"
-          name="message"
-          value={@form["message"]}
-          class="border-2 border-gray-500 p-4 lg:p-8 w-full"
-        />
-        <%= if @errors["message"] do %>
-          <p class="text-red-500">{@errors["message"]}</p>
-        <% end %>
+          <.input
+            field={@form["message"]}
+            type="text"
+            placeholder="Message"
+            name="message"
+            value={@form["message"]}
+            class=" border-gray-500 border-2 rounded-none p-4 lg:py-8 w-full"
+          />
+          <%= if @errors["message"] do %>
+            <p class="text-red-500">{@errors["message"]}</p>
+          <% end %>
 
-        <:actions>
-          <.button
-            class="px-2 py-4 lg:px-4 lg:py-8 w-full text-md md:text-lg lg:text-xl bg-blue-400 text-white mt-4 hover:bg-blue-500 transition-colors ease-in"
-            phx-disable-with="Submitting...."
-          >
-            Send Message
-          </.button>
-        </:actions>
-      </.simple_form>
+          <:actions>
+            <.button
+              class=" w-full text-md md:text-lg lg:text-md  text-white mt-4 bg-blue-500 transition-colors ease-in"
+              phx-disable-with="Submitting...."
+            >
+              Send Message
+            </.button>
+          </:actions>
+        </.simple_form>
+      </div>
     </div>
     """
   end
@@ -108,7 +109,12 @@ defmodule GlobaltideWeb.ContactLive.FormComponent do
         socket
       ) do
     errors = %{}
-    errors = if name == "", do: Map.put(errors, "name", "Name can't be blank"), else: errors
+
+    errors =
+      if name == "",
+        do: Map.put(errors, "name", "Name can't be blank.Come on you are getting a job"),
+        else: errors
+
     errors = if email == "", do: Map.put(errors, "email", "Email can't be blank"), else: errors
     errors = if phone == "", do: Map.put(errors, "phone", "Phone can't be blank"), else: errors
 

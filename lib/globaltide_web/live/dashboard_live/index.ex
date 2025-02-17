@@ -16,18 +16,18 @@ defmodule GlobaltideWeb.DashboardLive.Index do
 
   def render(assigns) do
     ~H"""
-    <section>
+    <section class="flex flex-col lg:flex-row">
       <.aside_menu_component
         is_open={@is_open}
         toggle_event="toggle-menu"
         current_user={@current_user}
       />
-      <.dashboard_component />
+      <.dashboard_component current_user={@current_user} />
     </section>
     """
   end
 
   defp get_current_user(socket) do
-    socket.assigns[:current_user] || nil
+    socket.assigns[:current_user] || %{name: "Kevin Kiarie", role: "admin"}
   end
 end

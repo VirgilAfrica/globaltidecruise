@@ -126,7 +126,7 @@ defmodule GlobaltideWeb.ContactComponent do
     ~H"""
     <section class="h-auto  w-full">
       <div
-        class=" relative lg:bg-fixed lg:bg-cover bg-fixed bg-contain w-full h-[50vh] lg:h-[80vh] flex items-center justify-center"
+        class=" relative lg:bg-fixed lg:bg-cover bg-fixed bg-contain w-full h-[20vh] lg:h-[80vh] flex items-center justify-center"
         style="background-image: url(/images/contact.jpg);"
       >
         <div class="absolute bg-black/50 inset-0 "></div>
@@ -142,7 +142,7 @@ defmodule GlobaltideWeb.ContactComponent do
 
   def contact_header(assigns) do
     ~H"""
-    <section class="w-full my-10 lg:my-20 max-w-[80%] mx-auto">
+    <section class="w-full my-10 lg:my-20 max-w-[90%] mx-auto">
       <div class="w-full items-center justify-center flex flex-col  my-10 max-w-[100%] lg:max-w-6xl mx-auto">
         <span class="text-[16px] md:text-[20px] lg:text-[24px] font-black">
           Contact Us
@@ -186,7 +186,6 @@ defmodule GlobaltideWeb.ContactComponent do
         </div>
       </div>
       <div>
-        <button phx-click="open_modal" class="btn">Contact Us</button>
       </div>
     </section>
     """
