@@ -28,15 +28,15 @@ defmodule GlobaltideWeb.Common.NavbarComponent do
         </div>
         <div class="grid justify-items-end w-full">
           <%= if @current_user do %>
-            <form action="/users/log_out" method="post">
-              <input type="hidden" name="_method" value="delete" />
-              <button
-                type="submit"
-                class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 lg:px-8 py-4"
-              >
-                Logout
+            <a
+              href="/users/log_out"
+              method="delete"
+              class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+            >
+              <button class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 lg:px-8 py-4">
+                Log out
               </button>
-            </form>
+            </a>
           <% else %>
             <a href="/users/log_in">
               <button class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 lg:px-8 py-4">
@@ -100,15 +100,13 @@ defmodule GlobaltideWeb.Common.NavbarComponent do
         </ul>
         <div class="flex flex-col space-y-4 mt-4 w-full">
           <%= if @current_user do %>
-            <form action="/users/log_out" method="post">
-              <input type="hidden" name="_method" value="delete" />
-              <button
-                type="submit"
-                class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 px-8 py-4"
-              >
-                Logout
-              </button>
-            </form>
+            <.link
+              href="/users/log_out"
+              method="delete"
+              class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+            >
+              Log out
+            </.link>
           <% else %>
             <a href="/users/log_in">
               <button class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 px-8 py-4">

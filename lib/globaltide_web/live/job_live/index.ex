@@ -7,6 +7,7 @@ defmodule GlobaltideWeb.JobLive.Index do
 
   import GlobaltideWeb.JobAvailableComponent
   import GlobaltideWeb.Common.NavbarComponent
+  alias GlobaltideWeb.UserAuth
 
   def mount(params, session, socket) do
     # Fetch jobs
@@ -35,7 +36,8 @@ defmodule GlobaltideWeb.JobLive.Index do
         filters: filters,
         active_filter: "All",
         is_open: false,
-        jobs: jobs
+        jobs: jobs,
+        csrf_token: get_csrf_token()
       )
 
     {:ok, socket}
@@ -52,7 +54,12 @@ defmodule GlobaltideWeb.JobLive.Index do
 
   def render(assigns) do
     ~H"""
-    <.navbar is_open={@is_open} toggle_event="toggle-menu" current_user={@current_user} />
+    <.navbar
+      is_open={@is_open}
+      toggle_event="toggle-menu"
+      current_user={@current_user}
+      csrf_token={@csrf_token}
+    />
     <.hero_section />
     <.filter_section />
     <.job_listing jobs={@jobs} />
@@ -60,6 +67,10 @@ defmodule GlobaltideWeb.JobLive.Index do
   end
 
   defp get_current_user(params, session, socket) do
-    socket.assigns[:current_user] || GlobaltideWeb.UserAuth.fetch_current_user(params, session)
+    socket.assigns[:current_user] || UserAuth.fetch_current_user(params, session)
+  end
+
+  defp get_csrf_token do
+    Plug.CSRFProtection.get_csrf_token()
   end
 end
