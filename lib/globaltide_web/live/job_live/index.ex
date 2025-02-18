@@ -1,14 +1,15 @@
 defmodule GlobaltideWeb.JobLive.Index do
   use GlobaltideWeb, :live_view
 
-  # Fetching data from the data
+  # Fetching data from the database
   alias Globaltide.Job
   alias Globaltide.Repo
 
   import GlobaltideWeb.JobAvailableComponent
+  import GlobaltideWeb.Common.NavbarComponent
 
-  def mount(_params, _session, socket) do
-    # job Call
+  def mount(params, session, socket) do
+    # Fetch jobs
     jobs = Repo.all(Job)
 
     IO.inspect(jobs, label: "Fetched Jobs")
@@ -25,7 +26,8 @@ defmodule GlobaltideWeb.JobLive.Index do
       %{name: "Casino"}
     ]
 
-    socket = assign_new(socket, :current_user, fn -> get_current_user(socket) end)
+    socket =
+      assign_new(socket, :current_user, fn -> get_current_user(params, session, socket) end)
 
     socket =
       assign(
@@ -37,6 +39,10 @@ defmodule GlobaltideWeb.JobLive.Index do
       )
 
     {:ok, socket}
+  end
+
+  def handle_event("toggle-menu", _params, socket) do
+    {:noreply, assign(socket, is_open: !socket.assigns.is_open)}
   end
 
   def handle_event("set_filter", %{"filter" => filter_name}, socket) do
@@ -53,7 +59,7 @@ defmodule GlobaltideWeb.JobLive.Index do
     """
   end
 
-  defp get_current_user(socket) do
-    socket.assigns[:current_user] || GlobaltideWeb.UserAuth.fetch_current_user(socket)
+  defp get_current_user(params, session, socket) do
+    socket.assigns[:current_user] || GlobaltideWeb.UserAuth.fetch_current_user(params, session)
   end
 end

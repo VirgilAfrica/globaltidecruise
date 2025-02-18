@@ -7,9 +7,9 @@ defmodule GlobaltideWeb.UserRegistrationLive do
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
-    <div>
-      <img src="/images/globaltide-lg2.jpeg" alt="">
-    </div>
+      <div>
+        <img src="/images/globaltide-lg2.jpeg" alt="" />
+      </div>
       <.header class="text-center">
         Register for an account
         <:subtitle>
@@ -35,10 +35,17 @@ defmodule GlobaltideWeb.UserRegistrationLive do
         </.error>
         <.input field={@form[:name]} type="text" label="Name" required />
         <.input field={@form[:email]} type="email" label="Email" required />
+        <.input field={@form[:role]} type="text" label="Role" required />
+
         <.input field={@form[:password]} type="password" label="Password" required />
 
         <:actions>
-          <.button phx-disable-with="Creating account..." class="w-full hover:bg-blue-500 transition-colors ease-in">Create an account</.button>
+          <.button
+            phx-disable-with="Creating account..."
+            class="w-full hover:bg-blue-500 transition-colors ease-in"
+          >
+            Create an account
+          </.button>
         </:actions>
       </.simple_form>
     </div>
