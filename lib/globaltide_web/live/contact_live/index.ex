@@ -1,25 +1,13 @@
 defmodule GlobaltideWeb.ContactLive.Index do
   use GlobaltideWeb, :live_view
+  on_mount {GlobaltideWeb.UserAuth, :mount_current_user}
   import GlobaltideWeb.Common.NavbarComponent
-  alias Globaltide.Accounts
+
   import GlobaltideWeb.ContactComponent
   alias GlobaltideWeb.ContactLive.FormComponent
 
-  # def mount(_params, _session, socket) do
-  #   socket = assign_new(socket, :current_user, fn -> get_current_user(socket) end)
-  #   {:ok, assign(socket, is_open: false, current_index: 0)}
-  # end
-  def mount(_params, session, socket) do
-
-    IO.inspect session
-
-    current_user = if session["user_token"] do
-      Accounts.get_user_by_session_token(session["user_token"])
-    else
-      nil
-    end
-
-    {:ok, assign(socket, is_open: false, current_index: 0, current_user: current_user)}
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, is_open: false, current_index: 0)}
   end
 
 
@@ -29,21 +17,12 @@ defmodule GlobaltideWeb.ContactLive.Index do
 
   def render(assigns) do
     ~H"""
-    <.navbar is_open={@is_open} toggle_event="toggle-menu" current_user={@current_user} />
+    <.navbar is_open={@is_open} toggle_event="toggle-menu" current_user={nil} />
     <.upper_section />
     <.contact_header />
     <.live_component module={FormComponent} id="contact-form" />
     <.footer />
     """
   end
-
-  # defp get_current_user(socket) do
-  #   socket.assigns[:current_user] || GlobaltideWeb.UserAuth.fetch_current_user(socket)
-  # end
-  def get_current_user(params, session, socket) do
-    socket.assigns[:current_user] || GlobaltideWeb.UserAuth.fetch_current_user(params, session)
-  end
-
-
 
 end

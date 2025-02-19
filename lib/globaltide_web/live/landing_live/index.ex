@@ -6,16 +6,18 @@ defmodule GlobaltideWeb.LandingLive.Index do
   import GlobaltideWeb.Common.NavbarComponent
 
   def mount(_params, session, socket) do
+    socket =
+      socket
+      |> assign_new(:current_user, fn ->
+        if session["user_token"] do
+          Accounts.get_user_by_session_token(session["user_token"])
+        else
+          nil
+        end
+      end)
+      |> assign(is_open: false, current_index: 0)
 
-    IO.inspect session
-
-    current_user = if session["user_token"] do
-      Accounts.get_user_by_session_token(session["user_token"])
-    else
-      nil
-    end
-
-    {:ok, assign(socket, is_open: false, current_index: 0, current_user: current_user)}
+    {:ok, socket}
   end
 
   def handle_event("toggle-menu", _params, socket) do
@@ -24,7 +26,7 @@ defmodule GlobaltideWeb.LandingLive.Index do
 
   def render(assigns) do
     ~H"""
-    <.navbar is_open={@is_open} toggle_event="toggle-menu" current_user={nil} />
+    <.navbar is_open={@is_open} toggle_event="toggle-menu" current_user={@current_user} />
     <.hero_section />
     <.departments />
     <.application_component />
@@ -34,8 +36,7 @@ defmodule GlobaltideWeb.LandingLive.Index do
     <.footer />
     """
   end
-
-  def get_current_user(params, session, socket) do
-    socket.assigns[:current_user] || GlobaltideWeb.UserAuth.fetch_current_user(params, session)
-  end
+  # def get_current_user(params, session, socket) do
+  #   socket.assigns[:current_user] || GlobaltideWeb.UserAuth.fetch_current_user(params, session)
+  # end
 end
