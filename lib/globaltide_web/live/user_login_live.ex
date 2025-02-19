@@ -4,11 +4,17 @@ defmodule GlobaltideWeb.UserLoginLive do
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-sm flex flex-col items-center justify-center h-screen">
+    <div>
+      <img src="/images/globaltide-lg2.jpeg" alt="" class="rounded-2xl lg:w-40 lg:h-40 bg-cover" >
+    </div>
       <.header class="text-center">
         Log in to account
         <:subtitle>
           Don't have an account?
-          <.link navigate={~p"/users/register"} class="font-semibold text-brand hover:underline">
+          <.link
+            navigate={~p"/users/register"}
+            class="font-semibold  text-blue-600 hover:underline"
+          >
             Sign up
           </.link>
           for an account now.
@@ -16,11 +22,11 @@ defmodule GlobaltideWeb.UserLoginLive do
       </.header>
 
       <.simple_form for={@form} id="login_form" action={~p"/users/log_in"} phx-update="ignore">
-        <.input field={@form[:email]} type="email" label="Email" required />
+        <.input field={@form[:email]} type="email" label="Email" required  class=""/>
         <.input field={@form[:password]} type="password" label="Password" required />
 
         <:actions>
-          <.input field={@form[:remember_me]} type="checkbox" label="Keep me logged in" />
+          <.input field={@form[:remember_me]} type="checkbox" label="Keep me logged in" class="border-blue-500 text-blue-500"/>
           <.link
             href={~p"/users/reset_password"}
             class="text-sm font-semibold hover:text-red-500 hover:underline hover:offset-underline-4"
@@ -31,7 +37,7 @@ defmodule GlobaltideWeb.UserLoginLive do
         <:actions>
           <.button
             phx-disable-with="Logging in..."
-            class="w-full bg-blue-300 hover:bg-blue-700 ease-in transition-colors duration-300"
+            class="w-full  hover:bg-blue-700 ease-in transition-colors duration-300"
           >
             Log in <span aria-hidden="true">→</span>
           </.button>

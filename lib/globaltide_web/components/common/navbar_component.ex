@@ -105,7 +105,7 @@ defmodule GlobaltideWeb.Common.NavbarComponent do
               method="delete"
               class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
             >
-              Log out {@current_user.name}
+              Log out 
             </.link>
           <% else %>
             <a href="/users/log_in">
