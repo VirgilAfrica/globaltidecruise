@@ -38,12 +38,12 @@ defmodule GlobaltideWeb.LandingPageComponent do
             Welcome to Global Tide Cruise LTD's official recruitment portal, where your journey to an exciting shipboard career begins. Discover a variety of job opportunities that match your skills and passions, and become part of our vibrant team.
           </p>
           <div class="flex flex-col lg:flex-row md:flex-row md:space-x-8 lg:space-x-8 space-y-4 lg:space-y-0 w-full ">
-            <a href="">
+            <a href="/jobs">
               <button class="bg-red-500 text-white font-bold rounded-full uppercase shadow-md px-4 py-2 md:px-6 md:py-3  lg:px-8 lg:py-4 text-sm lg:text-lg">
                 View All Jobs
               </button>
             </a>
-            <a href="">
+            <a href="/jobs">
               <button class="bg-transparent border-white border-2 py-2 px-8 lg:px-8 lg:py-4 rounded-full text-white font-bold uppercase shadow-md ">
                 Apply Today
               </button>
@@ -145,7 +145,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
         <p class="lg:text-lg text-[14px] leading-normal text-gray-500">{@department.desc}</p>
       </div>
       <div>
-        <a href="/jobs_available">
+        <a href="/jobs">
           <button class="px-6 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4 border-red-500 border-2 rounded-full text-lg lg:text-[20px] hover:bg-blue-500 hover:text-white hover:border-white transition-all ease-in">
             View Position
           </button>
@@ -298,12 +298,12 @@ defmodule GlobaltideWeb.LandingPageComponent do
       x-data="{ hover: false }"
       @mouseover="hover = true"
       @mouseleave="hover = false"
-      class="relative h-[400px] md:h-auto flex flex-col items-center w-full bg-transparent rounded-t-xl shadow-lg transform transition-transform duration-300"
+      class="relative h-[500px] md:h-auto flex flex-col items-center w-full bg-transparent rounded-t-xl shadow-lg transform transition-transform duration-300"
     >
-      <div class="bg-cover bg-center w-full h-[250px]" style="background-image: url('{@role.imgRef}')">
-      </div>
+      <img class="bg-cover bg-center w-full h-[250px] " src={@role.imgRef}/>
+      
 
-      <div class="h-[150px] md:h-[200px] lg:h-1/3 flex flex-row items-center justify-center w-full text-center p-2 bg-gradient-to-t from-black to-transparent">
+      <div class="h-[200px] md:h-[250px] lg:h-1/3 flex flex-row items-center justify-center w-full text-center p-2 bg-gradient-to-t from-black to-transparent">
         <a href="/jobs">
           <div>
             <h1 class="text-[20px] md:text-[24px] lg:text-[28px] font-bold text-white">
@@ -315,7 +315,10 @@ defmodule GlobaltideWeb.LandingPageComponent do
           </div>
 
           <span x-show="hover" class="block mt-2 px-2 text-lg text-gray-300">
-            <i class="fas fa-arrow-right"></i>
+            <i class="fas fa-arrow-right"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+            </svg>
+            </i>
           </span>
         </a>
       </div>
@@ -508,9 +511,12 @@ defmodule GlobaltideWeb.LandingPageComponent do
           <button class="pointer py-2 px-4 lg:py-4 lg:px-8 text-sm md:text-xl bg-red-500 text-white rounded-lg w-auto">
             Apply
           </button>
-          <button class="pointer py-2 px-4  lg:py-4 lg:px-8  text-sm md:text-xl border-2 border-gray-400 text-white rounded-lg">
-            View All Jobs
-          </button>
+          <a href="/jobs">
+            <button class="pointer py-2 px-4  lg:py-4 lg:px-8  text-sm md:text-xl border-2 border-gray-400 text-white rounded-lg">
+              View All Jobs
+            </button>
+          </a>
+         
         </div>
       </div>
     </section>
@@ -527,13 +533,16 @@ defmodule GlobaltideWeb.LandingPageComponent do
           </div>
           <div class="w-full flex flex-col lg:flex-row lg:space-x-8 space-y-2 lg:space-y-8">
             <ul class="font-bold flex flex-col lg:flex-row lg:items-center lg:justify-center lg:space-x-8 space-y-2 lg:space-y-0 ">
-              <a href="" class="text-lg font-medium hover:text-gray-300 transition duration-200">
+              <a href="/" class="text-lg font-medium hover:text-gray-300 transition duration-200">
                 <li>Home</li>
               </a>
-              <a href="" class="text-lg font-medium hover:text-gray-300 transition duration-200">
+              <a href="/jobs" class="text-lg font-medium hover:text-gray-300 transition duration-200">
                 <li>Jobs available</li>
               </a>
-              <a href="" class="text-lg font-medium hover:text-gray-300 transition duration-200">
+              <a
+                href="/contact"
+                class="text-lg font-medium hover:text-gray-300 transition duration-200"
+              >
                 <li>Contact</li>
               </a>
             </ul>
