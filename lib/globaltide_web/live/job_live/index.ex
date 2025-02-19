@@ -35,7 +35,7 @@ defmodule GlobaltideWeb.JobLive.Index do
         socket,
         filters: filters,
         active_filter: "All",
-        is_open: false,
+        is_open: false
         # jobs: jobs,
       )
 
