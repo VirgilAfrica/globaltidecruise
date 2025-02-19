@@ -24,6 +24,12 @@ defmodule GlobaltideWeb.Endpoint do
     from: :globaltide,
     gzip: false,
     only: GlobaltideWeb.static_paths()
+    
+    plug Plug.Static,
+    at: "/uploads",
+    from: {:globaltide, "priv/static/uploads"},
+    gzip: false,
+    only: ~w(pdf)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
