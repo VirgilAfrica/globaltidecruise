@@ -36,8 +36,7 @@ defmodule GlobaltideWeb.JobLive.Index do
         filters: filters,
         active_filter: "All",
         is_open: false,
-        jobs: jobs,
-        csrf_token: get_csrf_token()
+        # jobs: jobs,
       )
 
     {:ok, socket}
@@ -58,7 +57,6 @@ defmodule GlobaltideWeb.JobLive.Index do
       is_open={@is_open}
       toggle_event="toggle-menu"
       current_user={@current_user}
-      csrf_token={@csrf_token}
     />
     <.hero_section />
     <.filter_section />
@@ -70,7 +68,5 @@ defmodule GlobaltideWeb.JobLive.Index do
     socket.assigns[:current_user] || UserAuth.fetch_current_user(params, session)
   end
 
-  defp get_csrf_token do
-    Plug.CSRFProtection.get_csrf_token()
-  end
+
 end

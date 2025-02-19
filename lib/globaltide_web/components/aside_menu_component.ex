@@ -69,12 +69,14 @@ defmodule GlobaltideWeb.AsideMenuComponent do
           <div class="border-t-2 border-gray-300 border-b-2 py-8">
             <h3>User</h3>
             <div>
-              <ul>
-                <span>My profile</span>
-                <a href="">
-                  <li></li>
-                </a>
-              </ul>
+              <%= if @current_user do %>
+                <.link
+                  href="/users/settings"
+                  class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+                >
+                  Profile Settings
+                </.link>
+              <% end %>
             </div>
             <div>
               Notifications

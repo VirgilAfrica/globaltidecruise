@@ -28,15 +28,15 @@ defmodule GlobaltideWeb.Common.NavbarComponent do
         </div>
         <div class="grid justify-items-end w-full">
           <%= if @current_user do %>
-            <a
+            <.link
               href="/users/log_out"
               method="delete"
               class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
             >
               <button class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 lg:px-8 py-4">
-                Log out
+                Logout
               </button>
-            </a>
+            </.link>
           <% else %>
             <a href="/users/log_in">
               <button class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 lg:px-8 py-4">
@@ -105,7 +105,7 @@ defmodule GlobaltideWeb.Common.NavbarComponent do
               method="delete"
               class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
             >
-              Log out
+              Log out {@current_user.name}
             </.link>
           <% else %>
             <a href="/users/log_in">
