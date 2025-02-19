@@ -1,0 +1,43 @@
+<.header>
+  Listing Applications
+  <:actions>
+    <.link patch={~p"/applications/new"}>
+      <.button>New Application</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="applications"
+  rows={@streams.applications}
+  row_click={fn {_id, application} -> JS.navigate(~p"/applications/#{application}") end}
+>
+  <:col :let={{_id, application}} label="Job name">{application.job_name}</:col>
+  <:col :let={{_id, application}} label="Cv">{application.cv}</:col>
+  <:col :let={{_id, application}} label="Cover letter">{application.cover_letter}</:col>
+  <:action :let={{_id, application}}>
+    <div class="sr-only">
+      <.link navigate={~p"/applications/#{application}"}>Show</.link>
+    </div>
+    <.link patch={~p"/applications/#{application}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, application}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: application.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="application-modal" show on_cancel={JS.patch(~p"/applications")}>
+  <.live_component
+    module={GlobaltideWeb.ApplicationLive.FormComponent}
+    id={@application.id || :new}
+    title={@page_title}
+    action={@live_action}
+    application={@application}
+    patch={~p"/applications"}
+  />
+</.modal>
