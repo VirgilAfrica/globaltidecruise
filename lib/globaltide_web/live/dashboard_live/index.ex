@@ -25,6 +25,7 @@ defmodule GlobaltideWeb.DashboardLive.Index do
         is_open={@is_open}
         toggle_event="toggle-menu"
         current_user={@current_user}
+        
       />
       <.dashboard_component current_user={@current_user} />
     </section>

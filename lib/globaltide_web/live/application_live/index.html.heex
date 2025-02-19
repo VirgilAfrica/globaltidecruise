@@ -1,35 +1,45 @@
-<.header>
-  Listing Applications
+<.header class="flex justify-between items-center bg-gray-100 p-4 rounded-md shadow">
+  <h1 class="text-2xl font-semibold">Listing Applications</h1>
   <:actions>
     <.link patch={~p"/applications/new"}>
-      <.button>New Application</.button>
+      <.button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">New Application</.button>
     </.link>
   </:actions>
 </.header>
 
-<.table
-  id="applications"
-  rows={@streams.applications}
-  row_click={fn {_id, application} -> JS.navigate(~p"/applications/#{application}") end}
->
-  <:col :let={{_id, application}} label="Job name">{application.job_name}</:col>
-  <:col :let={{_id, application}} label="Cv">{application.cv}</:col>
-  <:col :let={{_id, application}} label="Cover letter">{application.cover_letter}</:col>
-  <:action :let={{_id, application}}>
-    <div class="sr-only">
-      <.link navigate={~p"/applications/#{application}"}>Show</.link>
-    </div>
-    <.link patch={~p"/applications/#{application}/edit"}>Edit</.link>
-  </:action>
-  <:action :let={{id, application}}>
-    <.link
-      phx-click={JS.push("delete", value: %{id: application.id}) |> hide("##{id}")}
-      data-confirm="Are you sure?"
-    >
-      Delete
-    </.link>
-  </:action>
-</.table>
+<div class="overflow-x-auto bg-white shadow-md rounded-lg p-4 mt-4">
+  <.table
+    id="applications"
+    rows={@streams.applications}
+    row_click={fn {_id, application} -> JS.navigate(~p"/applications/#{application}") end}
+    class="w-full border-collapse text-left"
+  >
+    <:col :let={{_id, application}} label="Job Name" class="border-b p-3 font-medium">
+      {application.job_name}
+    </:col>
+    <:col :let={{_id, application}} label="CV" class="border-b p-3">
+      {application.cv}
+    </:col>
+    <:col :let={{_id, application}} label="Cover Letter" class="border-b p-3">
+      {application.cover_letter}
+    </:col>
+    <:action :let={{_id, application}}>
+      <div class="sr-only">
+        <.link navigate={~p"/applications/#{application}"}>Show</.link>
+      </div>
+      <.link patch={~p"/applications/#{application}/edit"} class="text-blue-500 hover:underline">Edit</.link>
+    </:action>
+    <:action :let={{id, application}}>
+      <.link
+        phx-click={JS.push("delete", value: %{id: application.id}) |> hide("##{id}")}
+        data-confirm="Are you sure?"
+        class="text-red-500 hover:underline"
+      >
+        Delete
+      </.link>
+    </:action>
+  </.table>
+</div>
 
 <.modal :if={@live_action in [:new, :edit]} id="application-modal" show on_cancel={JS.patch(~p"/applications")}>
   <.live_component
