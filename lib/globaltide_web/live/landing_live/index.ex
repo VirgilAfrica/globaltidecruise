@@ -17,7 +17,11 @@ defmodule GlobaltideWeb.LandingLive.Index do
 
   def render(assigns) do
     ~H"""
-    <.navbar is_open={@is_open} toggle_event="toggle-menu" current_user={@current_user} />
+    <.navbar
+      is_open={@is_open}
+      toggle_event="toggle-menu"
+      current_user={@current_user}
+    />
     <.hero_section />
     <.departments />
     <.application_component />
@@ -31,4 +35,5 @@ defmodule GlobaltideWeb.LandingLive.Index do
   defp get_current_user(params, session, socket) do
     socket.assigns[:current_user] || GlobaltideWeb.UserAuth.fetch_current_user(params, session)
   end
+
 end

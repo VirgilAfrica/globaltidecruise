@@ -33,7 +33,7 @@ defmodule GlobaltideWeb.JobAvailableComponent do
           </h1>
         </div>
         <div class="grid grid-cols-2 gap-4 lg:grid-cols-5 lg:gap-6 flex-wrap">
-          <%!-- <%= for filter <- @filters do %>
+          <%= for filter <- @filters do %>
             <button
               phx-click="set_filter"
               phx-value-filter={filter.name}
@@ -47,7 +47,7 @@ defmodule GlobaltideWeb.JobAvailableComponent do
             >
               <%= filter.name %>
             </button>
-          <% end %> --%>
+          <% end %>
         </div>
       </div>
     </section>
@@ -58,16 +58,11 @@ defmodule GlobaltideWeb.JobAvailableComponent do
     ~H"""
     <section class="w-full">
       <div class="max-w-[90%] mx-auto">
-        <%= if @jobs == [] do %>
+        <%= if @job_data == [] do %>
           <p>No jobs found.</p>
         <% else %>
-          <%= for job <- @jobs do %>
-            <.job_tile
-              imgRef={job.imgRef}
-              jobTag={job.jobTag}
-              jobRole={job.jobTitle}
-              desc={job.shortDesc}
-            />
+          <%= for job <- @job_data do %>
+            <.job_tile imgRef={job.imgRef} jobTag={job.jobTag} jobTitle={job.jobTitle} shortDesc={job.shortDesc} />
           <% end %>
         <% end %>
       </div>
@@ -81,21 +76,23 @@ defmodule GlobaltideWeb.JobAvailableComponent do
       <span class="border-[1px] rounded-xl w-full border-black"></span>
       <div class="flex flex-col md:flex-row lg:flex-row items-center justify-center">
         <div class="flex items-center p-2 lg:p-4 lg:w-1/2">
-          <img src={@imgRef} alt={@jobRole} class="bg-cover bg-center rounded-3xl" />
+          <img src={@imgRef} alt={@jobTitle} class="bg-cover bg-center rounded-3xl" />
         </div>
         <div class="flex flex-col w-full items-start justify-start space-y-2 max-w-[90%] mx-auto lg:p-12">
           <span class="text-[16px] md:text-[20px] lg:text-[24px] font-bold">
             {@jobTag}
           </span>
           <h1 class="text-blue-700 hover:text-red-700 text-[24px] md:text-[30px] lg:text-[36px]">
-            {@jobRole}
+            {@jobTitle}
           </h1>
           <p class="text-[16px] md:text-[16px] lg:text-[20px] text-prettier">
-            {@desc}
+            {@shortDesc}
           </p>
         </div>
       </div>
     </div>
     """
   end
+
+
 end
