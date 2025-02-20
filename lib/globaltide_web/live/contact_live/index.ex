@@ -1,12 +1,13 @@
 defmodule GlobaltideWeb.ContactLive.Index do
   use GlobaltideWeb, :live_view
-  import GlobaltideWeb.Common.NavbarComponent
 
+  import GlobaltideWeb.Common.NavbarComponent
   import GlobaltideWeb.ContactComponent
   alias GlobaltideWeb.ContactLive.FormComponent
+  alias GlobaltideWeb.UserAuth
 
-  def mount(_params, _session, socket) do
-    socket = assign_new(socket, :current_user, fn -> get_current_user(socket) end)
+  def mount(params, session, socket) do
+    socket = assign_new(socket, :current_user, fn -> get_current_user(params, session, socket) end)
     {:ok, assign(socket, is_open: false, current_index: 0)}
   end
 
@@ -24,7 +25,7 @@ defmodule GlobaltideWeb.ContactLive.Index do
     """
   end
 
-  defp get_current_user(socket) do
-    socket.assigns[:current_user] || GlobaltideWeb.UserAuth.fetch_current_user(socket)
+  defp get_current_user(params, session, socket) do
+    socket.assigns[:current_user] || UserAuth.fetch_current_user(params, session)
   end
 end

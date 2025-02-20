@@ -1,14 +1,13 @@
 defmodule GlobaltideWeb.DashboardLive.Index do
   use GlobaltideWeb, :live_view
 
+  import Phoenix.Component
   import GlobaltideWeb.AsideMenuComponent
   import GlobaltideWeb.DashboardComponent
 
-  @impl true
-  def mount(params, session, socket) do
-    socket =
-      assign_new(socket, :current_user, fn -> get_current_user(params, session, socket) end)
-
+  @impl Phoenix.LiveView
+  def mount(_params, _session, socket) do
+    socket = assign_new(socket, :current_user, fn -> get_current_user(socket) end)
     {:ok, assign(socket, is_open: false)}
   end
 
@@ -31,7 +30,7 @@ defmodule GlobaltideWeb.DashboardLive.Index do
     """
   end
 
-  defp get_current_user(params, session, socket) do
-    socket.assigns[:current_user] || GlobaltideWeb.UserAuth.fetch_current_user(params, session)
+  defp get_current_user(socket) do
+    socket.assigns[:current_user] || {nil}
   end
 end

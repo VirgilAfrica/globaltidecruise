@@ -45,7 +45,7 @@ defmodule GlobaltideWeb.JobAvailableComponent do
                 end
               }
             >
-              <%= filter.name %>
+              {filter.name}
             </button>
           <% end %>
         </div>
@@ -62,7 +62,14 @@ defmodule GlobaltideWeb.JobAvailableComponent do
           <p>No jobs found.</p>
         <% else %>
           <%= for job <- @job_data do %>
-            <.job_tile imgRef={job.imgRef} jobTag={job.jobTag} jobTitle={job.jobTitle} shortDesc={job.shortDesc} />
+            <a href={ "/jobs/#{job.id}"}>
+              <.job_tile
+                imgRef={job.imgRef}
+                jobTag={job.jobTag}
+                jobTitle={job.jobTitle}
+                shortDesc={job.shortDesc}
+              />
+            </a>
           <% end %>
         <% end %>
       </div>
@@ -93,6 +100,4 @@ defmodule GlobaltideWeb.JobAvailableComponent do
     </div>
     """
   end
-
-
 end
