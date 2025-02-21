@@ -14,7 +14,7 @@ defmodule GlobaltideWeb.AsideMenuComponent do
         %{
           imgSrc: "/images/apply.png",
           name: "Fill Application",
-          path: "/dashboard/application"
+          path: "/applications"
         }
       ])
 
