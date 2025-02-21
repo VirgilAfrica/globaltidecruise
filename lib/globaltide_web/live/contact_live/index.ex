@@ -2,9 +2,9 @@ defmodule GlobaltideWeb.ContactLive.Index do
   use GlobaltideWeb, :live_view
   on_mount {GlobaltideWeb.UserAuth, :mount_current_user}
   import GlobaltideWeb.Common.NavbarComponent
-
   import GlobaltideWeb.ContactComponent
   alias GlobaltideWeb.ContactLive.FormComponent
+  alias GlobaltideWeb.UserAuth
 
   def mount(_params, _session, socket) do
     {:ok, assign(socket, is_open: false, current_index: 0)}
