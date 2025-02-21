@@ -1,6 +1,5 @@
 defmodule GlobaltideWeb.DashboardComponent do
   use Phoenix.Component
-  alias GlobaltideWeb.FormComponent
 
   def dashboard_component(assigns) do
     ~H"""
@@ -22,7 +21,6 @@ defmodule GlobaltideWeb.DashboardComponent do
             <% end %>
           </div>
         </div>
-
       </div>
     </section>
     """

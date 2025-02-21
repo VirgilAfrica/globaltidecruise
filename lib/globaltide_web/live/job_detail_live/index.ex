@@ -21,6 +21,18 @@ defmodule GlobaltideWeb.JobDetailLive do
     end)
   end
 
+  # Handle job application event
+  def handle_event("apply_for_job", %{"job_id" => job_id, "job_title" => job_title}, socket) do
+    case socket.assigns[:current_user] do
+      nil ->
+        {:noreply, push_navigate(socket, to: "/login")}
+
+      _ ->
+        {:noreply,
+         push_navigate(socket, to: "/dashboard?job_id=#{job_id}&job_title=#{job_title}")}
+    end
+  end
+
   def render(assigns) do
     ~H"""
     <%= if @job do %>

@@ -27,10 +27,9 @@ defmodule GlobaltideWeb.JobDetailComponent do
             {@jobTitle}
           </h2>
 
-          <a href="/dashboard"> customise this to fit the user form and job
+          <a href="/dashboard">
             <button
               phx-click="apply_for_job"
-              phx-value-job={@jobTitle}
               class="mt-4 px-6 py-3 bg-red-500 text-white text-[16px] md:text-[18px] rounded-lg hover:bg-blue-600 transition duration-300"
             >
               {@btn}

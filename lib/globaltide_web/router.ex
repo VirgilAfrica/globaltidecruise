@@ -26,6 +26,7 @@ defmodule GlobaltideWeb.Router do
     live "/contact", ContactLive.Index, :index
     live "/dashboard", DashboardLive.Index, :index
     live "/jobs/:id", JobDetailLive, :show
+    live "/application-status", ApplicationStatusController, :index
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

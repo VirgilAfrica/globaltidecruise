@@ -8,8 +8,13 @@ defmodule GlobaltideWeb.AsideMenuComponent do
         %{imgSrc: "/images/job-search.png", name: "View Jobs Available", path: "/jobs"},
         %{
           imgSrc: "/images/status.png",
-          name: "Application ",
-          path: "/dashboard?show_form=true"
+          name: "Application  status",
+          path: "/dashboard/application-status"
+        },
+        %{
+          imgSrc: "/images/apply.png",
+          name: "Fill Application",
+          path: "/dashboard/application"
         }
       ])
 
