@@ -44,6 +44,16 @@ defmodule Globaltide.Accounts do
     if User.valid_password?(user, password), do: user
   end
 
+  #getting admin count
+
+  def count_admins do
+    import Ecto.Query, only: [from: 2]
+
+    from(u in Globaltide.Accounts.User, where: u.role == "Admin")
+    |> Globaltide.Repo.aggregate(:count, :id)
+
+  end
+
   @doc """
   Gets a single user.
 

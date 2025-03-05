@@ -3,12 +3,15 @@ defmodule GlobaltideWeb.UserLoginLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm flex flex-col items-center justify-center h-screen">
+    <div class="mx-auto max-w-[50%]  shadow-md flex flex-col items-center justify-center h-screen">
+    <div class="w-full item-center justify-center flex">
+        <img src="/images/globaltide-lg2.jpeg" alt="" class="rounded-3xl lg:w-40 lg:h-40">
+      </div>
       <.header class="text-center">
         Log in to account
         <:subtitle>
           Don't have an account?
-          <.link navigate={~p"/users/register"} class="font-semibold text-brand hover:underline">
+          <.link navigate={~p"/users/register"} class="font-semibold text-red-500 hover:underline">
             Sign up
           </.link>
           for an account now.

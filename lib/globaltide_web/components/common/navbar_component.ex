@@ -11,7 +11,7 @@ defmodule GlobaltideWeb.Common.NavbarComponent do
       ])
 
     ~H"""
-    <nav class="w-full h-auto lg:shadow-sm border-b-2 border-blue-100 lg:border-none relative">
+    <nav class="w-full h-auto shadow-sm border-b-2 border-blue-100 lg:border-none relative">
       <div class="hidden max-w-[90%] mx-auto lg:flex flex-row items-center justify-evenly">
         <div class="w-full flex items-center">
           <img src="/images/globaltide-lg2.jpeg" alt="" class="w-20 h-20 rounded-full" />

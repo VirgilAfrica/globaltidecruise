@@ -6,15 +6,15 @@ defmodule GlobaltideWeb.UserRegistrationLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
-    <div>
-      <img src="/images/globaltide-lg2.jpeg" alt="">
-    </div>
+    <div class="mx-auto max-w-[50%] p-4 hover:shadow-md transition-shadow duration-300">
+      <div class="w-full item-center justify-center flex">
+        <img src="/images/globaltide-lg2.jpeg" alt="" class="rounded-3xl lg:w-40 lg:h-40">
+      </div>
       <.header class="text-center">
         Register for an account
-        <:subtitle>
+        <:subtitle >
           Already registered?
-          <.link navigate={~p"/users/log_in"} class="font-semibold text-brand hover:underline">
+          <.link navigate={~p"/users/log_in"} class="font-semibold text-blue-400 hover:underline">
             Log in
           </.link>
           to your account now.
@@ -33,12 +33,18 @@ defmodule GlobaltideWeb.UserRegistrationLive do
         <.error :if={@check_errors}>
           Oops, something went wrong! Please check the errors below.
         </.error>
+
         <.input field={@form[:name]} type="text" label="Name" required />
         <.input field={@form[:email]} type="email" label="Email" required />
         <.input field={@form[:password]} type="password" label="Password" required />
 
+        <!-- Role Selection Dropdown -->
+        <.input field={@form[:role]} type="select" label="Role" options={["User", "Admin"]} required />
+
         <:actions>
-          <.button phx-disable-with="Creating account..." class="w-full hover:bg-blue-500 transition-colors ease-in">Create an account</.button>
+          <.button phx-disable-with="Creating account..." class="w-full hover:bg-blue-500 transition-colors ease-in">
+            Create an account
+          </.button>
         </:actions>
       </.simple_form>
     </div>
@@ -57,19 +63,29 @@ defmodule GlobaltideWeb.UserRegistrationLive do
   end
 
   def handle_event("save", %{"user" => user_params}, socket) do
-    case Accounts.register_user(user_params) do
-      {:ok, user} ->
-        {:ok, _} =
-          Accounts.deliver_user_confirmation_instructions(
-            user,
-            &url(~p"/users/confirm/#{&1}")
-          )
+    case validate_admin_limit(user_params) do
+      :ok ->
+        case Accounts.register_user(user_params) do
+          {:ok, user} ->
+            {:ok, _} =
+              Accounts.deliver_user_confirmation_instructions(
+                user,
+                &url(~p"/users/confirm/#{&1}")
+              )
 
-        changeset = Accounts.change_user_registration(user)
-        {:noreply, socket |> assign(trigger_submit: true) |> assign_form(changeset)}
+            changeset = Accounts.change_user_registration(user)
+            {:noreply, socket |> assign(trigger_submit: true) |> assign_form(changeset)}
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, socket |> assign(check_errors: true) |> assign_form(changeset)}
+          {:error, %Ecto.Changeset{} = changeset} ->
+            {:noreply, socket |> assign(check_errors: true) |> assign_form(changeset)}
+        end
+
+      {:error, message} ->
+        changeset =
+          Accounts.change_user_registration(%User{}, user_params)
+          |> Ecto.Changeset.add_error(:role, message)
+
+        {:noreply, assign_form(socket, Map.put(changeset, :action, :validate))}
     end
   end
 
@@ -87,4 +103,17 @@ defmodule GlobaltideWeb.UserRegistrationLive do
       assign(socket, form: form)
     end
   end
+
+  # Function to check the number of admin users
+  defp validate_admin_limit(%{"role" => "Admin"}) do
+    admin_count = Accounts.count_admins()
+
+    if admin_count < 2 do
+      :ok
+    else
+      {:error, "Only two admins (Developer & Manager) are allowed."}
+    end
+  end
+
+  defp validate_admin_limit(_params), do: :ok
 end

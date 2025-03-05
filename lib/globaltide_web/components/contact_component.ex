@@ -28,15 +28,13 @@ defmodule GlobaltideWeb.ContactComponent do
         </div>
         <div class="grid justify-items-end w-full">
           <%= if @current_user do %>
-            <form action="/users/log_out" method="post">
-              <input type="hidden" name="_method" value="delete" />
-              <button
-                type="submit"
-                class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 lg:px-8 py-4"
-              >
-                Logout
-              </button>
-            </form>
+          <.link
+          href="/users/log_out"
+          method="delete"
+          class="flex items-center p-2  rounded-lg  text-white   hover:bg-white hover:text-black group"
+        >
+          <button class="flex-1 ms-3 whitespace-nowrap text-black px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 bg-red-300 hover:bg-red-700">Sign Out</button>
+        </.link>
           <% else %>
             <a href="/users/log_in">
               <button class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 lg:px-8 py-4">

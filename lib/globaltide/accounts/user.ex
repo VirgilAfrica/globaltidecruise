@@ -39,11 +39,31 @@ defmodule Globaltide.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:name, :email, :password])
+    |> cast(attrs, [:name, :email, :password, :role])
+    |> validate_required([:name, :email, :password, :role])
     |> validate_email(opts)
+    |> validate_inclusion(:role, ["User","Admin"],message: "Role must be 'User' for job applicants or 'Admin' for managers")
+    |> restrict_admin_count()
     |> validate_password(opts)
     |> validate_name()
   end
+
+  # admin_count
+  defp restrict_admin_count(changeset) do
+    if get_field(changeset, :role) == "Admin" do
+      current_admin_count = Globaltide.Accounts.count_admins()
+
+      if current_admin_count >= 2 do
+        add_error(changeset, :role, "Only two admins (Developer & Manager) are allowed.")
+      else
+        changeset
+      end
+    else
+      changeset
+    end
+  end
+  # continuation
+  
 
   defp validate_email(changeset, opts) do
     changeset

@@ -15,8 +15,8 @@ defmodule GlobaltideWeb.Job.JobDetailTile do
     </div>
 
     <div class="flex flex-col lg:flex-row">
-      <div class="flex flex-col w-full items-start justify-start p-8 space-y-6">
-        <span class="text-[16px] md:text-[20px] lg:text-[24px] font-bold text-gray-700">
+      <div class="flex flex-col w-full items-start justify-start  space-y-4 lg:space-y-4">
+        <span class="text-[16px] md:text-[20px] lg:text-[24px] font-bold text-red-700">
           <%= @jobTag %>
         </span>
 
@@ -62,7 +62,7 @@ defmodule GlobaltideWeb.Job.JobDetailTile do
         </ul>
       </div>
 
-      <div class="md:w-full lg:w-[40%]">
+      <div class="w-full lg:w-[40%]">
         <div class="flex items-center justify-center my-10 bg-blue-700 p-8">
           <h1 class="text-[30px] text-white font-bold"><%= @req %></h1>
         </div>
