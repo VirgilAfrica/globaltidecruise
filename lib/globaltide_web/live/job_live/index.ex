@@ -10,7 +10,7 @@ defmodule GlobaltideWeb.JobLive.Index do
     filters = [
       %{name: "All"},
       %{name: "Entertainment"},
-      %{name: "Deck Department"},
+      %{name: "Deck Departments"},
       %{name: "Photo Department"},
       %{name: "Galley"},
       %{name: "Restaurant"},
@@ -51,7 +51,7 @@ defmodule GlobaltideWeb.JobLive.Index do
         Jobs.get_jobs()
       else
         Jobs.get_jobs()
-        |> Enum.filter(fn job -> job.job_tag == filter_name end)
+        |> Enum.filter(fn job -> job.jobTag == filter_name end)
       end
 
     {:noreply, assign(socket, active_filter: filter_name, jobs: filtered_jobs)}
