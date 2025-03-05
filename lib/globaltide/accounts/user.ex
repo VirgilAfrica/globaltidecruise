@@ -5,6 +5,7 @@ defmodule Globaltide.Accounts.User do
   schema "users" do
     field :email, :string
     field :name, :string
+    field :role, :string, default: "User"
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :current_password, :string, virtual: true, redact: true

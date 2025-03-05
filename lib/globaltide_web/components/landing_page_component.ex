@@ -262,7 +262,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
         <p class="lg:text-lg text-[14px] leading-normal text-gray-500">{@department.desc}</p>
       </div>
       <div>
-        <a href="/jobs_available">
+        <a href="/jobs">
           <button class="px-6 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4 border-red-500 border-2 rounded-full text-lg lg:text-[20px] hover:bg-blue-500 hover:text-white hover:border-white transition-all ease-in">
             View Position
           </button>
