@@ -3,9 +3,9 @@ defmodule GlobaltideWeb.Job.JobDetailTile do
 
   def job_tile(assigns) do
     ~H"""
-    <section class="max-w-[90%] mx-auto">
+    <section class="max-w-[90%] mx-auto mt-10">
       <div
-      class="relative w-full h-[500px] flex items-center justify-center p-8 bg-cover bg-fixed bg-center text-white text-center rounded-3xl max-w-[100%] mx-auto"
+      class="relative w-full lg:h-[500px] h-[30vh] flex items-center justify-center p-8 bg-contain lg:bg-cover bg-fixed bg-center text-white text-center rounded-3xl max-w-[100%] mx-auto"
       style={"background-image: url('#{@img_ref}');"}
       >
       <div class="inset-0 absolute bg-gradient-to-r from-blue-500/50 to-red-500/50 rounded-3xl"></div>

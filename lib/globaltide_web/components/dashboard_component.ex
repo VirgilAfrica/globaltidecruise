@@ -21,7 +21,19 @@ def dashboard_component(assigns) do
         <% end %>
       </div>
       <div>
-        <button class="bg-red-400 hover:bg-red-700 duration-300 ease-in-out transition-all font-medium text-white px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 rounded-md">Logout</button>
+      <%= if @current_user do %>
+          <.link href="/users/log_out" method="delete" class="block">
+                <button class="w-full font-bold text-white bg-red-500 px-8 py-4 hover:bg-red-700 transition-colors">
+                  Logout
+                </button>
+              </.link>
+          <% else %>
+            <a href="/users/log_in">
+              <button class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 px-8 py-4">
+                Login
+              </button>
+            </a>
+          <% end %>
       </div>
     </div>
   </div>
