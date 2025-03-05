@@ -25,6 +25,10 @@ defmodule GlobaltideWeb.ContactLive.Index do
   end
 
   defp get_current_user(socket) do
-    socket.assigns[:current_user] || GlobaltideWeb.UserAuth.fetch_current_user(socket)
+    case GlobaltideWeb.UserAuth.fetch_current_user(socket, %{}) do
+      %{assigns: %{current_user: user}} -> user
+      _ -> nil
+    end
   end
+
 end

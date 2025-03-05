@@ -1,18 +1,11 @@
 defmodule GlobaltideWeb.JobLive.Index do
   use GlobaltideWeb, :live_view
 
-  # Fetching data from the data
-  alias Globaltide.Job
-  alias Globaltide.Repo
+  alias Globaltide.Jobs
 
   import GlobaltideWeb.JobAvailableComponent
 
   def mount(_params, _session, socket) do
-    # job Call
-    jobs = Repo.all(Job)
-
-    IO.inspect(jobs, label: "Fetched Jobs")
-
     filters = [
       %{name: "All"},
       %{name: "Entertainment"},
@@ -27,9 +20,10 @@ defmodule GlobaltideWeb.JobLive.Index do
 
     socket = assign_new(socket, :current_user, fn -> get_current_user(socket) end)
 
+    jobs = Jobs.get_jobs()
+
     socket =
-      assign(
-        socket,
+      assign(socket,
         filters: filters,
         active_filter: "All",
         is_open: false,
@@ -39,21 +33,36 @@ defmodule GlobaltideWeb.JobLive.Index do
     {:ok, socket}
   end
 
+  def handle_event("toggle-menu", _params, socket) do
+    {:noreply, assign(socket, :is_open, !socket.assigns.is_open)}
+  end
+
   def handle_event("set_filter", %{"filter" => filter_name}, socket) do
-    socket = assign(socket, active_filter: filter_name)
-    {:noreply, socket}
+    filtered_jobs =
+      if filter_name == "All" do
+        Jobs.get_jobs()
+      else
+        Jobs.get_jobs()
+        |> Enum.filter(fn job -> job.job_tag == filter_name end)
+      end
+
+    {:noreply, assign(socket, active_filter: filter_name, jobs: filtered_jobs)}
   end
 
   def render(assigns) do
     ~H"""
     <.navbar is_open={@is_open} toggle_event="toggle-menu" current_user={@current_user} />
     <.hero_section />
-    <.filter_section />
-    <.job_listing jobs={@jobs} />
+    <.filter_section filters={@filters} active_filter={@active_filter} />
+    <.job_list jobs={@jobs}/>
     """
   end
 
   defp get_current_user(socket) do
-    socket.assigns[:current_user] || GlobaltideWeb.UserAuth.fetch_current_user(socket)
+    case GlobaltideWeb.UserAuth.fetch_current_user(socket, %{}) do
+      %{assigns: %{current_user: user}} -> user
+      _ -> nil
+    end
   end
+
 end

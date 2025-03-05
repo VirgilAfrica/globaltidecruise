@@ -25,13 +25,20 @@ defmodule GlobaltideWeb.Router do
     live "/jobs", JobLive.Index, :index
     live "/contact", ContactLive.Index, :index
     live "/dashboard", DashboardLive.Index, :index
+    live "/jobs/:id", JobLive.Show, :show
+
+    live "/applications", ApplicationLive.Index, :index
+    live "/jobs/:job_id/dashboard/applications/new", ApplicationLive.Index, :new
+    live "/dashboard/applications/:id/edit", ApplicationLive.Index, :edit
+
+    live "/dashboard/applications/:id", ApplicationLive.Show, :show
+    live "/dashboard/applications/:id/show/edit", ApplicationLive.Show, :edit
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:globaltide, :dev_routes) do
     scope "/dev" do
       pipe_through :browser
-
       live_dashboard "/dashboard", metrics: GlobaltideWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end

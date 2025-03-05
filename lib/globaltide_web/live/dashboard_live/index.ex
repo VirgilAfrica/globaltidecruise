@@ -10,10 +10,12 @@ defmodule GlobaltideWeb.DashboardLive.Index do
     {:ok, assign(socket, is_open: false)}
   end
 
+  @impl true
   def handle_event("toggle-menu", _params, socket) do
     {:noreply, assign(socket, is_open: !socket.assigns.is_open)}
   end
 
+  @impl true
   def render(assigns) do
     ~H"""
     <section class="flex flex-col lg:flex-row">

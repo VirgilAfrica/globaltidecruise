@@ -14,7 +14,7 @@ defmodule GlobaltideWeb.ContactLive.FormComponent do
           phx-submit="save"
           class="w-full max-w-6xl"
         >
-          <.input
+          <input
             type="text"
             placeholder="Name"
             name="name"
@@ -25,49 +25,50 @@ defmodule GlobaltideWeb.ContactLive.FormComponent do
             <p class="text-red-500">{@errors["name"]}</p>
           <% end %>
 
-          <.input
+          <input
             field={@form["email"]}
             type="email"
             placeholder="Email"
             name="email"
             value={@form["email"]}
-            class=""
+            class="border-2 border-blue-500 p-4 lg:p-8 w-full"
           />
           <%= if @errors["email"] do %>
             <p class="text-red-500">{@errors["email"]}</p>
           <% end %>
 
-          <.input
+          <input
             field={@form["phone"]}
             type="tel"
             placeholder="Phone"
             name="phone"
             value={@form["phone"]}
-            class="border-2  border-gray-500 p-4 lg:px-8 w-full"
+            class="border-2 border-blue-500 p-4 lg:p-8 w-full"
           />
           <%= if @errors["phone"] do %>
             <p class="text-red-500">{@errors["phone"]}</p>
           <% end %>
 
-          <.input
+          <input
             field={@form["message"]}
-            type="text"
+            type="textarea"
             placeholder="Message"
             name="message"
+            rows={8}
             value={@form["message"]}
-            class=" border-gray-500 border-2 rounded-none p-4 lg:py-8 w-full"
+            class="border-2 border-blue-500 p-4 lg:p-8 w-full"
           />
           <%= if @errors["message"] do %>
             <p class="text-red-500">{@errors["message"]}</p>
           <% end %>
 
           <:actions>
-            <.button
-              class=" w-full text-md md:text-lg lg:text-md  text-white mt-4 bg-blue-500 transition-colors ease-in"
+            <button
+              class="p-8 font-bold w-full text-md md:text-lg lg:text-md  text-white mt-4 bg-blue-500 transition-colors ease-in"
               phx-disable-with="Submitting...."
             >
               Send Message
-            </.button>
+            </button>
           </:actions>
         </.simple_form>
       </div>

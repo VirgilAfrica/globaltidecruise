@@ -136,59 +136,32 @@ defmodule GlobaltideWeb.JobAvailableComponent do
     </section>
     """
   end
-
   def filter_section(assigns) do
     ~H"""
-    <section>
-      <div class="flex flex-col max-w-[90%] mx-auto">
-        <div class="w-full">
-          <h1 class="text-[24px] md:text-[30px] lg:text-[48px] font-black uppercase">
-            Click to Filter by Departments
-          </h1>
-        </div>
-        <div class="grid grid-cols-2 gap-4 lg:grid-cols-5 lg:gap-6 flex-wrap">
-          <%!-- <%= for filter <- @filters do %>
-            <button
-              phx-click="set_filter"
-              phx-value-filter={filter.name}
-              class={
-                if @active_filter == filter.name do
-                  "bg-blue-300 text-white shadow-lg px-4 py-2 rounded-3xl text-[16px] lg:text-[24px] font-medium"
-                else
-                  "bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white px-4 py-2 rounded-3xl text-[16px] lg:text-[24px] font-medium"
-                end
-              }
-            >
-              <%= filter.name %>
-            </button>
-          <% end %> --%>
-        </div>
+    <section class="max-w-[90%] mx-auto py-8 lg:py-12">
+      <h1 class="text-[24px] md:text-[30px] lg:text-[48px] font-black uppercase">
+        Filter by Departments
+      </h1>
+      <div class="grid grid-cols-2 gap-4 lg:grid-cols-5 lg:gap-6 flex-wrap mt-4">
+        <%= for filter <- @filters do %>
+          <button
+            phx-click="set_filter"
+            phx-value-filter={filter.name}
+            class={"px-4 py-2 rounded-3xl text-[16px] lg:text-[24px] font-medium transition-all " <>
+              if @active_filter == filter.name do
+                "bg-blue-500 text-white shadow-lg"
+              else
+                "bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white"
+              end}
+          >
+            <%= filter.name %>
+          </button>
+        <% end %>
       </div>
     </section>
     """
   end
 
-
-  def job_listing(assigns) do
-  ~H"""
-  <section class="w-full">
-    <div class="max-w-[90%] mx-auto">
-      <%= if @jobs == [] do %>
-        <p>No jobs found.</p>
-      <% else %>
-        <%= for job <- @jobs do %>
-          <.job_tile
-            imgRef={job.imgRef}
-            jobTag={job.jobTag}
-            jobRole={job.jobTitle}
-            desc={job.shortDesc}
-          />
-        <% end %>
-      <% end %>
-    </div>
-  </section>
-  """
-end
 
 
 
@@ -198,14 +171,14 @@ end
     <span class="border-[1px] rounded-xl w-full border-black"></span>
     <div class="flex flex-col md:flex-row lg:flex-row items-center justify-center">
       <div class="flex items-center p-2 lg:p-4 lg:w-1/2">
-        <img src={@imgRef} alt={@jobRole} class="bg-cover bg-center rounded-3xl" />
+        <img src={@img_ref} alt={@job_role} class="bg-cover bg-center rounded-3xl" />
       </div>
       <div class="flex flex-col w-full items-start justify-start space-y-2 max-w-[90%] mx-auto lg:p-12">
         <span class="text-[16px] md:text-[20px] lg:text-[24px] font-bold">
-          <%= @jobTag %>
+          <%= @job_tag %>
         </span>
         <h1 class="text-blue-700 hover:text-red-700 text-[24px] md:text-[30px] lg:text-[36px]">
-          <%= @jobRole %>
+          <%= @job_role %>
         </h1>
         <p class="text-[16px] md:text-[16px] lg:text-[20px] text-prettier">
           <%= @desc %>
@@ -213,6 +186,15 @@ end
       </div>
     </div>
   </div>
+  """
+end
+def job_list(assigns)do
+  ~H"""
+    <div class="mx-auto max-w-[90%]">
+      <%= for job <- @jobs do %>
+        <.job_tile id={job.id} img_ref={job.img_ref} job_tag={job.jobTag} job_role={job.jobTitle} desc={job.shortDesc} />
+      <% end %>
+    </div>
   """
 end
 

@@ -4,13 +4,15 @@ defmodule GlobaltideWeb.AsideMenuComponent do
   def aside_menu_component(assigns) do
     assigns =
       assign(assigns, :nav_links, [
-        %{imgSrc:  "", name: "Home", path: "/"},
-        %{imgSrc: "", name: "View Jobs Available", path: "/"},
-        %{imgSrc: "", name: "Application Status", path: "/"}
+        %{icon:  "/images/logos/home.png", name: "Home", path: "/"},
+        %{icon: "/images/logos/briefcase.png", name: "View Jobs Available", path: "/jobs"},
+        %{icon: "/images/logos/loading.png", name: "Application Status", path: "/"},
+        %{icon: "/images/logos/apply.png", name: "Apply Today", path: "/"}
+
       ])
 
     ~H"""
-    <aside class="w-full lg:w-1/5 shadow-md lg:fixed lg:left-0 lg:top-0 lg:h-full lg:z-20 lg:bg-white">
+    <aside class="w-full lg:w-1/5 shadow-md lg:fixed lg:left-0 lg:top-0 lg:h-full lg:z-20 lg:bg-blue-400">
       <div class="max-w-[90%] mx-auto">
         <div class="flex flex-row lg:hidden py-4">
           <button phx-click="toggle-menu" class="relative z-30 p-2  border rounded-lg">
@@ -25,18 +27,21 @@ defmodule GlobaltideWeb.AsideMenuComponent do
             <% end %>
           </button>
         </div>
-        <div class={"absolute  top-0 left-0 bg-white h-screen lg:block " <> if(@is_open, do: "block", else: "hidden")}>
-          <div>
-            <img src="/images/globaltide-lg2.jpeg" alt="" class="w-20 h-20 rounded-xl mx-auto lg:mt-4" />
+        <div class={"lg:w-full flex items-start   absolute  top-0 left-0 bg-blue-400 h-screen lg:block " <> if(@is_open, do: "block", else: "hidden")}>
+          <div class="flex items-start w-full">
+            <img src="/images/globaltide-lg2.jpeg" alt="" class="w-auto h-24 rounded-md mx-auto lg:my-4 flex" />
           </div>
           <%= for link <- @nav_links do %>
-            <a href={link.path} class="block py-2 px-4 lg:py-4 lg:px-8 hover:bg-blue-500 hover:text-white transition-colors">
-              <div class="flex items-center">
-                <span class="w-6 h-6 mr-4">{link.imgSrc}</span>
+            <a href={link.path} class="block py-2 px-4 lg:py-4 lg:px-8 hover:bg-red-500 hover:text-white transition-colors">
+              <div class="flex items-center ">
+                <img src={link.icon} alt={link.icon} class="w-6 h-6 mr-4 "/>
                 <span class="text-lg font-medium"><%= link.name %></span>
               </div>
             </a>
           <% end %>
+        </div>
+        <div class="flex flex-col">
+
         </div>
       </div>
     </aside>

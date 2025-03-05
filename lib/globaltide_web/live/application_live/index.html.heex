@@ -1,0 +1,48 @@
+<.header class="max-w-[90%] mx-auto py-8 lg:py-12 shadow-md">
+<h3 class="text-[24px] lg:text-[32px] font-bold">  Listing Applications
+</h3>  <:actions>
+    <.link patch={~p"/applications/new"}>
+      <button class="bg-blue-400 px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 rounded-md hover:bg-blue-700 text-white font-medium transition-colors duration-300 ease-in">New Application</button>
+    </.link>
+  </:actions>
+</.header>
+
+<div   class="max-w-[90%] mx-auto w-full"
+>
+  <.table
+  id="applications"
+  rows={@streams.applications}
+  row_click={fn {_id, application} -> JS.navigate(~p"/applications/#{application}") end}
+>
+  <:col :let={{_id, application}} label="Type of job">{application.type_of_job}</:col>
+  <:col :let={{_id, application}} label="Email">{application.email}</:col>
+  <:col :let={{_id, application}} label="Phone">{application.phone}</:col>
+  <:col :let={{_id, application}} label="Cv upload">{application.cv_upload}</:col>
+  <:action :let={{_id, application}}>
+    <div class="sr-only">
+      <.link navigate={~p"/applications/#{application}"}>Show</.link>
+    </div>
+    <.link patch={~p"/applications/#{application}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, application}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: application.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+</div>
+
+
+<.modal :if={@live_action in [:new, :edit]} id="application-modal" show on_cancel={JS.patch(~p"/applications")}>
+  <.live_component
+    module={GlobaltideWeb.ApplicationLive.FormComponent}
+    id={@application.id || :new}
+    title={@page_title}
+    action={@live_action}
+    application={@application}
+    patch={~p"/applications"}
+  />
+</.modal>
