@@ -8,9 +8,11 @@ defmodule GlobaltideWeb.JobTileComponent do
   attr :job_role, :string, required: true
   attr :desc, :string, required: true
 
+  # import GlobaltideWeb.Router.Helpers
+
   def job_tile(assigns) do
     ~H"""
-    <a href={Routes.live_path(@socket, GlobaltideWeb.JobLive.Show, @id)}
+    <a href={Routes.live_path(@socket, GlobaltideWeb.JobLive.Show, @id)}>
     >
       <div class="w-full h-auto flex flex-col mt-10 items-center justify-evenly space-y-10 cursor-pointer">
         <span class="border-[1px] rounded-xl w-full border-black"></span>

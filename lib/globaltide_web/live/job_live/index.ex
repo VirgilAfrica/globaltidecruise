@@ -5,7 +5,7 @@ defmodule GlobaltideWeb.JobLive.Index do
 
   import GlobaltideWeb.JobAvailableComponent
 
-  def mount(_params, _session, socket) do
+  def mount(_params, session, socket) do
     filters = [
       %{name: "All"},
       %{name: "Entertainment"},
@@ -18,7 +18,7 @@ defmodule GlobaltideWeb.JobLive.Index do
       %{name: "Casino"}
     ]
 
-    socket = assign_new(socket, :current_user, fn -> get_current_user(socket) end)
+    socket = assign_new(socket, :current_user, fn -> get_current_user(socket, session) end)
 
     jobs = Jobs.get_jobs()
 
@@ -58,8 +58,8 @@ defmodule GlobaltideWeb.JobLive.Index do
     """
   end
 
-  defp get_current_user(socket) do
-    case GlobaltideWeb.UserAuth.fetch_current_user(socket, %{}) do
+  defp get_current_user(socket, session) do
+    case GlobaltideWeb.UserAuth.fetch_current_user(socket, session) do
       %{assigns: %{current_user: user}} -> user
       _ -> nil
     end
