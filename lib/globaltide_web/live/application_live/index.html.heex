@@ -1,4 +1,21 @@
-<.header class="max-w-[90%] mx-auto py-8 lg:py-12 shadow-md">
+<div class="w-full max-w-[90%] mx-auto ">
+  <.link patch={~p"/dashboard"}>
+  
+    
+    <button class=" px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 font-medium hover:underline hover:underline-offset-4 transition-all duration-500 ease-in text-black hover:text-blue-500 flex flex-row items-center space-x-2">
+      <span class="w-4 h-2 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
+        </svg>
+      </span>
+      <p>
+        Go to Dashboard
+      </p>
+    </button>
+  </.link>
+</div>
+
+<.header class="max-w-[90%] mx-auto py-8 lg:py-12 shadow-md px-4">
 <h3 class="text-[24px] lg:text-[32px] font-bold">  Listing Applications
 </h3>  <:actions>
     <.link patch={~p"/applications/new"}>
