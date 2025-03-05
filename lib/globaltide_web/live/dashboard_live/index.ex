@@ -30,6 +30,6 @@ defmodule GlobaltideWeb.DashboardLive.Index do
   end
 
   defp get_current_user(socket) do
-    socket.assigns[:current_user] || %{name: "Kevin Kiarie", role: "admin"}
+    socket.assigns[:current_user] || %{name: "Viktor chevkosv", role: "admin"}
   end
 end

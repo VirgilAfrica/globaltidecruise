@@ -12,7 +12,7 @@ defmodule GlobaltideWeb.AsideMenuComponent do
       ])
 
     ~H"""
-    <aside class="w-full lg:w-1/5 shadow-md lg:fixed lg:left-0 lg:top-0 lg:h-full lg:z-20 lg:bg-blue-400">
+    <aside class="w-full bg-white lg:w-1/5 shadow-md lg:fixed lg:left-0 lg:top-0 lg:h-full lg:z-20 lg:bg-blue-400">
       <div class="max-w-[90%] mx-auto">
         <div class="flex flex-row lg:hidden py-4">
           <button phx-click="toggle-menu" class="relative z-30 p-2  border rounded-lg">

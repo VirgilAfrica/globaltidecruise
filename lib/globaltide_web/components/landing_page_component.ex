@@ -417,7 +417,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
       @mouseleave="hover = false"
       class="relative h-[400px] md:h-auto flex flex-col items-center w-full bg-transparent rounded-t-xl shadow-lg transform transition-transform duration-300"
     >
-      <div class="bg-cover bg-center w-full h-[250px]" style="background-image: url('{@role.imgRef}')">
+      <div class="bg-cover bg-center w-full h-[260px] rounded-md" style={"background-image: url('#{@role.imgRef}');"}>
       </div>
 
       <div class="h-[150px] md:h-[200px] lg:h-1/3 flex flex-row items-center justify-center w-full text-center p-2 bg-gradient-to-t from-black to-transparent">
