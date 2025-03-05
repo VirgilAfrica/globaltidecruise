@@ -15,7 +15,7 @@ defmodule GlobaltideWeb.JobTileComponent do
         <span class="border-[1px] rounded-xl w-full border-black"></span>
         <div class="flex flex-col md:flex-row lg:flex-row items-center justify-center">
           <div class="flex items-center p-2 lg:p-4 lg:w-1/2">
-            <img src={@img_ref} alt={@job_role} class="bg-cover bg-center rounded-3xl" />
+            <img src={@img_ref} alt={@job_tag} class="bg-cover bg-center rounded-3xl" />
           </div>
           <div class="flex flex-col w-full items-start justify-start space-y-2 max-w-[90%] mx-auto lg:p-12">
             <span class="text-[16px] md:text-[20px] lg:text-[24px] font-bold"><%= @job_tag %></span>
