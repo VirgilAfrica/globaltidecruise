@@ -14,7 +14,8 @@ def dashboard_component(assigns) do
         <p>You have admin privileges.</p>
         <% else %>
         <p>You are a regular user.</p>
-        <% end %> <% else %>
+        <% end %>
+        <% else %>
         <h1>Welcome, Guest!</h1>
         <p>Please log in to access more features.</p>
         <% end %>
