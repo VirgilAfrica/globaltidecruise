@@ -6,8 +6,8 @@ defmodule GlobaltideWeb.AsideMenuComponent do
       assign(assigns, :nav_links, [
         %{icon:  "/images/logos/home.png", name: "Home", path: "/"},
         %{icon: "/images/logos/briefcase.png", name: "View Jobs Available", path: "/jobs"},
-        %{icon: "/images/logos/loading.png", name: "Application Status", path: "/"},
-        %{icon: "/images/logos/apply.png", name: "Apply Today", path: "/"}
+        %{icon: "/images/logos/loading.png", name: "Application Status", path: "/dashboard/applications/:id"},
+        %{icon: "/images/logos/apply.png", name: "Apply Today", path: "/dashboard/applications/new"}
 
       ])
 

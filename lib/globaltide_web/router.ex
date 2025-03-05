@@ -28,7 +28,7 @@ defmodule GlobaltideWeb.Router do
     live "/jobs/:id", JobLive.Show, :show
 
     live "/applications", ApplicationLive.Index, :index
-    live "/jobs/:job_id/dashboard/applications/new", ApplicationLive.Index, :new
+    live "/dashboard/applications/new", ApplicationLive.Index, :new
     live "/dashboard/applications/:id/edit", ApplicationLive.Index, :edit
 
     live "/dashboard/applications/:id", ApplicationLive.Show, :show

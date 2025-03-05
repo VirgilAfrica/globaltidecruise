@@ -2,13 +2,22 @@ defmodule GlobaltideWeb.LandingLive.Index do
   use GlobaltideWeb, :live_view
 
   import GlobaltideWeb.LandingPageComponent
+  alias Globaltide.Accounts
 
-  def mount(_params, _session, socket) do
-    socket = assign_new(socket, :current_user, fn -> get_current_user(socket) end)
-    {:ok, assign(socket, is_open: false, current_index: 0)}
+  def mount(_params, session, socket) do
+    # Fetch user from session token
+    current_user =
+      case session["user_token"] do
+        nil -> nil
+        token -> Accounts.get_user_by_session_token(token)
+      end
+
+    # Initialize is_open state
+    {:ok, assign(socket, current_user: current_user, is_open: false, current_index: 0)}
   end
 
   def handle_event("toggle-menu", _params, socket) do
+    # Toggle is_open state
     {:noreply, assign(socket, is_open: !socket.assigns.is_open)}
   end
 
@@ -24,12 +33,4 @@ defmodule GlobaltideWeb.LandingLive.Index do
     <.footer />
     """
   end
-
-  defp get_current_user(socket) do
-    case GlobaltideWeb.UserAuth.fetch_current_user(socket, %{}) do
-      %{assigns: %{current_user: user}} -> user
-      _ -> nil
-    end
-  end
-
 end

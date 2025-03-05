@@ -7,11 +7,10 @@ defmodule GlobaltideWeb.JobTileComponent do
   attr :job_tag, :string, required: true
   attr :job_role, :string, required: true
   attr :desc, :string, required: true
+  attr :socket, :any, required: true
 
   def job_tile(assigns) do
     ~H"""
-    <a href={Routes.live_path(@socket, GlobaltideWeb.JobLive.Show, @id)}
-    >
       <div class="w-full h-auto flex flex-col mt-10 items-center justify-evenly space-y-10 cursor-pointer">
         <span class="border-[1px] rounded-xl w-full border-black"></span>
         <div class="flex flex-col md:flex-row lg:flex-row items-center justify-center">
@@ -27,8 +26,6 @@ defmodule GlobaltideWeb.JobTileComponent do
           </div>
         </div>
       </div>
-    </a>
     """
   end
-
 end

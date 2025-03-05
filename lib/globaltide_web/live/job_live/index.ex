@@ -2,10 +2,11 @@ defmodule GlobaltideWeb.JobLive.Index do
   use GlobaltideWeb, :live_view
 
   alias Globaltide.Jobs
+  alias Globaltide.Accounts
 
   import GlobaltideWeb.JobAvailableComponent
 
-  def mount(_params, _session, socket) do
+  def mount(_params, session, socket) do
     filters = [
       %{name: "All"},
       %{name: "Entertainment"},
@@ -18,7 +19,12 @@ defmodule GlobaltideWeb.JobLive.Index do
       %{name: "Casino"}
     ]
 
-    socket = assign_new(socket, :current_user, fn -> get_current_user(socket) end)
+    # Fetch user from session token
+    current_user =
+      case session["user_token"] do
+        nil -> nil
+        token -> Accounts.get_user_by_session_token(token)
+      end
 
     jobs = Jobs.get_jobs()
 
@@ -27,14 +33,16 @@ defmodule GlobaltideWeb.JobLive.Index do
         filters: filters,
         active_filter: "All",
         is_open: false,
-        jobs: jobs
+        jobs: jobs,
+        current_user: current_user
       )
 
     {:ok, socket}
   end
 
   def handle_event("toggle-menu", _params, socket) do
-    {:noreply, assign(socket, :is_open, !socket.assigns.is_open)}
+    # Toggle is_open state
+    {:noreply, assign(socket, is_open: !socket.assigns.is_open)}
   end
 
   def handle_event("set_filter", %{"filter" => filter_name}, socket) do
@@ -54,15 +62,7 @@ defmodule GlobaltideWeb.JobLive.Index do
     <.navbar is_open={@is_open} toggle_event="toggle-menu" current_user={@current_user} />
     <.hero_section />
     <.filter_section filters={@filters} active_filter={@active_filter} />
-    <.job_list jobs={@jobs}/>
+    <.job_list jobs={@jobs} />
     """
   end
-
-  defp get_current_user(socket) do
-    case GlobaltideWeb.UserAuth.fetch_current_user(socket, %{}) do
-      %{assigns: %{current_user: user}} -> user
-      _ -> nil
-    end
-  end
-
 end

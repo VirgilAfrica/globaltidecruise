@@ -1,7 +1,6 @@
 defmodule GlobaltideWeb.Common.NavbarComponent do
   use Phoenix.Component
 
-  import Phoenix.HTML
 
   def navbar(assigns) do
     assigns =
@@ -68,7 +67,7 @@ defmodule GlobaltideWeb.Common.NavbarComponent do
         </div>
       </div>
 
-      <div class={"absolute bg-white shadow-md top-25 lg:hidden w-full p-4 transition-all duration-500 ease-in-out transform " <>
+      <div class={"absolute bg-white shadow-md z-20 top-25 lg:hidden w-full p-4 transition-all duration-500 ease-in-out transform " <>
                    if(@is_open, do: "opacity-100 translate-y-0", else: "opacity-0 -translate-y-5 pointer-events-none")}>
         <ul class="flex flex-col items-start justify-evenly space-y-4 text-center">
           <%= for link <- @nav_links do %>
@@ -81,12 +80,11 @@ defmodule GlobaltideWeb.Common.NavbarComponent do
         </ul>
         <div class="flex flex-col space-y-4 mt-4 w-full">
           <%= if @current_user do %>
-            <form action="/users/log_out" method="post">
-              <input type="hidden" name="_method" value="delete" />
-              <button type="submit" class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 px-8 py-4">
-                Logout
-              </button>
-            </form>
+          <.link href="/users/log_out" method="delete" class="block">
+                <button class="w-full font-bold text-white bg-red-500 px-8 py-4 hover:bg-red-700 transition-colors">
+                  Logout
+                </button>
+              </.link>
           <% else %>
             <a href="/users/log_in">
               <button class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 px-8 py-4">
