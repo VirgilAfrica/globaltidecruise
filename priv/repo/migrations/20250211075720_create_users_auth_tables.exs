@@ -7,6 +7,7 @@ defmodule Globaltide.Repo.Migrations.CreateUsersAuthTables do
     create table(:users) do
       add :email, :citext, null: false
       add :hashed_password, :string, null: false
+      add :role, :string, default: "User"
       add :confirmed_at, :utc_datetime
 
       timestamps(type: :utc_datetime)

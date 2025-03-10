@@ -42,7 +42,9 @@ defmodule Globaltide.Accounts.User do
     |> cast(attrs, [:name, :email, :password, :role])
     |> validate_required([:name, :email, :password, :role])
     |> validate_email(opts)
-    |> validate_inclusion(:role, ["User","Admin"],message: "Role must be 'User' for job applicants or 'Admin' for managers")
+    |> validate_inclusion(:role, ["User", "Admin"],
+      message: "Role must be 'User' for job applicants or 'Admin' for managers"
+    )
     |> restrict_admin_count()
     |> validate_password(opts)
     |> validate_name()
@@ -62,8 +64,8 @@ defmodule Globaltide.Accounts.User do
       changeset
     end
   end
+
   # continuation
-  
 
   defp validate_email(changeset, opts) do
     changeset
@@ -76,7 +78,7 @@ defmodule Globaltide.Accounts.User do
   defp validate_password(changeset, opts) do
     changeset
     |> validate_required([:password])
-    |> validate_length(:password, min: 12, max: 72)
+    |> validate_length(:password, min: 6, max: 72)
     # Examples of additional password validation:
     # |> validate_format(:password, ~r/[a-z]/, message: "at least one lower case character")
     # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")
