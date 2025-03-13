@@ -8,11 +8,11 @@ defmodule GlobaltideWeb.UserRegistrationLive do
     ~H"""
     <div class="mx-auto max-w-[50%] p-4 hover:shadow-md transition-shadow duration-300">
       <div class="w-full item-center justify-center flex">
-        <img src="/images/globaltide-lg2.jpeg" alt="" class="rounded-3xl lg:w-40 lg:h-40">
+        <img src="/images/globaltide-lg2.jpeg" alt="" class="rounded-3xl lg:w-40 lg:h-40" />
       </div>
       <.header class="text-center">
         Register for an account
-        <:subtitle >
+        <:subtitle>
           Already registered?
           <.link navigate={~p"/users/log_in"} class="font-semibold text-blue-400 hover:underline">
             Log in
@@ -37,12 +37,22 @@ defmodule GlobaltideWeb.UserRegistrationLive do
         <.input field={@form[:name]} type="text" label="Name" required />
         <.input field={@form[:email]} type="email" label="Email" required />
         <.input field={@form[:password]} type="password" label="Password" required />
-
-        <!-- Role Selection Dropdown -->
-        <.input field={@form[:role]} type="select" label="Role" options={["User", "Admin"]} required />
+        
+    <!-- Role Selection Dropdown -->
+        <.input
+          :if={length(@users_who_are_admins) < 2}
+          field={@form[:role]}
+          type="select"
+          label="Role"
+          options={["User", "Admin"]}
+          required
+        />
 
         <:actions>
-          <.button phx-disable-with="Creating account..." class="w-full hover:bg-blue-500 transition-colors ease-in">
+          <.button
+            phx-disable-with="Creating account..."
+            class="w-full hover:bg-blue-500 transition-colors ease-in"
+          >
             Create an account
           </.button>
         </:actions>
@@ -54,8 +64,13 @@ defmodule GlobaltideWeb.UserRegistrationLive do
   def mount(_params, _session, socket) do
     changeset = Accounts.change_user_registration(%User{})
 
+    users_who_are_admins = Accounts.users_who_are_admins()
+
+    IO.inspect(users_who_are_admins)
+
     socket =
       socket
+      |> assign(:users_who_are_admins, users_who_are_admins)
       |> assign(trigger_submit: false, check_errors: false)
       |> assign_form(changeset)
 

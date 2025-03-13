@@ -26,6 +26,11 @@ defmodule Globaltide.Accounts do
     Repo.get_by(User, email: email)
   end
 
+  def users_who_are_admins do
+    from(u in User, where: u.role == "Admin")
+    |> Repo.all()
+  end
+
   @doc """
   Gets a user by email and password.
 
@@ -44,14 +49,13 @@ defmodule Globaltide.Accounts do
     if User.valid_password?(user, password), do: user
   end
 
-  #getting admin count
+  # getting admin count
 
   def count_admins do
     import Ecto.Query, only: [from: 2]
 
     from(u in Globaltide.Accounts.User, where: u.role == "Admin")
     |> Globaltide.Repo.aggregate(:count, :id)
-
   end
 
   @doc """
