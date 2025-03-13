@@ -60,7 +60,7 @@ defmodule GlobaltideWeb.JobLive.Show do
           current_user={@current_user}
         />
 
-        <div class="mt-4 max-w-[90%] mx-auto">
+        <div class="my-8 max-w-[90%] mx-auto">
           <%= if @current_user do %>
               <p
                 class=" text-[16px] md:text-[18px]  transition duration-300 font-light"
@@ -69,9 +69,9 @@ defmodule GlobaltideWeb.JobLive.Show do
               </p>
           <% else %>
 
-            <a href="/users/log_in" class="px-6 py-3 bg-gray-500 text-white text-[16px] md:text-[18px] rounded-lg hover:bg-gray-700 transition duration-300">
-              Login to Apply
-            </a>
+            <p  class="font-bold uppercase">
+            You need to login to apply!
+            </p>
           <% end %>
         </div>
       <% else %>
