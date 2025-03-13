@@ -6,7 +6,7 @@ defmodule GlobaltideWeb.AsideMenuComponent do
     ~H"""
     <aside
       class={"bg-blue-600 h-full lg:h-auto fixed inset-y-0 left-0 transition-transform duration-300 ease-in-out z-50 " <>
-      if @is_open, do: "translate-x-0 w-3/4  md:w-1/4 overflow-y-auto", else: "-translate-x-full lg:translate-x-0"}
+      if @is_open, do: "translate-x-0 w-3/4  lg:w-1/4 overflow-y-auto", else: "-translate-x-full lg:translate-x-0"}
     >
       <div class="p-6 space-y-6">
         <div class="flex justify-between items-center">
@@ -18,27 +18,32 @@ defmodule GlobaltideWeb.AsideMenuComponent do
         <ul class="space-y-4">
           <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
             <Heroicons.icon name="home" class="w-6 h-6" />
-            <a href="">Homepage</a>
+            <a href="/">Homepage</a>
           </li>
           <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
             <Heroicons.icon name="document-check" class="w-6 h-6" />
-            <a href="">Application Status</a>
+            <a href="/application/show">Application Status</a>
           </li>
           <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
             <Heroicons.icon name="briefcase" class="w-6 h-6" />
-            <a href="">Apply Jobs</a>
+            <a href="/jobs">Apply Jobs</a>
           </li>
         </ul>
 
         <h2 class="text-gray-200 text-lg font-bold">Preferences</h2>
         <ul class="space-y-4">
+          
           <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
+            <%= if @current_user do %>
             <Heroicons.icon name="cog" class="w-6 h-6" />
-            <a href="">User Settings</a>
+            <a href="/users/setings">User Settings</a>
+            <% else %>
+            <p class="uppercase font-semibold text-[14px] lg:text-[16px]">log in to use this feature</p>
+            <% end %>
           </li>
           <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
             <Heroicons.icon name="share" class="w-6 h-6" />
-            <a href="">Share</a>
+            <a href="/copy">Share</a>
           </li>
 
         </ul>
