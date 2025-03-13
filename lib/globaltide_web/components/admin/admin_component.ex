@@ -33,7 +33,7 @@ defmodule GlobaltideWeb.Admin.AdminComponent do
               <%else%>
                 <div>
                   <h1 class="text-[16px] md:text-[24px] font-bold">You are not logged in</h1>
-                  <p class="text-[16px] md:text-[18px] font-medium">Click <a class="text-blue-500 underline underline-offset-8" href="/users/register">Here</a> to login</p>
+                  <p class="text-[16px] md:text-[18px] font-medium">Login to access more features</p>
                 </div>
               <% end %>
             </div>
