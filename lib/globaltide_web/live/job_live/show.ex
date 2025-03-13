@@ -1,13 +1,12 @@
 defmodule GlobaltideWeb.JobLive.Show do
   use GlobaltideWeb, :live_view
-  alias Globaltide.Jobs
   alias Globaltide.Accounts
   import GlobaltideWeb.Job.JobDetailTile
   import GlobaltideWeb.Common.NavbarComponent
 
   @impl true
   def mount(%{"id" => id}, session, socket) do
-    job = Jobs.get_job_by_id(String.to_integer(id))
+    job = Globaltide.Repo.get(Globaltide.JobListing, String.to_integer(id))
     IO.inspect(id, label: "Received Job ID")
 
     # Fetch user from session token
@@ -46,17 +45,17 @@ defmodule GlobaltideWeb.JobLive.Show do
       <%= if @job do %>
         <.job_tile
           img_ref={@job.img_ref}
-          jobRole={@job.jobTitle}
-          jobTag={@job.jobTag}
-          longDesc={@job.longDesc}
+          jobRole={@job.job_title}
+          jobTag={@job.job_tag}
+          longDesc={@job.long_desc}
           btn={@job.btn}
           heading={@job.heading}
           roles={@job.roles}
           req={@job.req}
-          minRequirements={@job.minRequirements}
-          sideHead={@job.sideHead}
-          sideLogo={@job.sideLogo}
-          sideDesc={@job.sideDesc}
+          minRequirements={@job.min_requirements}
+          sideHead={@job.side_head}
+          sideLogo={@job.side_logo}
+          sideDesc={@job.side_desc}
           current_user={@current_user}
         />
 
