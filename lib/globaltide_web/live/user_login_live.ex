@@ -1,9 +1,10 @@
 defmodule GlobaltideWeb.UserLoginLive do
   use GlobaltideWeb, :live_view
-  # alias checks from account for easier redirect
-  alias Globaltide.Accounts
-  alias Argon2
   alias Heroicons
+  alias Argon2
+  # alias Globaltide.Accounts
+
+  @impl true
   def render(assigns) do
     ~H"""
     <section class="w-full bg-linear-to-r/srgb from-indigo-500 to-teal-400">
@@ -22,7 +23,7 @@ defmodule GlobaltideWeb.UserLoginLive do
             </:subtitle>
           </.header>
 
-          <.simple_form for={@form} id="login_form" action={~p"/users/log_in"} phx-update="ignore">
+          <.simple_form for={@form} id="login_form" phx-submit="login">
             <.input field={@form[:email]} type="email" label="Email" required />
             <.input field={@form[:password]} type="password" label="Password" required />
 
@@ -48,10 +49,10 @@ defmodule GlobaltideWeb.UserLoginLive do
           </.simple_form>
         </div>
     </section>
-
     """
   end
 
+  @impl true
   def mount(_params, _session, socket) do
     email = Phoenix.Flash.get(socket.assigns.flash, :email)
     form = to_form(%{"email" => email}, as: "user")
@@ -67,15 +68,16 @@ defmodule GlobaltideWeb.UserLoginLive do
           _ -> "/dashboard"
         end
 
-        {:noreply, socket |> put_flash(:info, "Login successful #{user.name}") |> push_navigate(to: path)}
+        {:noreply, socket |> put_flash(:info, "Login successful") |> push_navigate(to: path)}
 
       :error ->
         {:noreply, socket |> put_flash(:error, "Invalid credentials")}
     end
   end
 
-  defp authenticate_user(email,password)do
-    case Globaltide.Accounts.get_user_by_email(email)do
+  defp authenticate_user(email, password) do
+    # Replace this with your actual authentication logic
+    case Globaltide.Accounts.get_user_by_email(email) do
       nil -> :error
       %Globaltide.Accounts.User{} = user ->
         if Argon2.verify_pass(password, user.hashed_password) do
@@ -85,5 +87,4 @@ defmodule GlobaltideWeb.UserLoginLive do
         end
     end
   end
-
 end

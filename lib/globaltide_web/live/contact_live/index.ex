@@ -23,10 +23,10 @@ defmodule GlobaltideWeb.ContactLive.Index do
     """
   end
 
-  defp get_current_user(socket) do
-    case GlobaltideWeb.UserAuth.fetch_current_user(socket, %{}) do
-      %{assigns: %{current_user: user}} -> user
-      _ -> nil
-    end
-  end
+  # defp get_current_user(socket) do
+  #   case GlobaltideWeb.UserAuth.fetch_current_user(socket, %{}) do
+  #     %{assigns: %{current_user: user}} -> user
+  #     _ -> nil
+  #   end
+  # end
 end

@@ -5,25 +5,37 @@ defmodule GlobaltideWeb.Admin.AdminComponent do
   def admin_panel(assigns)do
     ~H"""
       <section class="w-4/5">
-        <div class="">
-          <div class="border-b-2 border-blue-200 w-full py-10 shadow-md flex justify-between">
+        <div class=" border-b-2 shadow-md">
+          <div class="max-w-[90%] mx-auto  w-full py-4 flex items-center justify-between">
             <div class="flex flex-col w-auto">
-              <div class="px-8 flex flex-row items-center justify-start">
-                <h3 class="flex text-[24px] md:text-[32px] font-bold">Welcome back</h3> <h3 class="text-[24px] md:text-[32px] font-semibold text-red-500 ">
-                  {@current_user.name}
-                </h3>
+              <%= if @current_user do %>
+              
+              <div clas>
+                <div class="flex flex-row items-center justify-start">
+                
+                  <h3 class="flex text-[24px] md:text-[32px] font-bold">Welcome back</h3> <h3 class="text-[24px] md:text-[32px] font-semibold text-red-500 ">
+                    {@current_user.name}
+                  </h3>
+                </div>
+                <div class="px-4 space-x-4 flex items-center justify-center">
+                  <h4 class="flex-row  text-[16px] md:text-[24px] font-bold flex space-x-4">
+                    You have   
+                   </h4>
+                   <p class="text-blue-500 space-x-4 font-bold">
+                    {@current_user.role}
+                  </p>
+                  <h4 class="flex-row  text-[16px] md:text-[24px] font-bold flex space-x-4">
+                    Priviledges               
+                    </h4>
+                </div>
               </div>
-              <div class="px-4 space-x-4 flex items-center justify-center">
-                <h4 class="flex-row  text-[16px] md:text-[24px] font-bold flex space-x-4">
-                  You have   
-                 </h4>
-                 <p class="text-blue-500 space-x-4 font-bold">
-                  {@current_user.role}
-                </p>
-                <h4 class="flex-row  text-[16px] md:text-[24px] font-bold flex space-x-4">
-                  Priviledges               
-                  </h4>
-              </div>
+              
+              <%else%>
+                <div>
+                  <h1 class="text-[16px] md:text-[24px] font-bold">You are not logged in</h1>
+                  <p class="text-[16px] md:text-[18px] font-medium">Click <a class="text-blue-500 underline underline-offset-8" href="/users/register">Here</a> to login</p>
+                </div>
+              <% end %>
             </div>
             <div class="">
               <div>

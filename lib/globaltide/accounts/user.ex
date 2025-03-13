@@ -56,7 +56,7 @@ defmodule Globaltide.Accounts.User do
       current_admin_count = Globaltide.Accounts.count_admins()
 
       if current_admin_count >= 4 do
-        add_error(changeset, :role, "Only four admins (2Developer & 2Managers) are allowed.")
+        add_error(changeset, :role, "Only four admins (2-Developer & 2-Managers) are allowed.")
       else
         changeset
       end
