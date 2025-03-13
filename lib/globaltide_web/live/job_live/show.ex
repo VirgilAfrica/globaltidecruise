@@ -1,13 +1,12 @@
 defmodule GlobaltideWeb.JobLive.Show do
   use GlobaltideWeb, :live_view
-  alias Globaltide.Jobs
   alias Globaltide.Accounts
   import GlobaltideWeb.Job.JobDetailTile
   import GlobaltideWeb.Common.NavbarComponent
 
   @impl true
   def mount(%{"id" => id}, session, socket) do
-    job = Jobs.get_job_by_id(String.to_integer(id))
+    job = Globaltide.Repo.get(Globaltide.JobListing, String.to_integer(id))
     IO.inspect(id, label: "Received Job ID")
 
     # Fetch user from session token
@@ -46,21 +45,21 @@ defmodule GlobaltideWeb.JobLive.Show do
       <%= if @job do %>
         <.job_tile
           img_ref={@job.img_ref}
-          jobRole={@job.jobTitle}
-          jobTag={@job.jobTag}
-          longDesc={@job.longDesc}
+          jobRole={@job.job_title}
+          jobTag={@job.job_tag}
+          longDesc={@job.long_desc}
           btn={@job.btn}
           heading={@job.heading}
           roles={@job.roles}
           req={@job.req}
-          minRequirements={@job.minRequirements}
-          sideHead={@job.sideHead}
-          sideLogo={@job.sideLogo}
-          sideDesc={@job.sideDesc}
+          minRequirements={@job.min_requirements}
+          sideHead={@job.side_head}
+          sideLogo={@job.side_logo}
+          sideDesc={@job.side_desc}
           current_user={@current_user}
         />
 
-        <div class="mt-4 max-w-[90%] mx-auto">
+        <div class="my-8 max-w-[90%] mx-auto">
           <%= if @current_user do %>
               <p
                 class=" text-[16px] md:text-[18px]  transition duration-300 font-light"
@@ -69,9 +68,9 @@ defmodule GlobaltideWeb.JobLive.Show do
               </p>
           <% else %>
 
-            <a href="/users/log_in" class="px-6 py-3 bg-gray-500 text-white text-[16px] md:text-[18px] rounded-lg hover:bg-gray-700 transition duration-300">
-              Login to Apply
-            </a>
+            <p  class="font-bold uppercase">
+            You need to login to apply!
+            </p>
           <% end %>
         </div>
       <% else %>

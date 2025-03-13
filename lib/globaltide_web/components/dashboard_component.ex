@@ -10,10 +10,10 @@ def dashboard_component(assigns) do
       <div class="flex flex-col">
         <%= if @current_user do %>
         <h1 class="text-[20px] md:text-[24px]">Welcome, <%= @current_user.name %>!</h1>
-        <%= if @current_user.role == "admin" do %>
-        <p class="font-bold text-[16px] text-[18px]">You have admin privileges.</p>
+        <%= if @current_user.role == "User" do %>
+        <p class="font-bold text-[16px] text-[18px]">Check your job applications</p>
         <% else %>
-        <p class="font-medium text-blue-500 text-[16px] md:text-[18px]">You are a regular user.</p>
+        <p class="font-medium text-blue-500 text-[16px] md:text-[18px]">You are an admin. Click here for redirect</p>
         <% end %>
         <% else %>
         <h1>Welcome, Guest!</h1>

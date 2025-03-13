@@ -6,9 +6,9 @@ defmodule GlobaltideWeb.UserRegistrationLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-[50%] p-4 hover:shadow-md transition-shadow duration-300">
+    <div class="mx-auto max-w-[90%] lg:max-w-[60%] p-4 hover:shadow-md transition-shadow duration-300">
       <div class="w-full item-center justify-center flex">
-        <img src="/images/globaltide-lg2.jpeg" alt="" class="rounded-3xl lg:w-40 lg:h-40" />
+        <img src="/images/globaltide-lg2.jpeg" alt="" class="rounded-3xl w-20 h-20 lg:w-40 lg:h-40" />
       </div>
       <.header class="text-center">
         Register for an account
@@ -37,8 +37,7 @@ defmodule GlobaltideWeb.UserRegistrationLive do
         <.input field={@form[:name]} type="text" label="Name" required />
         <.input field={@form[:email]} type="email" label="Email" required />
         <.input field={@form[:password]} type="password" label="Password" required />
-        
-    <!-- Role Selection Dropdown -->
+
         <.input
           :if={length(@users_who_are_admins) < 2}
           field={@form[:role]}
@@ -46,6 +45,7 @@ defmodule GlobaltideWeb.UserRegistrationLive do
           label="Role"
           options={["User", "Admin"]}
           required
+          class="w-40"
         />
 
         <:actions>

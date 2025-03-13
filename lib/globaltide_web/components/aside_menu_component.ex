@@ -1,6 +1,8 @@
 defmodule GlobaltideWeb.AsideMenuComponent do
   use Phoenix.Component
 
+  alias Heroicons
+
   def aside_menu_component(assigns) do
     assigns =
       assign(assigns, :nav_links, [

@@ -1,9 +1,8 @@
 defmodule GlobaltideWeb.JobLive.Index do
   use GlobaltideWeb, :live_view
 
-  alias Globaltide.Jobs
   alias Globaltide.Accounts
-
+  alias Globaltide.JobListing
   import GlobaltideWeb.JobAvailableComponent
 
   def mount(_params, session, socket) do
@@ -19,6 +18,7 @@ defmodule GlobaltideWeb.JobLive.Index do
       %{name: "Casino"}
     ]
 
+    socket = assign_new(socket, :current_user, fn -> get_current_user(socket, session) end)
     # Fetch user from session token
     current_user =
       case session["user_token"] do
@@ -26,7 +26,7 @@ defmodule GlobaltideWeb.JobLive.Index do
         token -> Accounts.get_user_by_session_token(token)
       end
 
-    jobs = Jobs.get_jobs()
+    jobs = Globaltide.Repo.all(JobListing)
 
     socket =
       assign(socket,
@@ -48,10 +48,10 @@ defmodule GlobaltideWeb.JobLive.Index do
   def handle_event("set_filter", %{"filter" => filter_name}, socket) do
     filtered_jobs =
       if filter_name == "All" do
-        Jobs.get_jobs()
+        Globaltide.Repo.all(JobListing)
       else
-        Jobs.get_jobs()
-        |> Enum.filter(fn job -> job.jobTag == filter_name end)
+        Globaltide.Repo.all(JobListing)
+        |> Enum.filter(fn job -> job.job_tag == filter_name end)
       end
 
     {:noreply, assign(socket, active_filter: filter_name, jobs: filtered_jobs)}
@@ -69,9 +69,9 @@ defmodule GlobaltideWeb.JobLive.Index do
           <.job_tile
             id={job.id}
             img_ref={job.img_ref}
-            job_tag={job.jobTag}
-            job_role={job.jobTitle}
-            desc={job.shortDesc}
+            job_tag={job.job_tag}
+            job_role={job.job_title}
+            desc={job.short_desc}
             socket={@socket}
           />
         </a>
@@ -79,4 +79,12 @@ defmodule GlobaltideWeb.JobLive.Index do
     </div>
     """
   end
+
+  defp get_current_user(socket, session) do
+    case GlobaltideWeb.UserAuth.fetch_current_user(socket, session) do
+      %{assigns: %{current_user: user}} -> user
+      _ -> nil
+    end
+  end
+
 end
