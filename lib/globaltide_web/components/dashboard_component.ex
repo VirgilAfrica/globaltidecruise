@@ -2,9 +2,9 @@ defmodule GlobaltideWeb.DashboardComponent do
 use Phoenix.Component
 def dashboard_component(assigns) do
 ~H"""
-<section class="w-full lg:w-4/5  lg:ml-auto lg:h-full">
+<section class="w-full lg:w-3/4  lg:ml-auto lg:h-full">
   <div
-    class=" mx-auto flex flex-col lg:py-8 lg:shadow-md"
+    class=" mx-auto flex flex-col border-b-2 border-grey-400 py-4 lg:py-8 lg:shadow-md"
   >
     <div class="w-full flex lg:flex-row flex-col items-start justify-between max-w-[90%] mx-auto" >
       <div class="flex flex-col">
@@ -13,7 +13,7 @@ def dashboard_component(assigns) do
         <%= if @current_user.role == "User" do %>
         <p class="font-bold text-[16px] text-[18px]">Check your job applications</p>
         <% else %>
-        <p class="font-medium text-blue-500 text-[16px] md:text-[18px]">You are an admin. Click here for redirect</p>
+        <p class="font-medium text-blue-500 text-[16px] md:text-[18px]">You are an admin. Click here for redirec</p>
         <% end %>
         <% else %>
         <h1>Welcome, Guest!</h1>
@@ -21,19 +21,7 @@ def dashboard_component(assigns) do
         <% end %>
       </div>
       <div>
-      <%= if @current_user do %>
-          <.link href="/users/log_out" method="delete" class="block">
-                <button class="w-full font-bold text-white bg-red-500 px-8 py-4 hover:bg-red-700 transition-colors">
-                  Logout
-                </button>
-              </.link>
-          <% else %>
-            <a href="/users/log_in">
-              <button class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 px-8 py-4">
-                Login
-              </button>
-            </a>
-          <% end %>
+
       </div>
     </div>
   </div>
