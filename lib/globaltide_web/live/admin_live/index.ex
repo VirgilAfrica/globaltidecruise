@@ -1,18 +1,20 @@
 defmodule GlobaltideWeb.AdminLive.Index do
+alias Globaltide.Accounts
   use GlobaltideWeb, :live_view
 
   import GlobaltideWeb.Admin.AdminComponent
   import GlobaltideWeb.Admin.AsideBarComponent
 
   @impl true
-  def mount(_params, _session, socket) do
-    socket =
-      assign(socket,
-        is_sidebar_open: false,
-        current_user: get_current_user(socket)
-      )
+  def mount(_params, session, socket) do
 
-    {:ok, socket}
+    current_user =
+      case session["user_token"]do
+        nil -> nil
+        token -> Accounts.get_user_by_session_token(token)
+      end
+
+    {:ok,assign( socket,is_sidebar_open: false,current_user: current_user)}
   end
 
   @impl true
