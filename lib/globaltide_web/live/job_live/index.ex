@@ -7,7 +7,6 @@ defmodule GlobaltideWeb.JobLive.Index do
   import GlobaltideWeb.JobAvailableComponent
 
   def mount(_params, session, socket) do
-  def mount(_params, session, socket) do
     filters = [
       %{name: "All"},
       %{name: "Entertainment"},
