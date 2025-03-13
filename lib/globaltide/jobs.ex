@@ -2,7 +2,6 @@ defmodule Globaltide.Jobs do
   def get_jobs do
   [
     %{id: 1,
-
       img_ref: "/images/updates/entertainment.jpg",
       jobTag: "Entertainment",
       jobTitle: "Youth Staff",

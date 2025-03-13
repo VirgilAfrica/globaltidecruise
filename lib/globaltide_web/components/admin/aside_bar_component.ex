@@ -10,7 +10,7 @@ defmodule GlobaltideWeb.Admin.AsideBarComponent do
           <img src="/images/globaltide-lg2.jpeg" alt="Globaltide-admin" class="w-20 h-20">
         </div>
         <div class="">
-          <h2 class="text-[24px] md:text-[32px] font-bold text-white text-start">Main Menu</h2>
+          <h2 class="text-[16px] md:text-[24px] font-bold text-gray-200 text-start">Main Menu</h2>
         </div>
         <div class="space-y-4">
           <ul class="space-y-4 flex flex-col" >
@@ -35,7 +35,7 @@ defmodule GlobaltideWeb.Admin.AsideBarComponent do
           </ul>
         </div>
         <div>
-          <h1 class="text-[24px] md:text-[32px] font-bold text-white text-start">Others</h1>        
+          <h1 class="text-[16px] md:text-[24px] font-bold text-white text-start">Others</h1>        
         </div>
         <div class="space-y-4">
           <ul class="space-y-4 flex flex-col" >
@@ -59,7 +59,7 @@ defmodule GlobaltideWeb.Admin.AsideBarComponent do
           </ul>
         </div>
         <div>
-          <h1 class="text-[24px] md:text-[32px] font-bold text-white text-start">Preferences</h1>        
+          <h1 class="text-[16px] md:text-[24px] font-bold text-white text-start">Preferences</h1>        
         </div>
         <div class="space-y-4">
           <ul class="space-y-4 flex flex-col" >
