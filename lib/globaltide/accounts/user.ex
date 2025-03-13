@@ -5,7 +5,7 @@ defmodule Globaltide.Accounts.User do
   schema "users" do
     field :email, :string
     field :name, :string
-    field :role, :string, default: "User"
+    field :role, :string, default: "user"
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :current_password, :string, virtual: true, redact: true
@@ -55,8 +55,8 @@ defmodule Globaltide.Accounts.User do
     if get_field(changeset, :role) == "Admin" do
       current_admin_count = Globaltide.Accounts.count_admins()
 
-      if current_admin_count >= 2 do
-        add_error(changeset, :role, "Only two admins (Developer & Manager) are allowed.")
+      if current_admin_count >= 4 do
+        add_error(changeset, :role, "Only four admins (2Developer & 2Managers) are allowed.")
       else
         changeset
       end
