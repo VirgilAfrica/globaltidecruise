@@ -39,7 +39,7 @@ alias Globaltide.Accounts
     """
   end
 
-  defp get_current_user(socket) do
-    socket.assigns[:current_user]
-  end
+  # defp get_current_user(socket) do
+  #   socket.assigns[:current_user]
+  # end
 end
