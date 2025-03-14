@@ -22,7 +22,15 @@ defmodule GlobaltideWeb.ApplicationLive.FormComponent do
         phx-submit="save"
       >
         <.input field={@form[:job_listing_id]} type="select" label="Select Job" options={Enum.map(@jobs, &{&1.job_title, &1.id})} />
-        <.input field={@form[:cv_upload]} type="text" label="CV Upload" />
+
+        <.input field={@form[:type_of_job]} type="text" label="Type of Job" />
+
+        <.input field={@form[:email]} type="email" label="Email" />
+
+        <.input field={@form[:phone]} type="text" label="Phone Number" />
+
+        <label>Upload CV (PDF only)</label>
+        <.live_file_input upload={@uploads.cv} />
 
         <:actions>
           <.button type="submit" phx-disable-with="Saving...">Save Application</.button>
@@ -45,7 +53,8 @@ defmodule GlobaltideWeb.ApplicationLive.FormComponent do
      |> assign(:jobs, jobs)
      |> assign_new(:form, fn ->
        to_form(Applications.change_application(application))
-     end)}
+     end)
+     |> allow_upload(:cv, accept: ~w(.pdf), max_entries: 1)}
   end
 
   @impl true
@@ -56,24 +65,48 @@ defmodule GlobaltideWeb.ApplicationLive.FormComponent do
     {:noreply, assign(socket, form: to_form(changeset, action: :validate))}
   end
 
+  @impl true
   def handle_event("save", %{"application" => application_params}, socket) do
     IO.inspect(application_params, label: "Received application_params")
 
-    case Applications.create_application(application_params) do
-      {:ok, application} ->
-        IO.puts("Application created successfully!")
-        notify_parent({:saved, application})
+    # Process file upload
+    uploaded_files =
+      consume_uploaded_entries(socket, :cv, fn %{path: path}, _entry ->
+        dest = Path.join(["priv/static/uploads", Path.basename(path)])
+        File.cp!(path, dest)
+        {:ok, "/uploads/" <> Path.basename(dest)}
+      end)
 
-        {:noreply,
-         socket
-         |> put_flash(:info, "Application created successfully")
-         |> push_patch(to: socket.assigns[:patch] || "/applications")}
+    # Ensure we only store the first uploaded file
+    application_params =
+      application_params
+      |> Map.put("cv_upload", List.first(uploaded_files) || "")
+      |> Map.put_new("type_of_job", "")
+      |> Map.put_new("email", "")
+      |> Map.put_new("phone", "")
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        IO.puts("Failed to create application.")
-        IO.inspect(changeset, label: "Changeset errors")
+    changeset = Applications.change_application(%Applications.Application{}, application_params)
 
-        {:noreply, assign(socket, form: to_form(changeset))}
+    if changeset.valid? do
+      case Applications.create_application(application_params) do
+        {:ok, application} ->
+          IO.puts("Application created successfully!")
+          notify_parent({:saved, application})
+
+          {:noreply,
+           socket
+           |> put_flash(:info, "Application created successfully")
+           |> push_patch(to: socket.assigns[:patch] || "/applications")}
+
+        {:error, %Ecto.Changeset{} = changeset} ->
+          IO.puts("Failed to create application.")
+          IO.inspect(changeset, label: "Changeset errors")
+
+          {:noreply, assign(socket, form: to_form(changeset))}
+      end
+    else
+      IO.puts("Validation failed: Missing required fields")
+      {:noreply, assign(socket, form: to_form(changeset))}
     end
   end
 

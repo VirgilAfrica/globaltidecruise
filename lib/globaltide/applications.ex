@@ -101,4 +101,23 @@ defmodule Globaltide.Applications do
   def change_application(%Application{} = application, attrs \\ %{}) do
     Application.changeset(application, attrs)
   end
+
+
+  # Admin rights on the codebase
+  # Updated enumaration
+  def approve_application(application_id)do
+    application = Repo.get!(Application, application_id)
+
+    application
+    |> Application.changeset(%{status: "approved"})
+    |> Repo.update()
+  end
+
+  def reject_application(application_id)do
+    application = Repo.get!(Application, application_id)
+
+    application
+    |> Application.changeset(%{status: "rejected"})
+    |> Repo.update()
+  end
 end

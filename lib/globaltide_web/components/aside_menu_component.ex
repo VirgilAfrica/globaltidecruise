@@ -32,11 +32,11 @@ defmodule GlobaltideWeb.AsideMenuComponent do
 
         <h2 class="text-gray-200 text-lg font-bold">Preferences</h2>
         <ul class="space-y-4">
-          
+
           <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
             <%= if @current_user do %>
             <Heroicons.icon name="cog" class="w-6 h-6" />
-            <a href="/users/setings">User Settings</a>
+            <a href="/users/settings">User Settings</a>
             <% else %>
             <p class="uppercase font-semibold text-[14px] lg:text-[16px]">log in to use this feature</p>
             <% end %>
@@ -62,7 +62,7 @@ defmodule GlobaltideWeb.AsideMenuComponent do
             </a>
           <% end %>
         </div>
-       
+
       </div>
     </aside>
     """

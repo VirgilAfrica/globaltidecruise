@@ -23,4 +23,5 @@ defmodule Globaltide.Applications.Application do
     # Add a foreign Key Constraint
     |> foreign_key_constraint(:job_listing_id)
   end
+
 end
