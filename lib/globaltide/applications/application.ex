@@ -7,6 +7,8 @@ defmodule Globaltide.Applications.Application do
     field :email, :string
     field :phone, :string
     field :cv_upload, :string
+    # Add field for checks
+    field :status, :string, default: "Pending"
     # foreign Key to reference Job_listings
     belongs_to :job_listing, Globaltide.JobListing
 

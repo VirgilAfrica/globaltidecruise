@@ -9,7 +9,6 @@ defmodule GlobaltideWeb.Admin.AdminComponent do
           <div class="max-w-[90%] mx-auto  w-full py-4 flex items-center">
             <div class="flex flex-col w-auto">
               <%= if @current_user do %>
-
               <div clas>
                 <div class="flex flex-row items-center justify-start">
 
@@ -41,9 +40,7 @@ defmodule GlobaltideWeb.Admin.AdminComponent do
               <div>
                 <button class="px-4 py-2 md:px-8 md:py-4"></button>
               </div>
-
             </div>
-
           </div>
         </div>
       </section>

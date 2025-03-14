@@ -1,16 +1,17 @@
 defmodule GlobaltideWeb.DashboardLive.Index do
-alias Globaltide.Accounts
   use GlobaltideWeb, :live_view
 
+  alias Globaltide.Accounts
   import GlobaltideWeb.AsideMenuComponent
   import GlobaltideWeb.DashboardComponent
 
   @impl true
   def mount(_params, session, socket) do
+    # Fetch user from session token (same approach as other modules)
     current_user =
-      case session["user_token"]do
+      case session["user_token"] do
         nil -> nil
-        token-> Accounts.get_user_by_session_token(token)
+        token -> Accounts.get_user_by_session_token(token)
       end
 
     {:ok, assign(socket, current_user: current_user, is_open: true)}
@@ -46,8 +47,4 @@ alias Globaltide.Accounts
     </section>
     """
   end
-
-  # defp get_current_user(socket) do
-  #   socket.assigns[:current_user]
-  # end
 end
