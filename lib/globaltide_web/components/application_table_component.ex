@@ -3,7 +3,7 @@ defmodule GlobaltideWeb.ApplicationTableComponent do
 
   def application_table(assigns) do
     ~H"""
-    <div class="lg:w-1/2 mx-auto ">
+    <div class="w-full max-w-[90%] mx-auto ">
       <h2 class="text-2xl font-bold mb-4">My Applications</h2>
 
       <table class="min-w-full border-collapse border border-gray-300">

@@ -38,7 +38,8 @@ defmodule GlobaltideWeb.DashboardLive.Index do
   @impl true
   def render(assigns) do
     ~H"""
-    <section class="relative flex flex-col lg:flex-row min-h-screen">
+    <section class="flex flex-col lg:flex-row h-auto">
+    <div class="lg:hidden relative">
       <div class="lg:hidden absolute top-4 right-4 z-50">
         <button
           phx-click="toggle-menu"
@@ -47,14 +48,16 @@ defmodule GlobaltideWeb.DashboardLive.Index do
           ☰
         </button>
       </div>
-
+    </div>
+    <div class="lg:w-1/4">
       <.aside_menu_component
         is_open={@is_open}
         toggle_event="toggle-menu"
         current_user={@current_user}
       />
+      </div>
 
-      <div class="relative top-0 lg:flex-1 flex flex-col justify-center items-center">
+      <div class="lg:w-3/4  flex flex-col justify-center items-center">
         <.dashboard_component current_user={@current_user} />
         <.application_table applications={@applications} />
       </div>

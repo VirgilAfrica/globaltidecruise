@@ -2,7 +2,7 @@ defmodule GlobaltideWeb.DashboardComponent do
 use Phoenix.Component
 def dashboard_component(assigns) do
 ~H"""
-<section class="w-full lg:w-3/4  lg:ml-auto ">
+<section class="w-full lg:ml-auto ">
   <div
     class=" mx-auto flex flex-col border-b-2 border-grey-400 py-4 lg:py-8 lg:shadow-md"
   >
