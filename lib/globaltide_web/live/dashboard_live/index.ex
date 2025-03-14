@@ -2,19 +2,28 @@ defmodule GlobaltideWeb.DashboardLive.Index do
   use GlobaltideWeb, :live_view
 
   alias Globaltide.Accounts
+  alias Globaltide.Jobs
   import GlobaltideWeb.AsideMenuComponent
   import GlobaltideWeb.DashboardComponent
+  import GlobaltideWeb.ApplicationTableComponent
 
   @impl true
   def mount(_params, session, socket) do
-    # Fetch user from session token (same approach as other modules)
+    # Fetch user from session token
     current_user =
       case session["user_token"] do
         nil -> nil
         token -> Accounts.get_user_by_session_token(token)
       end
 
-    {:ok, assign(socket, current_user: current_user, is_open: true)}
+    applications =
+      if current_user do
+        Jobs.get_user_applications(current_user.id)
+      else
+        []
+      end
+
+    {:ok, assign(socket, current_user: current_user, is_open: true, applications: applications)}
   end
 
   @impl true
@@ -43,6 +52,7 @@ defmodule GlobaltideWeb.DashboardLive.Index do
 
       <div class="relative top-0 lg:flex-1 flex flex-col justify-center items-center">
         <.dashboard_component current_user={@current_user} />
+        <.application_table applications={@applications} />
       </div>
     </section>
     """

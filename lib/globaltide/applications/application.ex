@@ -3,14 +3,17 @@ defmodule Globaltide.Applications.Application do
   import Ecto.Changeset
 
   schema "applications" do
-    field :type_of_job, :string  #added field to reference the jobs picked
+    field :type_of_job, :string  
     field :email, :string
     field :phone, :string
     field :cv_upload, :string
-    # Add field for checks
     field :status, :string, default: "Pending"
-    # foreign Key to reference Job_listings
+
+    # Foreign Key to reference Job Listings
     belongs_to :job_listing, Globaltide.JobListing
+
+    # Foreign Key to reference Users (Missing Field Added)
+    belongs_to :user, Globaltide.Accounts.User
 
     timestamps(type: :utc_datetime)
   end
@@ -18,10 +21,9 @@ defmodule Globaltide.Applications.Application do
   @doc false
   def changeset(application, attrs) do
     application
-    |> cast(attrs, [:type_of_job, :email, :phone, :cv_upload, :job_listing_id])
-    |> validate_required([:type_of_job, :email, :phone, :cv_upload,:job_listing_id])
-    # Add a foreign Key Constraint
+    |> cast(attrs, [:type_of_job, :email, :phone, :cv_upload, :job_listing_id, :user_id])
+    |> validate_required([:type_of_job, :email, :phone, :cv_upload, :job_listing_id, :user_id])
     |> foreign_key_constraint(:job_listing_id)
+    |> foreign_key_constraint(:user_id)
   end
-
 end
