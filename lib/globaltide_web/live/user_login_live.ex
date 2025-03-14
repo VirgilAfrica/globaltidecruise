@@ -2,7 +2,6 @@ defmodule GlobaltideWeb.UserLoginLive do
   use GlobaltideWeb, :live_view
   alias Heroicons
   alias Argon2
-  # alias Globaltide.Accounts
 
   @impl true
   def render(assigns) do
@@ -64,7 +63,7 @@ defmodule GlobaltideWeb.UserLoginLive do
     case authenticate_user(email, password) do
       {:ok, user} ->
         path = case user.role do
-          "admin" -> "/admin"
+          "Admin" -> "/admin"
           _ -> "/dashboard"
         end
 

@@ -3,7 +3,7 @@ defmodule Globaltide.Applications.Application do
   import Ecto.Changeset
 
   schema "applications" do
-    field :type_of_job, :string  
+    field :type_of_job, :string
     field :email, :string
     field :phone, :string
     field :cv_upload, :string

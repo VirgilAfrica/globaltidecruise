@@ -4,7 +4,7 @@ defmodule GlobaltideWeb.Admin.AdminComponent do
 
   def admin_panel(assigns)do
     ~H"""
-      <section class="w-full mx-auto">
+      <section class="w-full h-auto mx-auto ">
         <div class=" border-b-2 shadow-md">
           <div class="max-w-[90%] mx-auto  w-full py-4 flex items-center">
             <div class="flex flex-col w-auto">
@@ -35,11 +35,6 @@ defmodule GlobaltideWeb.Admin.AdminComponent do
                   <p class="text-[16px] md:text-[18px] font-medium">Login to access more features</p>
                 </div>
               <% end %>
-            </div>
-            <div class="">
-              <div>
-                <button class="px-4 py-2 md:px-8 md:py-4"></button>
-              </div>
             </div>
           </div>
         </div>

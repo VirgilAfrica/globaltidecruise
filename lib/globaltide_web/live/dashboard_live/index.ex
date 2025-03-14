@@ -1,8 +1,10 @@
 defmodule GlobaltideWeb.DashboardLive.Index do
   use GlobaltideWeb, :live_view
 
-  alias Globaltide.Accounts
-  alias Globaltide.Jobs
+  alias Globaltide.{Accounts, Repo}
+  alias Globaltide.Applications.Application
+
+  import Ecto.Query
   import GlobaltideWeb.AsideMenuComponent
   import GlobaltideWeb.DashboardComponent
   import GlobaltideWeb.ApplicationTableComponent
@@ -18,10 +20,12 @@ defmodule GlobaltideWeb.DashboardLive.Index do
 
     applications =
       if current_user do
-        Jobs.get_user_applications(current_user.id)
+        Repo.all(from a in Application, where: a.user_id == ^current_user.id)
       else
         []
       end
+
+    IO.inspect(applications, label: "User Applications")  # Debugging output
 
     {:ok, assign(socket, current_user: current_user, is_open: true, applications: applications)}
   end

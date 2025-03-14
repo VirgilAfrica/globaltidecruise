@@ -29,8 +29,10 @@ defmodule GlobaltideWeb.ApplicationLive.FormComponent do
 
         <.input field={@form[:phone]} type="text" label="Phone Number" />
 
+        <div class="flex flex-col space-y-4">
         <label>Upload CV (PDF only)</label>
-        <.live_file_input upload={@uploads.cv} />
+        <.live_file_input upload={@uploads.cv} class="px-4 py-2 lg:px-8 lg:py-4 hover:border-blue-500 duration-500 ease-in border-red-500 border-2 rounded-md" />
+        </div>
 
         <:actions>
           <.button type="submit" phx-disable-with="Saving...">Save Application</.button>
