@@ -43,6 +43,6 @@ button {
 
 ::-webkit-scrollbar-thumb{
   background: #3358FF;
-  border: 2px solid white;
+  /* border: 2px solid white; */
 
 }

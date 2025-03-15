@@ -18,8 +18,7 @@ defmodule GlobaltideWeb.JobLive.Index do
       %{name: "Casino"}
     ]
 
-    socket = assign_new(socket, :current_user, fn -> get_current_user(socket, session) end)
-    # Fetch user from session token
+    # Fetch user from session token (simple approach)
     current_user =
       case session["user_token"] do
         nil -> nil
@@ -28,20 +27,18 @@ defmodule GlobaltideWeb.JobLive.Index do
 
     jobs = Globaltide.Repo.all(JobListing)
 
-    socket =
-      assign(socket,
-        filters: filters,
-        active_filter: "All",
-        is_open: false,
-        jobs: jobs,
-        current_user: current_user
-      )
-
-    {:ok, socket}
+    # Assign everything in one go
+    {:ok,
+     assign(socket,
+       filters: filters,
+       active_filter: "All",
+       is_open: false,
+       jobs: jobs,
+       current_user: current_user
+     )}
   end
 
   def handle_event("toggle-menu", _params, socket) do
-    # Toggle is_open state
     {:noreply, assign(socket, is_open: !socket.assigns.is_open)}
   end
 
@@ -79,12 +76,4 @@ defmodule GlobaltideWeb.JobLive.Index do
     </div>
     """
   end
-
-  defp get_current_user(socket, session) do
-    case GlobaltideWeb.UserAuth.fetch_current_user(socket, session) do
-      %{assigns: %{current_user: user}} -> user
-      _ -> nil
-    end
-  end
-
 end

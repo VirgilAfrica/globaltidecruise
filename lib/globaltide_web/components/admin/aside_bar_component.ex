@@ -20,7 +20,7 @@ defmodule GlobaltideWeb.Admin.AsideBarComponent do
         <ul class="space-y-4">
           <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
             <Heroicons.icon name="document" class="w-6 h-6" />
-            <a href="">View Applications</a>
+            <a href="/applications/show">View Applications</a>
           </li>
           <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
             <Heroicons.icon name="book-open" class="w-6 h-6" />

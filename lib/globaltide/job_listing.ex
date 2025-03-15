@@ -16,6 +16,8 @@ defmodule Globaltide.JobListing do
     field :side_head, {:array, :string}
     field :side_desc, {:array, :string}
     field :side_logo, {:array, :string}
+    # Establish A relation with the applications schema
+    has_many :applications, Globaltide.Applications.Application
 
     timestamps(type: :utc_datetime)
   end

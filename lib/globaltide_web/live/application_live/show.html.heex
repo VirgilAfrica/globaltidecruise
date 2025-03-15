@@ -1,29 +1,35 @@
 <.header>
-  Application {@application.id}
-  <:subtitle>This is a application record from your database.</:subtitle>
+  Application ID: {@application.id}
+  <:subtitle>This is an application record from your database.</:subtitle>
   <:actions>
-    <.link patch={~p"/applications/#{@application}/show/edit"} phx-click={JS.push_focus()}>
-      <.button>Edit application</.button>
+    <.link patch={~p"/applications/#{@application.id}/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit Application</.button>
     </.link>
   </:actions>
 </.header>
 
 <.list>
-  <:item title="Type of job">{@application.type_of_job}</:item>
+  <:item title="Type of Job">{@application.type_of_job}</:item>
   <:item title="Email">{@application.email}</:item>
   <:item title="Phone">{@application.phone}</:item>
-  <:item title="Cv upload">{@application.cv_upload}</:item>
+  <:item title="CV Upload">
+    <%= if @application.cv_upload do %>
+      <a href={@application.cv_upload} target="_blank">View CV</a>
+    <% else %>
+      No CV uploaded
+    <% end %>
+  </:item>
 </.list>
 
-<.back navigate={~p"/applications"}>Back to applications</.back>
+<.back navigate={~p"/applications"}>Back to Applications</.back>
 
-<.modal :if={@live_action == :edit} id="application-modal" show on_cancel={JS.patch(~p"/applications/#{@application}")}>
+<.modal :if={@live_action == :edit} id="application-modal" show on_cancel={JS.patch(~p"/applications/#{@application.id}")}>
   <.live_component
     module={GlobaltideWeb.ApplicationLive.FormComponent}
     id={@application.id}
     title={@page_title}
     action={@live_action}
     application={@application}
-    patch={~p"/applications/#{@application}"}
+    patch={~p"/applications/#{@application.id}"}
   />
 </.modal>

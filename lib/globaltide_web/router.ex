@@ -25,7 +25,6 @@ defmodule GlobaltideWeb.Router do
     live "/jobs", JobLive.Index, :index
     live "/contact", ContactLive.Index, :index
     live "/dashboard", DashboardLive.Index, :index
-    live "/admin", AdminLive.Index, :index
     live "/jobs/:id", JobLive.Show, :show
 
     live "/applications", ApplicationLive.Index, :index
@@ -56,6 +55,7 @@ defmodule GlobaltideWeb.Router do
       live "/users/log_in", UserLoginLive, :new
       live "/users/reset_password", UserForgotPasswordLive, :new
       live "/users/reset_password/:token", UserResetPasswordLive, :edit
+
     end
 
     post "/users/log_in", UserSessionController, :create
@@ -66,6 +66,8 @@ defmodule GlobaltideWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{GlobaltideWeb.UserAuth, :ensure_authenticated}] do
+        live "/admin", AdminLive.Index, :index
+
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end

@@ -7,6 +7,13 @@ defmodule Globaltide.Applications.Application do
     field :email, :string
     field :phone, :string
     field :cv_upload, :string
+    field :status, :string, default: "Pending"
+
+    # Foreign Key to reference Job Listings
+    belongs_to :job_listing, Globaltide.JobListing
+
+    # Foreign Key to reference Users (Missing Field Added)
+    belongs_to :user, Globaltide.Accounts.User
 
     timestamps(type: :utc_datetime)
   end
@@ -14,7 +21,9 @@ defmodule Globaltide.Applications.Application do
   @doc false
   def changeset(application, attrs) do
     application
-    |> cast(attrs, [:type_of_job, :email, :phone, :cv_upload])
-    |> validate_required([:type_of_job, :email, :phone, :cv_upload])
+    |> cast(attrs, [:type_of_job, :email, :phone, :cv_upload, :job_listing_id, :user_id])
+    |> validate_required([:type_of_job, :email, :phone, :cv_upload, :job_listing_id, :user_id])
+    |> foreign_key_constraint(:job_listing_id)
+    |> foreign_key_constraint(:user_id)
   end
 end

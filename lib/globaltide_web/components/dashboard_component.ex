@@ -2,7 +2,7 @@ defmodule GlobaltideWeb.DashboardComponent do
 use Phoenix.Component
 def dashboard_component(assigns) do
 ~H"""
-<section class="w-full lg:w-3/4  lg:ml-auto lg:h-full">
+<section class="w-full lg:ml-auto ">
   <div
     class=" mx-auto flex flex-col border-b-2 border-grey-400 py-4 lg:py-8 lg:shadow-md"
   >
@@ -13,7 +13,7 @@ def dashboard_component(assigns) do
         <%= if @current_user.role == "User" do %>
         <p class="font-bold text-[16px] text-[18px]">Check your job applications</p>
         <% else %>
-        <p class="font-medium text-blue-500 text-[16px] md:text-[18px]">You are an admin. Click here for redirec</p>
+        <p class="font-medium text-blue-500 text-[16px] md:text-[18px]">You are an admin. Click here for redirect</p>
         <% end %>
         <% else %>
         <h1>Welcome, Guest!</h1>
