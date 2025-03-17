@@ -22,13 +22,8 @@ defmodule GlobaltideWeb.ApplicationLive.FormComponent do
         phx-submit="save"
       >
         <.input field={@form[:job_listing_id]} type="select" label="Select Job" options={Enum.map(@jobs, &{&1.job_title, &1.id})} />
-
-        <.input field={@form[:type_of_job]} type="text" label="Type of Job" />
-
         <.input field={@form[:email]} type="email" label="Email" />
-
         <.input field={@form[:phone]} type="text" label="Phone Number" />
-
         <div class="flex flex-col space-y-4">
         <label>Upload CV (PDF only)</label>
         <.live_file_input upload={@uploads.cv} class="px-4 py-2 lg:px-8 lg:py-4 hover:border-blue-500 duration-500 ease-in border-red-500 border-2 rounded-md" />
@@ -71,6 +66,7 @@ defmodule GlobaltideWeb.ApplicationLive.FormComponent do
   def handle_event("save", %{"application" => application_params}, socket) do
     IO.inspect(application_params, label: "Received application_params")
 
+
     # Process file upload
     uploaded_files =
       consume_uploaded_entries(socket, :cv, fn %{path: path}, _entry ->
@@ -78,14 +74,17 @@ defmodule GlobaltideWeb.ApplicationLive.FormComponent do
         File.cp!(path, dest)
         {:ok, "/uploads/" <> Path.basename(dest)}
       end)
+      IO.inspect(uploaded_files, label: "Uploaded files")
 
     # Ensure we only store the first uploaded file
     application_params =
       application_params
-      |> Map.put("cv_upload", List.first(uploaded_files) || "")
-      |> Map.put_new("type_of_job", "")
+      |> Map.put("cv_upload", List.first(uploaded_files) || "" )
       |> Map.put_new("email", "")
       |> Map.put_new("phone", "")
+      |> Map.put("user_id", socket.assigns.current_user.id)
+
+
 
     changeset = Applications.change_application(%Applications.Application{}, application_params)
 
@@ -111,6 +110,5 @@ defmodule GlobaltideWeb.ApplicationLive.FormComponent do
       {:noreply, assign(socket, form: to_form(changeset))}
     end
   end
-
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
 end

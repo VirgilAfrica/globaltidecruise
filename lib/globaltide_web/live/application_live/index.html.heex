@@ -31,7 +31,8 @@
   rows={@streams.applications}
   row_click={fn {_id, application} -> JS.navigate(~p"/applications/#{application}") end}
 >
-  <:col :let={{_id, application}} label="Type of job">{application.type_of_job}</:col>
+
+
   <:col :let={{_id, application}} label="Email">{application.email}</:col>
   <:col :let={{_id, application}} label="Phone">{application.phone}</:col>
   <:col :let={{_id, application}} label="Cv upload">{application.cv_upload}</:col>
@@ -61,5 +62,6 @@
     action={@live_action}
     application={@application}
     patch={~p"/applications"}
+    current_user={@current_user}
   />
 </.modal>

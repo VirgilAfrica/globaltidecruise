@@ -3,10 +3,30 @@ defmodule GlobaltideWeb.ApplicationLive.Index do
 
   alias Globaltide.Applications
   alias Globaltide.Applications.Application
+  alias Globaltide.Accounts
+  alias Globaltide.Repo
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, stream(socket, :applications, Applications.list_applications())}
+  def mount(_params, session, socket) do
+    user = get_current_user(session)
+
+    if connected?(socket), do: GlobaltideWeb.Endpoint.subscribe("applications")
+
+    applications = Applications.list_applications()
+    |> Repo.preload(:job_listing)
+    IO.inspect(applications)
+
+    {:ok,
+     socket
+     |> assign(:current_user, user)
+     |> stream(:applications, applications)}
+  end
+
+  defp get_current_user(session) do
+    case session["user_token"] do
+      nil -> nil
+      token -> Accounts.get_user_by_session_token(token)
+    end
   end
 
   @impl true
@@ -15,9 +35,10 @@ defmodule GlobaltideWeb.ApplicationLive.Index do
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do
+    application = Applications.get_application!(id) |> Repo.preload(:job_listing)
     socket
     |> assign(:page_title, "Edit Application")
-    |> assign(:application, Applications.get_application!(id))
+    |> assign(:application, application)
   end
 
   defp apply_action(socket, :new, _params) do
@@ -34,7 +55,7 @@ defmodule GlobaltideWeb.ApplicationLive.Index do
 
   @impl true
   def handle_info({GlobaltideWeb.ApplicationLive.FormComponent, {:saved, application}}, socket) do
-    {:noreply, stream_insert(socket, :applications, application)}
+    {:noreply, stream_insert(socket, :applications, application |> Repo.preload(:job_listing))}
   end
 
   @impl true
