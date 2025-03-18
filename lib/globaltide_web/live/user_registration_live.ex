@@ -6,7 +6,7 @@ defmodule GlobaltideWeb.UserRegistrationLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-[90%] lg:max-w-[60%] p-4 hover:shadow-md transition-shadow duration-300">
+    <div class="mx-auto max-w-[90%] lg:max-w-[50%] p-8 hover:shadow-md transition-shadow duration-300 h-auto">
       <div class="w-full item-center justify-center flex">
         <img src="/images/globaltide-lg2.jpeg" alt="" class="rounded-3xl w-20 h-20 lg:w-40 lg:h-40" />
       </div>

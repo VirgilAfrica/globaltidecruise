@@ -22,17 +22,17 @@ defmodule GlobaltideWeb.Admin.AsideBarComponent do
             <Heroicons.icon name="document" class="w-6 h-6" />
             <a href="/applications/show">View Applications</a>
           </li>
-          <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
+          <%!-- <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
             <Heroicons.icon name="book-open" class="w-6 h-6" />
             <a href="">Open Hiring</a>
-          </li>
+          </li> --%>
           <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
             <Heroicons.icon name="document-plus" class="w-6 h-6" />
             <a href="">Add Jobs</a>
           </li>
         </ul>
 
-        <h2 class="text-lg md:text-xl font-bold text-white mt-6">Others</h2>
+        <%!-- <h2 class="text-lg md:text-xl font-bold text-white mt-6">Others</h2>
         <ul class="space-y-4">
           <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
             <Heroicons.icon name="user-group" class="w-6 h-6" />
@@ -46,7 +46,7 @@ defmodule GlobaltideWeb.Admin.AsideBarComponent do
             <Heroicons.icon name="calendar" class="w-6 h-6" />
             <a href="">Schedule</a>
           </li>
-        </ul>
+        </ul> --%>
 
         <h2 class="text-lg md:text-xl font-bold text-white mt-6">Preferences</h2>
         <ul class="space-y-4">
@@ -54,10 +54,10 @@ defmodule GlobaltideWeb.Admin.AsideBarComponent do
             <Heroicons.icon name="cog-6-tooth" class="w-6 h-6" />
             <a href="">Admin Settings</a>
           </li>
-          <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
+          <%!-- <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
             <Heroicons.icon name="shield-check" class="w-6 h-6" />
             <a href="">Policy Tools</a>
-          </li>
+          </li> --%>
         </ul>
         <div class="w-full">
           <%= if @current_user do %>
