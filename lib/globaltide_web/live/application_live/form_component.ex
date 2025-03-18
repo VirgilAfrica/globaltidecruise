@@ -88,11 +88,17 @@ defmodule GlobaltideWeb.ApplicationLive.FormComponent do
 
     changeset = Applications.change_application(%Applications.Application{}, application_params)
 
+    # IO.inspect(changeset)
+
+
+
     if changeset.valid? do
       case Applications.create_application(application_params) do
         {:ok, application} ->
           IO.puts("Application created successfully!")
           notify_parent({:saved, application})
+          IO.inspect(Applications)
+
 
           {:noreply,
            socket

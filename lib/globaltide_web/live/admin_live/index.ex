@@ -5,11 +5,11 @@ defmodule GlobaltideWeb.AdminLive.Index do
   alias Globaltide.Applications
   import GlobaltideWeb.Admin.AdminComponent
   import GlobaltideWeb.Admin.AsideBarComponent
-  alias Phoenix.PubSub
 
   @impl true
   def mount(_params, session, socket) do
-    if connected?(socket), do: PubSub.subscribe(Globaltide.PubSub, "applications")
+    # Start polling every 5 seconds
+    if connected?(socket), do: Process.send_after(self(), :refresh_applications, 5000)
 
     current_user =
       session["user_token"]
@@ -36,16 +36,8 @@ defmodule GlobaltideWeb.AdminLive.Index do
   def handle_event("approve", %{"id" => id}, socket) do
     with application <- Applications.get_application!(id),
          {:ok, updated_application} <- Applications.update_application(application, %{status: "Approved"}) do
-      PubSub.broadcast(Globaltide.PubSub, "applications", {:application_updated, updated_application})
-
-      applications = update_application_list(socket.assigns.applications, updated_application)
-
-      {:noreply, socket
-        |> assign(:applications, applications)
-        |> put_flash(:info, "Application approved successfully!")
-      }
-    else
-      _ -> {:noreply, put_flash(socket, :error, "Failed to approve application")}
+      send(self(), {:application_updated, updated_application})
+      {:noreply, socket}
     end
   end
 
@@ -53,22 +45,21 @@ defmodule GlobaltideWeb.AdminLive.Index do
   def handle_event("deny", %{"id" => id}, socket) do
     with application <- Applications.get_application!(id),
          {:ok, updated_application} <- Applications.update_application(application, %{status: "Denied"}) do
-      PubSub.broadcast(Globaltide.PubSub, "applications", {:application_updated, updated_application})
-
-      applications = update_application_list(socket.assigns.applications, updated_application)
-
-      {:noreply, socket
-        |> assign(:applications, applications)
-        |> put_flash(:info, "Application denied successfully!")
-      }
-    else
-      _ -> {:noreply, put_flash(socket, :error, "Failed to deny application")}
+      send(self(), {:application_updated, updated_application})
+      {:noreply, socket}
     end
   end
 
   @impl true
   def handle_info({:application_updated, updated_application}, socket) do
     applications = update_application_list(socket.assigns.applications, updated_application)
+    {:noreply, assign(socket, :applications, applications)}
+  end
+
+  @impl true
+  def handle_info(:refresh_applications, socket) do
+    applications = Applications.list_applications()
+    Process.send_after(self(), :refresh_applications, 5000)  # Keep polling every 5 seconds
     {:noreply, assign(socket, :applications, applications)}
   end
 

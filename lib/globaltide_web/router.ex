@@ -24,15 +24,8 @@ defmodule GlobaltideWeb.Router do
     live "/", LandingLive.Index, :index
     live "/jobs", JobLive.Index, :index
     live "/contact", ContactLive.Index, :index
-    live "/dashboard", DashboardLive.Index, :index
     live "/jobs/:id", JobLive.Show, :show
 
-    live "/applications", ApplicationLive.Index, :index
-    live "/applications/new", ApplicationLive.Index, :new
-    live "/applications/:id/edit", ApplicationLive.Index, :edit
-
-    live "/applications/:id", ApplicationLive.Show, :show
-    live "/applications/:id/show/edit", ApplicationLive.Show, :edit
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
@@ -55,6 +48,8 @@ defmodule GlobaltideWeb.Router do
       live "/users/log_in", UserLoginLive, :new
       live "/users/reset_password", UserForgotPasswordLive, :new
       live "/users/reset_password/:token", UserResetPasswordLive, :edit
+      live "/dashboard", DashboardLive.Index, :index
+      live "/admin", AdminLive.Index, :index
 
     end
 
@@ -66,10 +61,16 @@ defmodule GlobaltideWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{GlobaltideWeb.UserAuth, :ensure_authenticated}] do
-        live "/admin", AdminLive.Index, :index
 
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+
+
+    live "/applications", ApplicationLive.Index, :index
+    live "/applications/new", ApplicationLive.Index, :new
+    live "/applications/:id/edit", ApplicationLive.Index, :edit
+    live "/applications/:id", ApplicationLive.Show, :show
+    live "/applications/:id/show/edit", ApplicationLive.Show, :edit
     end
   end
 

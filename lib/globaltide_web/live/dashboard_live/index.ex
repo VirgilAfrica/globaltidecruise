@@ -17,13 +17,10 @@ defmodule GlobaltideWeb.DashboardLive.Index do
         token -> Accounts.get_user_by_session_token(token)
       end
 
-      applications =
-        if current_user do
-          Repo.all(from a in Application, where: a.user_id == ^current_user.id, preload: [:job_listing])
-        else
-          []
-        end
+    applications = fetch_user_applications(current_user)
 
+    # Start polling every 5 seconds
+    if connected?(socket), do: Process.send_after(self(), :refresh_applications, 5000)
 
     IO.inspect(applications, label: "User Applications")
 
@@ -35,10 +32,21 @@ defmodule GlobaltideWeb.DashboardLive.Index do
      )}
   end
 
-
   @impl true
   def handle_event("toggle-menu", _params, socket) do
     {:noreply, assign(socket, :is_open, !socket.assigns.is_open)}
+  end
+
+  @impl true
+  def handle_info(:refresh_applications, socket) do
+    applications = fetch_user_applications(socket.assigns.current_user)
+    Process.send_after(self(), :refresh_applications, 5000)  # Keep polling every 5 seconds
+    {:noreply, assign(socket, :applications, applications)}
+  end
+
+  defp fetch_user_applications(nil), do: []
+  defp fetch_user_applications(current_user) do
+    Repo.all(from a in Application, where: a.user_id == ^current_user.id, preload: [:job_listing])
   end
 
   @impl true

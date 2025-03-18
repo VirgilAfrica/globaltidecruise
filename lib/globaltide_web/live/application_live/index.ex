@@ -56,7 +56,12 @@ defmodule GlobaltideWeb.ApplicationLive.Index do
   @impl true
   def handle_info({GlobaltideWeb.ApplicationLive.FormComponent, {:saved, application}}, socket) do
     {:noreply, stream_insert(socket, :applications, application |> Repo.preload(:job_listing))}
+
   end
+  def handle_info({:created, application}, socket) do
+    {:noreply, stream_insert(socket, :applications, application |> Repo.preload(:job_listing))}
+  end
+
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do

@@ -97,18 +97,16 @@ defmodule Globaltide.Applications do
 
   #  **Helper function to update status**
   defp update_application_status(%Application{} = application, status) do
-    application
-    |> Application.changeset(%{status: status})
-    |> Repo.update()
-    |> case do
+    case Repo.update(Application.changeset(application, %{status: status})) do
       {:ok, updated_application} ->
-        broadcast(:status_updated, updated_application)
+        send(self(), {:application_updated, updated_application})  # Notify LiveView process
         {:ok, updated_application}
 
       {:error, changeset} ->
         {:error, changeset}
     end
   end
+
 
   #  **Broadcast application changes**
   defp broadcast(event, application) do
