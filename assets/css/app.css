@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=DM+Sans:wght@400;500;700&display=swap");
 
-
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
@@ -36,13 +35,13 @@ button {
   font-weight: 100 1000;
   font-style: normal;
 }
-::-webkit-scrollbar{
-  width: 15px;
+::-webkit-scrollbar {
+  width: 10px;
   background: transparent;
 }
 
-::-webkit-scrollbar-thumb{
-  background: #3358FF;
+::-webkit-scrollbar-thumb {
+  background: #3358ff;
+  border-radius: 10px;
   /* border: 2px solid white; */
-
 }
