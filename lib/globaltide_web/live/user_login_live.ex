@@ -6,7 +6,7 @@ defmodule GlobaltideWeb.UserLoginLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <section class="w-full bg-linear-to-r/srgb from-indigo-500 to-teal-400">
+    <section class="w-full ">
       <div class="mx-auto max-w-[90%] lg:max-w-[60%] shadow-md flex flex-col items-center justify-center h-screen">
           <div class="w-full item-center justify-center flex">
             <img src="/images/globaltide-lg2.jpeg" alt="" class="rounded-3xl w-20 h-20 lg:w-40 lg:h-40">
@@ -86,4 +86,5 @@ defmodule GlobaltideWeb.UserLoginLive do
         end
     end
   end
+
 end

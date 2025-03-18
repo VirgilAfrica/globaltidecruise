@@ -88,8 +88,14 @@ defmodule GlobaltideWeb.UserRegistrationLive do
                 &url(~p"/users/confirm/#{&1}")
               )
 
-            changeset = Accounts.change_user_registration(user)
-            {:noreply, socket |> assign(trigger_submit: true) |> assign_form(changeset)}
+            path = case user.role do
+              "Admin" -> "/admin"
+              _ -> "/dashboard"
+            end
+
+            {:noreply, socket
+            |> put_flash(:info, "Registration successful! Redirecting...")
+            |> push_navigate(to: path)}
 
           {:error, %Ecto.Changeset{} = changeset} ->
             {:noreply, socket |> assign(check_errors: true) |> assign_form(changeset)}
@@ -103,6 +109,7 @@ defmodule GlobaltideWeb.UserRegistrationLive do
         {:noreply, assign_form(socket, Map.put(changeset, :action, :validate))}
     end
   end
+
 
   def handle_event("validate", %{"user" => user_params}, socket) do
     changeset = Accounts.change_user_registration(%User{}, user_params)

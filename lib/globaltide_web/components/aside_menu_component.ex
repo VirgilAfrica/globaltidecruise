@@ -22,7 +22,7 @@ defmodule GlobaltideWeb.AsideMenuComponent do
           </li>
           <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
             <Heroicons.icon name="document-check" class="w-6 h-6" />
-            <a href="/applications/show">Application Status</a>
+            <a href="/applications">Application Status</a>
           </li>
           <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
             <Heroicons.icon name="briefcase" class="w-6 h-6" />

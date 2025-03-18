@@ -5,14 +5,15 @@ defmodule GlobaltideWeb.AdminLive.Index do
   alias Globaltide.Applications
   import GlobaltideWeb.Admin.AdminComponent
   import GlobaltideWeb.Admin.AsideBarComponent
-  alias Phoenix.PubSub
 
   @impl true
   def mount(_params, session, socket) do
-    if connected?(socket), do: PubSub.subscribe(Globaltide.PubSub, "applications")
+    # Start polling every 5 seconds
+    if connected?(socket), do: Process.send_after(self(), :refresh_applications, 5000)
 
     current_user =
-      case session["user_token"] do
+      session["user_token"]
+      |> case do
         nil -> nil
         token -> Accounts.get_user_by_session_token(token)
       end
@@ -33,56 +34,57 @@ defmodule GlobaltideWeb.AdminLive.Index do
 
   @impl true
   def handle_event("approve", %{"id" => id}, socket) do
-    application = Applications.get_application!(id)
-
-    case Applications.update_application(application, %{status: "Approved"}) do
-      {:ok, _updated_application} ->
-        {:noreply, put_flash(socket, :info, "Application approved successfully!")}
-
-      {:error, _changeset} ->
-        {:noreply, put_flash(socket, :error, "Failed to approve application")}
+    with application <- Applications.get_application!(id),
+         {:ok, updated_application} <- Applications.update_application(application, %{status: "Approved"}) do
+      send(self(), {:application_updated, updated_application})
+      {:noreply, socket}
     end
   end
 
   @impl true
   def handle_event("deny", %{"id" => id}, socket) do
-    application = Applications.get_application!(id)
-
-    case Applications.update_application(application, %{status: "Denied"}) do
-      {:ok, _updated_application} ->
-        {:noreply, put_flash(socket, :info, "Application denied successfully!")}
-
-      {:error, _changeset} ->
-        {:noreply, put_flash(socket, :error, "Failed to deny application")}
+    with application <- Applications.get_application!(id),
+         {:ok, updated_application} <- Applications.update_application(application, %{status: "Denied"}) do
+      send(self(), {:application_updated, updated_application})
+      {:noreply, socket}
     end
   end
 
-  # Handle real-time updates from Phoenix PubSub
   @impl true
   def handle_info({:application_updated, updated_application}, socket) do
-    updated_applications = Enum.map(socket.assigns.applications, fn app ->
-      if app.id == updated_application.id, do: updated_application, else: app
-    end)
-
-    {:noreply, assign(socket, applications: updated_applications)}
+    applications = update_application_list(socket.assigns.applications, updated_application)
+    {:noreply, assign(socket, :applications, applications)}
   end
 
   @impl true
-  @spec render(any()) :: Phoenix.LiveView.Rendered.t()
+  def handle_info(:refresh_applications, socket) do
+    applications = Applications.list_applications()
+    Process.send_after(self(), :refresh_applications, 5000)  # Keep polling every 5 seconds
+    {:noreply, assign(socket, :applications, applications)}
+  end
+
+  defp update_application_list(applications, updated_application) do
+    Enum.map(applications, fn app ->
+      if app.id == updated_application.id, do: updated_application, else: app
+    end)
+  end
+
+  @impl true
   def render(assigns) do
     ~H"""
-    <div class="flex flex-row w-full">
+    <div class="flex w-full min-h-screen">
       <button phx-click="toggle_sidebar" class="fixed top-4 right-4 lg:hidden z-50 bg-blue-600 p-3 rounded-md text-white">
         ☰
       </button>
 
       <.aside_bar is_open={@is_sidebar_open} current_user={@current_user} />
-      <div class="flex-1 flex-col">
+
+      <div class="flex-1 flex flex-col p-6">
         <.admin_panel current_user={@current_user} />
-        <div class="flex-1 p-6">
+        <div class="overflow-x-auto">
           <h1 class="text-2xl font-bold mb-4">Job Applications</h1>
 
-          <table class="min-w-full border-collapse border border-gray-300">
+          <table class="w-full border-collapse border border-gray-300">
             <thead>
               <tr class="bg-gray-100">
                 <th class="border p-2">Job Title</th>
@@ -95,34 +97,35 @@ defmodule GlobaltideWeb.AdminLive.Index do
             <tbody>
               <%= for application <- @applications do %>
                 <tr class="border">
-                  <td class="border p-2"><%= application.type_of_job %></td>
+                  <td class="border p-2"><%= application.job_listing && application.job_listing.job_title || "N/A" %></td>
                   <td class="border p-2"><%= application.email %></td>
                   <td class="border p-2"><%= application.phone %></td>
                   <td class="border p-2">
-                    <%= case application.status do %>
-                      <% "Pending" -> %>
-                        <span class="text-yellow-500">Pending</span>
-                      <% "Approved" -> %>
-                        <span class="text-green-500">Approved</span>
-                      <% "Denied" -> %>
-                        <span class="text-red-500">Denied</span>
-                      <% _ -> %>
-                        <span class="text-gray-500">Unknown</span>
-                    <% end %>
+                    <span class={
+                      case application.status do
+                        "Pending" -> "text-yellow-500"
+                        "Approved" -> "text-green-500"
+                        "Denied" -> "text-red-500"
+                        _ -> "text-gray-500"
+                      end
+                    }>
+                      <%= application.status %>
+                    </span>
                   </td>
                   <td class="border p-2">
-                    <%= case application.status do %>
-                      <% "Pending" -> %>
-                        <button phx-click="approve" phx-value-id={application.id} class="bg-blue-500 text-white px-3 py-1 rounded">
-                          Approve
-                        </button>
-                        <button phx-click="deny" phx-value-id={application.id} class="bg-red-500 text-white px-3 py-1 rounded ml-2">
-                          Deny
-                        </button>
-                      <% "Approved" -> %>
-                        <span class="text-green-500">Approved</span>
-                      <% "Denied" -> %>
-                        <span class="text-red-500">Denied</span>
+                    <%= if application.status == "Pending" do %>
+                      <button phx-click="approve" phx-value-id={application.id} class="bg-blue-500 text-white px-3 py-1 rounded">
+                        Approve
+                      </button>
+                      <button phx-click="deny" phx-value-id={application.id} class="bg-red-500 text-white px-3 py-1 rounded ml-2">
+                        Deny
+                      </button>
+                    <% else %>
+                      <span class={
+                        if application.status == "Approved", do: "text-green-500", else: "text-red-500"
+                      }>
+                        <%= application.status %>
+                      </span>
                     <% end %>
                   </td>
                 </tr>

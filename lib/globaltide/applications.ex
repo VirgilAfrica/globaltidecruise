@@ -6,37 +6,31 @@ defmodule Globaltide.Applications do
   import Ecto.Query, warn: false
   alias Globaltide.Repo
   alias Globaltide.Applications.Application
-  alias Phoenix.PubSub
 
-  @topic "applications"
-
-  # 📌 **Subscribe to real-time application updates**
-  def subscribe do
-    PubSub.subscribe(Globaltide.PubSub, @topic)
-  end
-
-  # 📌 **List all applications**
+  # **List all applications**
   def list_applications do
-    Repo.all(Application)
+    Repo.all(Application) |> Repo.preload(:job_listing)
   end
 
-  # 📌 **List applications for a specific user**
+  # **List applications for a specific user**
   def list_user_applications(user_id) do
-    from(a in Application, where: a.user_id == ^user_id)
+    from(a in Application, where: a.user_id == ^user_id, preload: [:job_listing])
     |> Repo.all()
   end
 
-  # 📌 **Get a single application by ID**
-  def get_application!(id), do: Repo.get!(Application, id)
+  # **Get a single application by ID**
+  def get_application!(id) do
+    Repo.get!(Application, id) |> Repo.preload([:job_listing])
+  end
 
-  # 📌 **Create a new application**
+  # **Create a new application**
   def create_application(attrs \\ %{}) do
     %Application{}
     |> Application.changeset(attrs)
     |> Repo.insert()
     |> case do
       {:ok, application} ->
-        broadcast(:created, application)
+        send_update_to_liveview(application)  # Notify LiveView
         {:ok, application}
 
       {:error, changeset} ->
@@ -44,14 +38,14 @@ defmodule Globaltide.Applications do
     end
   end
 
-  # 📌 **Update an application**
+  # **Update an application**
   def update_application(%Application{} = application, attrs) do
     application
     |> Application.changeset(attrs)
     |> Repo.update()
     |> case do
       {:ok, updated_application} ->
-        broadcast(:updated, updated_application)
+        send_update_to_liveview(updated_application)  # Notify LiveView
         {:ok, updated_application}
 
       {:error, changeset} ->
@@ -59,12 +53,12 @@ defmodule Globaltide.Applications do
     end
   end
 
-  # 📌 **Delete an application**
+  # **Delete an application**
   def delete_application(%Application{} = application) do
     Repo.delete(application)
     |> case do
       {:ok, deleted_application} ->
-        broadcast(:deleted, deleted_application)
+        send_update_to_liveview(deleted_application)  # Notify LiveView
         {:ok, deleted_application}
 
       {:error, changeset} ->
@@ -72,12 +66,12 @@ defmodule Globaltide.Applications do
     end
   end
 
-  # 📌 **Change function for forms**
+  # **Change function for forms**
   def change_application(%Application{} = application, attrs \\ %{}) do
     Application.changeset(application, attrs)
   end
 
-  # 📌 **Approve an application**
+  # **Approve an application**
   def approve_application(application_id) do
     case Repo.get(Application, application_id) do
       nil -> {:error, "Application not found"}
@@ -85,7 +79,7 @@ defmodule Globaltide.Applications do
     end
   end
 
-  # 📌 **Reject an application**
+  # **Reject an application**
   def reject_application(application_id) do
     case Repo.get(Application, application_id) do
       nil -> {:error, "Application not found"}
@@ -93,14 +87,11 @@ defmodule Globaltide.Applications do
     end
   end
 
-  # 📌 **Helper function to update status**
+  # **Helper function to update status**
   defp update_application_status(%Application{} = application, status) do
-    application
-    |> Application.changeset(%{status: status})
-    |> Repo.update()
-    |> case do
+    case Repo.update(Application.changeset(application, %{status: status})) do
       {:ok, updated_application} ->
-        broadcast(:status_updated, updated_application)
+        send_update_to_liveview(updated_application)  # Notify LiveView
         {:ok, updated_application}
 
       {:error, changeset} ->
@@ -108,8 +99,8 @@ defmodule Globaltide.Applications do
     end
   end
 
-  # 📌 **Broadcast application changes**
-  defp broadcast(event, application) do
-    PubSub.broadcast(Globaltide.PubSub, @topic, {event, application})
+  # **Notify LiveView instead of PubSub**
+  defp send_update_to_liveview(application) do
+    send(self(), {:application_updated, application})
   end
 end
