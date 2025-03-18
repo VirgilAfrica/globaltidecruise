@@ -12,9 +12,9 @@ defmodule GlobaltideWeb.ApplicationLive.Index do
 
     if connected?(socket), do: GlobaltideWeb.Endpoint.subscribe("applications")
 
-    applications = Applications.list_applications()
-    |> Repo.preload(:job_listing)
-    IO.inspect(applications)
+    applications =
+      Applications.list_applications()
+      |> Repo.preload(:job_listing)
 
     {:ok,
      socket
@@ -36,6 +36,7 @@ defmodule GlobaltideWeb.ApplicationLive.Index do
 
   defp apply_action(socket, :edit, %{"id" => id}) do
     application = Applications.get_application!(id) |> Repo.preload(:job_listing)
+
     socket
     |> assign(:page_title, "Edit Application")
     |> assign(:application, application)
@@ -56,12 +57,11 @@ defmodule GlobaltideWeb.ApplicationLive.Index do
   @impl true
   def handle_info({GlobaltideWeb.ApplicationLive.FormComponent, {:saved, application}}, socket) do
     {:noreply, stream_insert(socket, :applications, application |> Repo.preload(:job_listing))}
-
   end
+
   def handle_info({:created, application}, socket) do
     {:noreply, stream_insert(socket, :applications, application |> Repo.preload(:job_listing))}
   end
-
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do

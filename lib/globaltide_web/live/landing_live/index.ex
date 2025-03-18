@@ -6,11 +6,15 @@ defmodule GlobaltideWeb.LandingLive.Index do
 
   def mount(_params, session, socket) do
     # Fetch user from session token
+    IO.inspect(session)
+
     current_user =
       case session["user_token"] do
         nil -> nil
         token -> Accounts.get_user_by_session_token(token)
       end
+
+    IO.inspect(current_user)
 
     # Initialize is_open state
     {:ok, assign(socket, current_user: current_user, is_open: false, current_index: 0)}
