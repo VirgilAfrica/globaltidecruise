@@ -17,15 +17,15 @@ defmodule GlobaltideWeb.ApplicationTableComponent do
           <%= for application <- @applications do %>
             <tr class="border text-sm sm:text-base">
               <td class="border p-3">
-              <%= application.job_listing.job_title %>
+                <%= application.job_listing.job_title %>
               </td>
               <td class="border p-3">
-                <%= case application.status do %>
-                  <% :pending -> %>
+                <%= case String.downcase(application.status) do %>
+                  <% "pending" -> %>
                     <span class="text-yellow-500 font-medium">Pending</span>
-                  <% :approved -> %>
+                  <% "approved" -> %>
                     <span class="text-green-500 font-medium">Approved</span>
-                  <% :rejected -> %>
+                  <% "rejected" -> %>
                     <span class="text-red-500 font-medium">Rejected</span>
                   <% _ -> %>
                     <span class="text-gray-500 font-medium">Unknown</span>

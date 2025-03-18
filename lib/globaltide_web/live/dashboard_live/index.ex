@@ -45,9 +45,27 @@ defmodule GlobaltideWeb.DashboardLive.Index do
   end
 
   defp fetch_user_applications(nil), do: []
-  defp fetch_user_applications(current_user) do
-    Repo.all(from a in Application, where: a.user_id == ^current_user.id, preload: [:job_listing])
+
+  defp fetch_user_applications(%{id: user_id}) do
+    Repo.all(
+      from a0 in Globaltide.Applications.Application,
+      join: j1 in Globaltide.JobListing,
+      on: j1.id == a0.job_listing_id,
+      where: a0.user_id == ^user_id,
+      select: %{
+        id: a0.id,
+        status: a0.status,
+        inserted_at: a0.inserted_at,
+        updated_at: a0.updated_at,
+        job_listing: %{
+          id: j1.id,
+          job_title: j1.job_title
+        }
+      }
+    )
   end
+
+
 
   @impl true
   def render(assigns) do

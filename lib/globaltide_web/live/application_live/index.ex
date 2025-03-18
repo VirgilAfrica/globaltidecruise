@@ -12,9 +12,7 @@ defmodule GlobaltideWeb.ApplicationLive.Index do
 
     if connected?(socket), do: GlobaltideWeb.Endpoint.subscribe("applications")
 
-    applications =
-      Applications.list_applications()
-      |> Repo.preload(:job_listing)
+    applications = fetch_applications_for_user(user)
 
     {:ok,
      socket
@@ -27,6 +25,16 @@ defmodule GlobaltideWeb.ApplicationLive.Index do
       nil -> nil
       token -> Accounts.get_user_by_session_token(token)
     end
+  end
+
+  defp fetch_applications_for_user(nil), do: [] # No user logged in? No applications.
+
+  defp fetch_applications_for_user(%Globaltide.Accounts.User{role: "admin"}) do
+    Applications.list_applications() |> Repo.preload(:job_listing)
+  end
+
+  defp fetch_applications_for_user(%Globaltide.Accounts.User{id: user_id}) do
+    Applications.list_user_applications(user_id) |> Repo.preload(:job_listing)
   end
 
   @impl true

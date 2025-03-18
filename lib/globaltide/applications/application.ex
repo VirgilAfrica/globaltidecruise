@@ -20,8 +20,8 @@ defmodule Globaltide.Applications.Application do
   @doc false
   def changeset(application, attrs) do
     application
-    |> cast(attrs, [ :email, :phone, :cv_upload, :job_listing_id, :user_id])
-    |> validate_required([:email, :phone, :cv_upload, :job_listing_id, :user_id])
+    |> cast(attrs, [ :email, :phone, :cv_upload, :job_listing_id, :user_id,:status])
+    |> validate_required([:email, :phone, :cv_upload, :job_listing_id, :user_id,:status])
     |> foreign_key_constraint(:job_listing_id)
     |> foreign_key_constraint(:user_id)
   end

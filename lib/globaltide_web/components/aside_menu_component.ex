@@ -41,10 +41,10 @@ defmodule GlobaltideWeb.AsideMenuComponent do
             <p class="uppercase font-semibold text-[14px] lg:text-[16px]">log in to use this feature</p>
             <% end %>
           </li>
-          <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
+          <%!-- <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
             <Heroicons.icon name="share" class="w-6 h-6" />
             <a href="/copy">Share</a>
-          </li>
+          </li> --%>
 
         </ul>
         <div class="w-full">

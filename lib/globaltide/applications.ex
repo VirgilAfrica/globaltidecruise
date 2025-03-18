@@ -7,20 +7,24 @@ defmodule Globaltide.Applications do
   alias Globaltide.Repo
   alias Globaltide.Applications.Application
 
-  # **List all applications**
+  # **List applications based on user role**
+  def list_applications_for_user(%{role: "admin"}), do: list_applications()
+  def list_applications_for_user(%{id: user_id}), do: list_user_applications(user_id)
+  def list_applications_for_user(_), do: [] # If no valid user, return empty list.
+
+  # **List all applications (Admin)**
   def list_applications do
     Repo.all(Application) |> Repo.preload(:job_listing)
   end
 
   # **List applications for a specific user**
   def list_user_applications(user_id) do
-    from(a in Application, where: a.user_id == ^user_id, preload: [:job_listing])
-    |> Repo.all()
+    Repo.all(from a in Application, where: a.user_id == ^user_id, preload: [:job_listing])
   end
 
   # **Get a single application by ID**
   def get_application!(id) do
-    Repo.get!(Application, id) |> Repo.preload([:job_listing])
+    Repo.get!(Application, id) |> Repo.preload(:job_listing)
   end
 
   # **Create a new application**
@@ -28,14 +32,7 @@ defmodule Globaltide.Applications do
     %Application{}
     |> Application.changeset(attrs)
     |> Repo.insert()
-    |> case do
-      {:ok, application} ->
-        send_update_to_liveview(application)  # Notify LiveView
-        {:ok, application}
-
-      {:error, changeset} ->
-        {:error, changeset}
-    end
+    |> handle_db_response()
   end
 
   # **Update an application**
@@ -43,64 +40,53 @@ defmodule Globaltide.Applications do
     application
     |> Application.changeset(attrs)
     |> Repo.update()
-    |> case do
-      {:ok, updated_application} ->
-        send_update_to_liveview(updated_application)  # Notify LiveView
-        {:ok, updated_application}
-
-      {:error, changeset} ->
-        {:error, changeset}
-    end
+    |> handle_db_response()
   end
 
   # **Delete an application**
   def delete_application(%Application{} = application) do
     Repo.delete(application)
-    |> case do
-      {:ok, deleted_application} ->
-        send_update_to_liveview(deleted_application)  # Notify LiveView
-        {:ok, deleted_application}
-
-      {:error, changeset} ->
-        {:error, changeset}
-    end
-  end
-
-  # **Change function for forms**
-  def change_application(%Application{} = application, attrs \\ %{}) do
-    Application.changeset(application, attrs)
+    |> handle_db_response()
   end
 
   # **Approve an application**
   def approve_application(application_id) do
-    case Repo.get(Application, application_id) do
-      nil -> {:error, "Application not found"}
-      application -> update_application_status(application, "approved")
-    end
+    update_application_status(application_id, "approved")
   end
 
   # **Reject an application**
   def reject_application(application_id) do
+    update_application_status(application_id, "rejected")
+  end
+
+  # **Helper function to update application status**
+  defp update_application_status(application_id, status) do
     case Repo.get(Application, application_id) do
       nil -> {:error, "Application not found"}
-      application -> update_application_status(application, "rejected")
+      application ->
+        application
+        |> Application.changeset(%{status: status})
+        |> Repo.update()
+        |> handle_db_response()
     end
   end
 
-  # **Helper function to update status**
-  defp update_application_status(%Application{} = application, status) do
-    case Repo.update(Application.changeset(application, %{status: status})) do
-      {:ok, updated_application} ->
-        send_update_to_liveview(updated_application)  # Notify LiveView
-        {:ok, updated_application}
-
-      {:error, changeset} ->
-        {:error, changeset}
-    end
+  # **Handle DB insert/update/delete responses**
+  defp handle_db_response({:ok, application}) do
+    send_update_to_liveview(application)
+    {:ok, application}
   end
 
-  # **Notify LiveView instead of PubSub**
+  defp handle_db_response({:error, changeset}), do: {:error, changeset}
+
+  # **Notify LiveView about application updates**
   defp send_update_to_liveview(application) do
-    send(self(), {:application_updated, application})
+    GlobaltideWeb.Endpoint.broadcast("applications", "application_updated", %{application: application})
   end
+
+  # **Return a changeset for an application**
+def change_application(%Application{} = application, attrs \\ %{}) do
+  Application.changeset(application, attrs)
+end
+
 end
