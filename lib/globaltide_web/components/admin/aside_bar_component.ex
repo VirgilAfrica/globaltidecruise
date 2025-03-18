@@ -52,7 +52,7 @@ defmodule GlobaltideWeb.Admin.AsideBarComponent do
         <ul class="space-y-4">
           <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
             <Heroicons.icon name="cog-6-tooth" class="w-6 h-6" />
-            <a href="">Admin Settings</a>
+            <a href="/users/settings">Admin Settings</a>
           </li>
           <%!-- <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
             <Heroicons.icon name="shield-check" class="w-6 h-6" />
