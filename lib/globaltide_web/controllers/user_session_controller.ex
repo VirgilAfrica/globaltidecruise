@@ -4,9 +4,20 @@ defmodule GlobaltideWeb.UserSessionController do
   alias Globaltide.Accounts
   alias GlobaltideWeb.UserAuth
 
-  def create(conn, %{"_action" => "registered"} = params) do
-    create(conn, params, "Account created successfully!")
+  def create(conn, %{"_action" => "registered", "user" => user_params}) do
+    case Accounts.register_user(user_params) do
+      {:ok, user} ->
+        conn
+        |> put_flash(:info, "Account created successfully!")
+        |> UserAuth.log_in_user(user, user_params)
+
+      {:error} ->
+        conn
+        |> put_flash(:error, "Could not create account")
+        |> redirect(to: ~p"/users/register")
+    end
   end
+
 
   def create(conn, %{"_action" => "password_updated"} = params) do
     conn

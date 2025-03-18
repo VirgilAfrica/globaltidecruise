@@ -20,15 +20,15 @@ defmodule GlobaltideWeb.Admin.AsideBarComponent do
         <ul class="space-y-4">
           <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
             <Heroicons.icon name="document" class="w-6 h-6" />
-            <a href="/applications/show">View Applications</a>
+            <a href="/applications">View Applications</a>
           </li>
           <%!-- <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
             <Heroicons.icon name="book-open" class="w-6 h-6" />
             <a href="">Open Hiring</a>
           </li> --%>
-          <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition">
+          <li class="flex items-center space-x-4 p-4 bg-white rounded-md hover:bg-red-500 hover:text-white transition disable-btn">
             <Heroicons.icon name="document-plus" class="w-6 h-6" />
-            <a href="">Add Jobs</a>
+            <a href="#">Add Jobs</a>
           </li>
         </ul>
 

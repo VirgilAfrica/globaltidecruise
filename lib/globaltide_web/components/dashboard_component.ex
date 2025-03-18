@@ -13,7 +13,8 @@ def dashboard_component(assigns) do
         <%= if @current_user.role == "User" do %>
         <p class="font-bold text-[16px] text-[18px]">Check your job applications</p>
         <% else %>
-        <p class="font-medium text-blue-500 text-[16px] md:text-[18px]">You are an admin. Click here for redirect</p>
+        <p class="font-medium text-blue-500 text-[16px] md:text-[18px]">You are an admin. Click
+        <a href="/admin" class="text-red-400"> here</a> for redirect</p>
         <% end %>
         <% else %>
         <h1>Welcome, Guest!</h1>
