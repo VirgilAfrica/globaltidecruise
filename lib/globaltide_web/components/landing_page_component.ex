@@ -22,9 +22,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
     {:noreply, assign(socket, current_index: new_index)}
   end
 
-
-
- def navbar(assigns) do
+  def navbar(assigns) do
     assigns =
       assign(assigns, :nav_links, [
         %{name: "Home", path: "/"},
@@ -43,7 +41,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
             <%= for link <- @nav_links do %>
               <li class="text-[20px] font-medium">
                 <a href={link.path}>
-                  <%= link.name %>
+                  {link.name}
                 </a>
               </li>
             <% end %>
@@ -52,8 +50,11 @@ defmodule GlobaltideWeb.LandingPageComponent do
         <div class="grid justify-items-end w-full">
           <%= if @current_user do %>
             <form action="/users/log_out" method="post">
-              <input type="hidden" name="_method" value="delete">
-              <button type="submit" class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 lg:px-8 py-4">
+              <input type="hidden" name="_method" value="delete" />
+              <button
+                type="submit"
+                class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 lg:px-8 py-4"
+              >
                 Logout
               </button>
             </form>
@@ -113,7 +114,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
           <%= for link <- @nav_links do %>
             <li class="text-[20px] font-medium">
               <a href={link.path}>
-                <%= link.name %>
+                {link.name}
               </a>
             </li>
           <% end %>
@@ -121,8 +122,11 @@ defmodule GlobaltideWeb.LandingPageComponent do
         <div class="flex flex-col space-y-4 mt-4 w-full">
           <%= if @current_user do %>
             <form action="/users/log_out" method="post">
-              <input type="hidden" name="_method" value="delete">
-              <button type="submit" class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 px-8 py-4">
+              <input type="hidden" name="_method" value="delete" />
+              <button
+                type="submit"
+                class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 px-8 py-4"
+              >
                 Logout
               </button>
             </form>
@@ -417,7 +421,10 @@ defmodule GlobaltideWeb.LandingPageComponent do
       @mouseleave="hover = false"
       class="relative h-[400px] md:h-auto flex flex-col items-center w-full bg-transparent rounded-t-xl shadow-lg transform transition-transform duration-300"
     >
-      <div class="bg-cover bg-center w-full h-[260px] rounded-md" style={"background-image: url('#{@role.imgRef}');"}>
+      <div
+        class="bg-cover bg-center w-full h-[260px] rounded-md"
+        style={"background-image: url('#{@role.imgRef}');"}
+      >
       </div>
 
       <div class="h-[150px] md:h-[200px] lg:h-1/3 flex flex-row items-center justify-center w-full text-center p-2 bg-gradient-to-t from-black to-transparent">
@@ -567,7 +574,7 @@ defmodule GlobaltideWeb.LandingPageComponent do
           <img
             src={@testimony.imgRef}
             alt={@testimony.title}
-            class="rounded-full bg-cover w-[80px] h-[80px] bg-center "
+            class="rounded-full object-cover w-[80px] h-[80px] object-center "
           />
         </div>
         <div class="flex flex-col justify-evenly p-2 w-[60%]">
@@ -655,73 +662,20 @@ defmodule GlobaltideWeb.LandingPageComponent do
               </a>
             </ul>
           </div>
-          <div class="w-full items-center justify-between lg:justify-center flex flex-col lg:flex-row">
-            <div class="w-full flex items-center justify-center  space-y-4 lg:space-y-0">
-              <ul class="w-full flex flex-row lg:space-x-8 items-center justify-center space-x-4">
-                <a href="">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    x="0px"
-                    y="0px"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 48 48"
-                  >
-                    <path fill="#039be5" d="M24 5A19 19 0 1 0 24 43A19 19 0 1 0 24 5Z"></path>
-                    <path
-                      fill="#fff"
-                      d="M26.572,29.036h4.917l0.772-4.995h-5.69v-2.73c0-2.075,0.678-3.915,2.619-3.915h3.119v-4.359c-0.548-0.074-1.707-0.236-3.897-0.236c-4.573,0-7.254,2.415-7.254,7.917v3.323h-4.701v4.995h4.701v13.729C22.089,42.905,23.032,43,24,43c0.875,0,1.729-0.08,2.572-0.194V29.036z"
-                    >
-                    </path>
-                  </svg>
-                </a>
+          <div class="w-full items-start justify-between lg:justify-center flex flex-col ">
+            <a href="https://www.facebook.com/share/1AGCnq2viE/" target="_blank">
+              <i class="fa fa-facebook" aria-hidden="true"></i> Facebook
+            </a>
+            <a href="https://instagram.com/globaltidesagency" target="_blank">
+              <i class="fa fa-instagram"></i> Instagram
+            </a>
 
-                <a href="">
-                  <li class=" bg-blue-300 text-white rounded-xl">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      x="0px"
-                      y="0px"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 50 50"
-                    >
-                      <path d="M 16 3 C 8.8545455 3 3 8.8545455 3 16 L 3 34 C 3 41.145455 8.8545455 47 16 47 L 34 47 C 41.145455 47 47 41.145455 47 34 L 47 16 C 47 8.8545455 41.145455 3 34 3 L 16 3 z M 16 5 L 34 5 C 40.054545 5 45 9.9454545 45 16 L 45 34 C 45 40.054545 40.054545 45 34 45 L 16 45 C 9.9454545 45 5 40.054545 5 34 L 5 16 C 5 9.9454545 9.9454545 5 16 5 z M 37 11 C 35.9 11 35 11.9 35 13 C 35 14.1 35.9 15 37 15 C 38.1 15 39 14.1 39 13 C 39 11.9 38.1 11 37 11 z M 25 14 C 18.954545 14 14 18.954545 14 25 C 14 31.045455 18.954545 36 25 36 C 31.045455 36 36 31.045455 36 25 C 36 18.954545 31.045455 14 25 14 z M 25 16 C 29.954545 16 34 20.045455 34 25 C 34 29.954545 29.954545 34 25 34 C 20.045455 34 16 29.954545 16 25 C 16 20.045455 20.045455 16 25 16 z">
-                      </path>
-                    </svg>
-                  </li>
-                </a>
-                <a href="">
-                  <li>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      x="0px"
-                      y="0px"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 48 48"
-                    >
-                      <path
-                        fill="#0288D1"
-                        d="M42,37c0,2.762-2.238,5-5,5H11c-2.761,0-5-2.238-5-5V11c0-2.762,2.239-5,5-5h26c2.762,0,5,2.238,5,5V37z"
-                      >
-                      </path>
-                      <path
-                        fill="#FFF"
-                        d="M12 19H17V36H12zM14.485 17h-.028C12.965 17 12 15.888 12 14.499 12 13.08 12.995 12 14.514 12c1.521 0 2.458 1.08 2.486 2.499C17 15.887 16.035 17 14.485 17zM36 36h-5v-9.099c0-2.198-1.225-3.698-3.192-3.698-1.501 0-2.313 1.012-2.707 1.99C24.957 25.543 25 26.511 25 27v9h-5V19h5v2.616C25.721 20.5 26.85 19 29.738 19c3.578 0 6.261 2.25 6.261 7.274L36 36 36 36z"
-                      >
-                      </path>
-                    </svg>
-                  </li>
-                </a>
-              </ul>
-            </div>
-            <div class="text-center w-full items-center   flex flex-col lg:flex-row ">
-              <span class="flex flex-row text-lg font-bold">
-                <.current_year /> &copy;
-                <h3>GTCruise LTD</h3>
-              </span>
-            </div>
+            <a href="https://wa.me/+447785970125" target="_blank">
+              <i class="fa fa-whatsapp"></i> WhatsApp
+            </a>
+            <a href="https://maps.google.com" target="_blank">
+              <i class="fa fa-map-pin"></i> West Quay shopping centre,  Southampton SO15 1QD, Uk
+            </a>
           </div>
         </div>
       </div>
