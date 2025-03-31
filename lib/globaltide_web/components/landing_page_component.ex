@@ -651,13 +651,13 @@ defmodule GlobaltideWeb.LandingPageComponent do
           </div>
           <div class="w-full flex flex-col lg:flex-row lg:space-x-8 space-y-2 lg:space-y-8">
             <ul class="font-bold flex flex-col gap-3">
-              <a href="" class="text-lg font-medium hover:text-gray-300 transition duration-200">
+              <a href="/" class="text-lg font-medium hover:text-gray-300 transition duration-200">
                 <li>Home</li>
               </a>
-              <a href="" class="text-lg font-medium hover:text-gray-300 transition duration-200">
+              <a href="/jobs" class="text-lg font-medium hover:text-gray-300 transition duration-200">
                 <li>Jobs available</li>
               </a>
-              <a href="" class="text-lg font-medium hover:text-gray-300 transition duration-200">
+              <a href="/contact" class="text-lg font-medium hover:text-gray-300 transition duration-200">
                 <li>Contact</li>
               </a>
             </ul>

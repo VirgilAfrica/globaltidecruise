@@ -6,55 +6,65 @@ defmodule GlobaltideWeb.UserLoginLive do
   @impl true
   def render(assigns) do
     ~H"""
-      <div class="mx-auto max-w-[90%] lg:max-w-[50%] p-8 hover:shadow-md transition-shadow duration-300 h-auto">
-        <div class="w-full item-center justify-center flex">
-          <img src="/images/globaltide-lg2.jpeg" alt="" class="rounded-3xl w-20 h-20 lg:w-40 lg:h-40" />
-        </div>
-        <.header class="text-center">
-          Log in to account
-          <:subtitle>
-            Don't have an account?
-            <.link navigate={~p"/users/register"} class="font-semibold text-red-500 hover:underline">
-              Sign up
-            </.link>
-            for an account now.
-          </:subtitle>
-        </.header>
-
-        <.simple_form for={@form} action={~p"/users/log_in"} phx-update="ignore">
-          <.input field={@form[:email]} type="email" label="Email" required />
-          <.input field={@form[:password]} type="password" label="Password" required />
-
-          <:actions>
-            <.input field={@form[:remember_me]} type="checkbox" label="Keep me logged in" />
-            <.link
-              href={~p"/users/reset_password"}
-              class="text-sm font-semibold hover:text-red-500 hover:underline hover:offset-underline-4"
-            >
-              Forgot your password?
-            </.link>
-          </:actions>
-          <:actions>
-            <.button
-              phx-disable-with="Logging in..."
-              class="w-full flex items-center justify-center space-x-4 bg-blue-300 hover:bg-blue-700 ease-in transition-colors duration-300"
-            >
-              Log in
-              <span aria-hidden="true">
-                <Heroicons.icon name="arrow-long-right" class="w-4 h-4" />
-              </span>
-            </.button>
-          </:actions>
-        </.simple_form>
+    <div class="mx-auto max-w-[90%] lg:max-w-[50%] p-8 hover:shadow-md transition-shadow duration-300 h-auto">
+      <div class="w-full item-center justify-center flex">
+        <img src="/images/globaltide-lg2.jpeg" alt="" class="rounded-3xl w-20 h-20 lg:w-40 lg:h-40" />
       </div>
+      <.header class="text-center">
+        Log in to account
+        <:subtitle>
+          Don't have an account?
+          <.link navigate={~p"/users/register"} class="font-semibold text-red-500 hover:underline">
+            Sign up
+          </.link>
+          for an account now.
+        </:subtitle>
+      </.header>
+
+      <.simple_form for={@form} action={@url} phx-update="ignore">
+        <.input field={@form[:email]} type="email" label="Email" required />
+        <.input field={@form[:password]} type="password" label="Password" required />
+
+        <:actions>
+          <.input field={@form[:remember_me]} type="checkbox" label="Keep me logged in" />
+          <.link
+            href={~p"/users/reset_password"}
+            class="text-sm font-semibold hover:text-red-500 hover:underline hover:offset-underline-4"
+          >
+            Forgot your password?
+          </.link>
+        </:actions>
+        <:actions>
+          <.button
+            phx-disable-with="Logging in..."
+            class="w-full flex items-center justify-center space-x-4 bg-blue-300 hover:bg-blue-700 ease-in transition-colors duration-300"
+          >
+            Log in
+            <span aria-hidden="true">
+              <Heroicons.icon name="arrow-long-right" class="w-4 h-4" />
+            </span>
+          </.button>
+        </:actions>
+      </.simple_form>
+    </div>
     """
   end
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(params, _session, socket) do
     email = Phoenix.Flash.get(socket.assigns.flash, :email)
     form = to_form(%{"email" => email}, as: "user")
-    {:ok, assign(socket, form: form), temporary_assigns: [form: form]}
+
+    url =
+      case params["url"] do
+        nil -> "/users/log_in"
+        url -> "/users/log_in?url=#{url}"
+      end
+
+    {:ok,
+     socket
+     |> assign(:url, url)
+     |> assign(form: form), temporary_assigns: [form: form]}
   end
 
   @impl true
@@ -66,6 +76,8 @@ defmodule GlobaltideWeb.UserLoginLive do
             "Admin" -> "/admin"
             _ -> "/dashboard"
           end
+
+        IO.inspect(path)
 
         {:noreply, socket |> put_flash(:info, "Login successful") |> push_navigate(to: path)}
 

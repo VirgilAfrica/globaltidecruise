@@ -4,7 +4,9 @@ defmodule GlobaltideWeb.UserSessionController do
   alias Globaltide.Accounts
   alias GlobaltideWeb.UserAuth
 
-  def create(conn, %{"_action" => "registered", "user" => user_params}) do
+  def create(conn, %{"_action" => "registered", "user" => user_params} = params) do
+    IO.inspect(params)
+
     case Accounts.register_user(user_params) do
       {:ok, user} ->
         conn
@@ -18,7 +20,6 @@ defmodule GlobaltideWeb.UserSessionController do
     end
   end
 
-
   def create(conn, %{"_action" => "password_updated"} = params) do
     conn
     |> put_session(:user_return_to, ~p"/users/settings")
@@ -29,12 +30,14 @@ defmodule GlobaltideWeb.UserSessionController do
     create(conn, params, "Welcome back!")
   end
 
-  defp create(conn, %{"user" => user_params}, info) do
+  defp create(conn, %{"user" => user_params} = params, info) do
+    IO.inspect(params)
     %{"email" => email, "password" => password} = user_params
 
     if user = Accounts.get_user_by_email_and_password(email, password) do
       conn
       |> put_flash(:info, info)
+      |> put_session(:user_return_to, params["url"] || "/")
       |> UserAuth.log_in_user(user, user_params)
     else
       # In order to prevent user enumeration attacks, don't disclose whether the email is registered.

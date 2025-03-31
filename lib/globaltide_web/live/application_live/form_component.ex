@@ -21,12 +21,22 @@ defmodule GlobaltideWeb.ApplicationLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input
-          field={@form[:job_listing_id]}
-          type="select"
-          label="Select Job"
-          options={Enum.map(@jobs, &{&1.job_title, &1.id})}
-        />
+        <%= if @selected_job_id do %>
+          <.input
+            field={@form[:job_listing_id]}
+            type="select"
+            options={Enum.map(@jobs, &{&1.job_title, &1.id})}
+            readonly
+            value={@selected_job_id}
+          />
+        <% else %>
+          <.input
+            field={@form[:job_listing_id]}
+            type="select"
+            label="Select Job"
+            options={Enum.map(@jobs, &{&1.job_title, &1.id})}
+          />
+        <% end %>
         <.input field={@form[:email]} type="email" label="Email" />
         <.input field={@form[:phone]} type="text" label="Phone Number" />
         <div class="flex flex-col space-y-4">
@@ -38,7 +48,7 @@ defmodule GlobaltideWeb.ApplicationLive.FormComponent do
         </div>
 
         <:actions>
-          <.button type="submit" phx-disable-with="Saving...">Save Application</.button>
+          <.button type="submit" phx-disable-with="Sending..">Send Application</.button>
         </:actions>
       </.simple_form>
     </div>
@@ -47,10 +57,6 @@ defmodule GlobaltideWeb.ApplicationLive.FormComponent do
 
   @impl true
   def update(%{application: application} = assigns, socket) do
-    IO.puts("Updating form component...")
-
-    # Fetch jobs from the database
-
     jobs = Repo.all(JobListing)
 
     IO.inspect(assigns.current_user)

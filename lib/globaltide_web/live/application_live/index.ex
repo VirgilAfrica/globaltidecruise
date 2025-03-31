@@ -7,7 +7,7 @@ defmodule GlobaltideWeb.ApplicationLive.Index do
   alias Globaltide.Repo
 
   @impl true
-  def mount(_params, session, socket) do
+  def mount(%{"job_id" => job_id}, session, socket) do
     user = get_current_user(session)
 
     if connected?(socket), do: GlobaltideWeb.Endpoint.subscribe("applications")
@@ -17,6 +17,21 @@ defmodule GlobaltideWeb.ApplicationLive.Index do
     {:ok,
      socket
      |> assign(:current_user, user)
+     |> assign(:selected_job_id, job_id)
+     |> stream(:applications, applications)}
+  end
+
+  def mount(_, session, socket) do
+    user = get_current_user(session)
+
+    if connected?(socket), do: GlobaltideWeb.Endpoint.subscribe("applications")
+
+    applications = fetch_applications_for_user(user)
+
+    {:ok,
+     socket
+     |> assign(:current_user, user)
+     |> assign(:selected_job_id, nil)
      |> stream(:applications, applications)}
   end
 
@@ -27,7 +42,8 @@ defmodule GlobaltideWeb.ApplicationLive.Index do
     end
   end
 
-  defp fetch_applications_for_user(nil), do: [] # No user logged in? No applications.
+  # No user logged in? No applications.
+  defp fetch_applications_for_user(nil), do: []
 
   defp fetch_applications_for_user(%Globaltide.Accounts.User{role: "admin"}) do
     Applications.list_applications() |> Repo.preload(:job_listing)

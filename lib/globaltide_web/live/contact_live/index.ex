@@ -16,7 +16,7 @@ defmodule GlobaltideWeb.ContactLive.Index do
   def render(assigns) do
     ~H"""
     <.navbar is_open={@is_open} toggle_event="toggle-menu" current_user={nil} />
-    <.upper_section />
+
     <.contact_header />
     <.live_component module={FormComponent} id="contact-form" />
     <.footer />

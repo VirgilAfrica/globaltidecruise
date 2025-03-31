@@ -125,10 +125,7 @@ defmodule GlobaltideWeb.ContactComponent do
   def upper_section(assigns) do
     ~H"""
     <section class="h-auto  w-full">
-      <div
-        class=" relative lg:bg-fixed lg:bg-cover bg-fixed bg-contain w-full h-[20vh] lg:h-[80vh] flex items-center justify-center"
-        style="background-image: url(/images/contact.jpg);"
-      >
+      <div class=" relative lg:bg-fixed lg:bg-cover bg-fixed bg-contain w-full h-[20vh] lg:h-[80vh] flex items-center justify-center">
         <div class="absolute bg-black/50 inset-0 "></div>
         <div class="relative flex items-center justify-center ">
           <h1 class="text-center text-[24px] md:text-[30px] lg:text-[44px]  font-bold text-white">
