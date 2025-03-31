@@ -643,14 +643,14 @@ defmodule GlobaltideWeb.LandingPageComponent do
 
   def footer(assigns) do
     ~H"""
-    <footer class="-full bg-blue-800 lg:h-80  flex items-center justify-center text-white py-10 lg:py-20">
+    <footer class="-full bg-blue-800   flex items-start justify-start text-white py-10 lg:py-20">
       <div class="w-full max-w-[90%] mx-auto">
-        <div class="flex flex-col lg:space-x-4 lg:flex-row items-start justify-start lg:justify-center lg:items-center">
+        <div class="flex flex-col lg:space-x-4 lg:flex-row items-start justify-start ">
           <div class="w-full flex items-center">
             <img src="/images/globaltide-lg2.jpeg" alt="" class="w-20 h-20 " />
           </div>
           <div class="w-full flex flex-col lg:flex-row lg:space-x-8 space-y-2 lg:space-y-8">
-            <ul class="font-bold flex flex-col lg:flex-row lg:items-center lg:justify-center lg:space-x-8 space-y-2 lg:space-y-0 ">
+            <ul class="font-bold flex flex-col gap-3">
               <a href="" class="text-lg font-medium hover:text-gray-300 transition duration-200">
                 <li>Home</li>
               </a>
@@ -662,19 +662,42 @@ defmodule GlobaltideWeb.LandingPageComponent do
               </a>
             </ul>
           </div>
-          <div class="w-full items-start justify-between lg:justify-center flex flex-col ">
-            <a href="https://www.facebook.com/share/1AGCnq2viE/" target="_blank">
-              <i class="fa fa-facebook" aria-hidden="true"></i> Facebook
+          <div class="w-full flex flex-col items-start justify-between gap-4 text-base lg:justify-center">
+            <a
+              href="https://www.facebook.com/share/1AGCnq2viE/"
+              target="_blank"
+              class="flex items-center gap-3 px-3 py-1 rounded-md transition-all duration-300 hover:bg-gray-100 hover:text-blue-600 hover:translate-x-1 hover:shadow-md"
+            >
+              <i class="fa fa-facebook w-5 text-center" aria-hidden="true"></i> Global tide
             </a>
-            <a href="https://instagram.com/globaltidesagency" target="_blank">
-              <i class="fa fa-instagram"></i> Instagram
+            <a
+              href="https://instagram.com/globaltidesagency"
+              target="_blank"
+              class="flex items-center gap-3 px-3 py-1 rounded-md transition-all duration-300 hover:bg-gray-100 hover:text-pink-600 hover:translate-x-1 hover:shadow-md"
+            >
+              <i class="fa fa-instagram w-5 text-center"></i> globaltidesagency
             </a>
-
-            <a href="https://wa.me/+447785970125" target="_blank">
-              <i class="fa fa-whatsapp"></i> WhatsApp
+            <a
+              href="https://wa.me/+447785970125"
+              target="_blank"
+              class="flex items-center gap-3 px-3 py-1 rounded-md transition-all duration-300 hover:bg-gray-100 hover:text-green-600 hover:translate-x-1 hover:shadow-md"
+            >
+              <i class="fa fa-whatsapp w-5 text-center"></i> +447785970125
             </a>
-            <a href="https://maps.google.com" target="_blank">
-              <i class="fa fa-map-pin"></i> West Quay shopping centre,  Southampton SO15 1QD, Uk
+            <a
+              href="tel:0203500040"
+              target="_blank"
+              class="flex items-center gap-3 px-3 py-1 rounded-md transition-all duration-300 hover:bg-gray-100 hover:text-blue-600 hover:translate-x-1 hover:shadow-md"
+            >
+              <i class="fa fa-phone w-5 text-center"></i> 020 3500 040
+            </a>
+            <a
+              href="https://maps.google.com"
+              target="_blank"
+              class="flex items-center gap-3 px-3 py-2 rounded-md transition-all duration-300 hover:bg-gray-100 hover:text-red-600 hover:translate-x-1 hover:shadow-md"
+            >
+              <i class="fa fa-map-pin w-5 text-center"></i>
+              West Quay shopping centre, Southampton SO15 1QD, UK
             </a>
           </div>
         </div>

@@ -28,13 +28,15 @@ defmodule GlobaltideWeb.ContactComponent do
         </div>
         <div class="grid justify-items-end w-full">
           <%= if @current_user do %>
-          <.link
-          href="/users/log_out"
-          method="delete"
-          class="flex items-center p-2  rounded-lg  text-white   hover:bg-white hover:text-black group"
-        >
-          <button class="flex-1 ms-3 whitespace-nowrap text-black px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 bg-red-300 hover:bg-red-700">Sign Out</button>
-        </.link>
+            <.link
+              href="/users/log_out"
+              method="delete"
+              class="flex items-center p-2  rounded-lg  text-white   hover:bg-white hover:text-black group"
+            >
+              <button class="flex-1 ms-3 whitespace-nowrap text-black px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 bg-red-300 hover:bg-red-700">
+                Sign Out
+              </button>
+            </.link>
           <% else %>
             <a href="/users/log_in">
               <button class="font-bold text-white rounded-xl transition-colors ease-linear hover:bg-red-700 bg-red-500 lg:px-8 py-4">
@@ -174,17 +176,47 @@ defmodule GlobaltideWeb.ContactComponent do
             Contact Us{" "}
           </p>
           <span class="w-full border-b-2 border-grey-300 text-center"></span>
-          <h2 class="text-[20px] md:text-[28px] lg:text-[32px]">
-            020 7993 2905{" "}
-          </h2>
-
-          <p class="text-[16px] md:text-[20px] lg:text-[20px] text-gray-300">
-            hello@finsweet.com{" "}
-          </p>
+          <div class="w-full flex flex-col items-start justify-between gap-4 text-base lg:justify-center">
+            <a
+              href="https://www.facebook.com/share/1AGCnq2viE/"
+              target="_blank"
+              class="flex items-center gap-3 px-3 py-1 rounded-md transition-all duration-300 hover:bg-gray-100 hover:text-blue-600 hover:translate-x-1 hover:shadow-md"
+            >
+              <i class="fa fa-facebook w-5 text-center" aria-hidden="true"></i> Global tide
+            </a>
+            <a
+              href="https://instagram.com/globaltidesagency"
+              target="_blank"
+              class="flex items-center gap-3 px-3 py-1 rounded-md transition-all duration-300 hover:bg-gray-100 hover:text-pink-600 hover:translate-x-1 hover:shadow-md"
+            >
+              <i class="fa fa-instagram w-5 text-center"></i> globaltidesagency
+            </a>
+            <a
+              href="https://wa.me/+447785970125"
+              target="_blank"
+              class="flex items-center gap-3 px-3 py-1 rounded-md transition-all duration-300 hover:bg-gray-100 hover:text-green-600 hover:translate-x-1 hover:shadow-md"
+            >
+              <i class="fa fa-whatsapp w-5 text-center"></i> +447785970125
+            </a>
+            <a
+              href="tel:0203500040"
+              target="_blank"
+              class="flex items-center gap-3 px-3 py-1 rounded-md transition-all duration-300 hover:bg-gray-100 hover:text-blue-600 hover:translate-x-1 hover:shadow-md"
+            >
+              <i class="fa fa-phone w-5 text-center"></i> 020 3500 040
+            </a>
+            <a
+              href="https://maps.google.com"
+              target="_blank"
+              class="flex items-center gap-3 px-3 py-2 rounded-md transition-all duration-300 hover:bg-gray-100 hover:text-red-600 hover:translate-x-1 hover:shadow-md"
+            >
+              <i class="fa fa-map-pin w-5 text-center"></i>
+              West Quay shopping centre, Southampton SO15 1QD, UK
+            </a>
+          </div>
         </div>
       </div>
-      <div>
-      </div>
+      <div></div>
     </section>
     """
   end
