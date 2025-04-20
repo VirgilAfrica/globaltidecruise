@@ -5,30 +5,22 @@ defmodule GlobaltideWeb.Admin.AdminComponent do
   def admin_panel(assigns)do
     ~H"""
       <section class="w-full h-auto mx-auto ">
-        <div class=" border-b-2 shadow-md">
-          <div class="max-w-[90%] mx-auto  w-full py-4 flex items-center">
+        <div class=" border-b-[1px]">
+          <div class="max-w-[100%] mx-auto  w-full py-4 flex items-center">
             <div class="flex flex-col w-auto">
               <%= if @current_user do %>
-              <div clas>
-                <div class="flex flex-row items-center justify-start">
-
-                  <h3 class="flex text-[24px] md:text-[32px] font-bold">Welcome back</h3> <h3 class="text-[24px] md:text-[32px] font-semibold text-red-500 ">
-                    {@current_user.name}
+              <div class="w-full">
+                <div class="flex flex-row items-start justify-start">
+                  <h3 class="flex text-[24px] md:text-[32px] font-bold">Welcome back
+                    {@current_user.name},
                   </h3>
                 </div>
-                <div class="px-4 space-x-4 flex items-center justify-center">
-                  <h4 class="flex-row  text-[16px] md:text-[24px] font-bold flex space-x-4">
-                    You have
-                   </h4>
-                   <p class="text-blue-500 space-x-4 font-bold">
-                    {@current_user.role}
-                  </p>
-                  <h4 class="flex-row  text-[16px] md:text-[24px] font-bold flex space-x-4">
-                    Priviledges
+                <div class="flex items-start justify-start">
+                  <h4 class="text-[16px] md:text-[24px]">
+                  You have <span class=""> {@current_user.role} </span> priviledges
                     </h4>
                 </div>
               </div>
-
               <%else%>
                 <div>
                   <h1 class="text-[16px] md:text-[24px] font-bold">You are not logged in</h1>

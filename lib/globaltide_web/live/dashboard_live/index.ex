@@ -2,7 +2,6 @@ defmodule GlobaltideWeb.DashboardLive.Index do
   use GlobaltideWeb, :live_view
 
   alias Globaltide.{Accounts, Repo}
-  alias Globaltide.Applications.Application
 
   import Ecto.Query
   import GlobaltideWeb.AsideMenuComponent
@@ -40,7 +39,7 @@ defmodule GlobaltideWeb.DashboardLive.Index do
   @impl true
   def handle_info(:refresh_applications, socket) do
     applications = fetch_user_applications(socket.assigns.current_user)
-    Process.send_after(self(), :refresh_applications, 5000)  # Keep polling every 5 seconds
+    Process.send_after(self(), :refresh_applications, 5000)
     {:noreply, assign(socket, :applications, applications)}
   end
 

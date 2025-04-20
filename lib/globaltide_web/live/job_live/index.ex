@@ -59,7 +59,6 @@ defmodule GlobaltideWeb.JobLive.Index do
     <.navbar is_open={@is_open} toggle_event="toggle-menu" current_user={@current_user} />
     <.hero_section />
     <.filter_section filters={@filters} active_filter={@active_filter} />
-
     <div class="job-list max-w-[90%] mx-auto">
       <%= for job <- @jobs do %>
         <a href={~p"/jobs/#{job.id}"} class="block">

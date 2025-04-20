@@ -86,12 +86,12 @@ defmodule GlobaltideWeb.AdminLive.Index do
 
           <table class="w-full border-collapse border border-gray-300">
             <thead>
-              <tr class="bg-gray-100">
-                <th class="border p-2">Job Title</th>
-                <th class="border p-2">Email</th>
-                <th class="border p-2">Phone</th>
-                <th class="border p-2">Status</th>
-                <th class="border p-2">Actions</th>
+              <tr class="bg-gray-100 text-start w-full">
+                <th class="border p-2 text-start">Job Title</th>
+                <th class="border p-2 text-start">Email</th>
+                <th class="border p-2 text-start">Phone</th>
+                <th class="border p-2 text-start">Status</th>
+                <th class="border p-2 text-start">Actions</th>
               </tr>
             </thead>
             <tbody>
